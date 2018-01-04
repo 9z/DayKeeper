@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,23 +20,25 @@ import devlight.io.library.ntb.NavigationTabBar;
  * Created by GIGAMOLE on 28.03.2016.
  */
 public class HorizontalNtbActivity extends Activity {
-
+TextView percentview=null;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizontal_ntb);
         initUI();
-
+        /*int dow=DoDayOfWeek();
+        percentview=(TextView)findViewById(R.id.percentview);
+        percentview.setText(dow);*/
     }
-    private String DoDayOfWeek(){
+   /* private int DoDayOfWeek(){
         Calendar cal=Calendar.getInstance();
         String strWeek=null;
 
         int nweek = cal.get(Calendar.DAY_OF_WEEK);
         //nweek 1->일요일 , 2->월요일 , 3 ->화요일
 
-   return strWeek;
-    }
+   return nweek;
+    }*/
 
     private void initUI() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
@@ -68,9 +71,8 @@ public class HorizontalNtbActivity extends Activity {
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
                 }else if (position==2){
                     //세영 담당
-                    v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
-                    Intent it=new Intent(HorizontalNtbActivity.this,inherit_static.class);
-                    startActivity(it);
+                    v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_analysis2, null, false);
+
 
                 }else{
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
