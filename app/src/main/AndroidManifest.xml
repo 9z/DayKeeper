@@ -20,7 +20,10 @@
         </activity>
         <activity android:name=".HorizontalNtbActivity">
         </activity>
-        <activity android:name=".inherit_static"></activity>
+        <activity android:name=".inherit_static"
+            android:label="수정하기"
+            android:parentActivityName=".HorizontalNtbActivity"
+            android:screenOrientation="portrait"></activity>
 
     </application>
 
