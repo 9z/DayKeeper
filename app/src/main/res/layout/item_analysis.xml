@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:weightSum="4">
+
+    <TextView
+        android:id="@+id/static22222"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_round_rect"
+        android:gravity="center"
+        android:text="통계"
+        android:textColor="#9b92b3"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/predict"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_round_rect"
+        android:gravity="center"
+        android:text="예측"
+        android:textColor="#9b92b3"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tendency"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_round_rect"
+        android:gravity="center"
+        android:text="성향"
+        android:textColor="#9b92b3"
+        android:textStyle="bold" />
+
+</LinearLayout>
