@@ -55,6 +55,7 @@ public class HorizontalNtbActivity extends Activity {
                 }else if(position==1){
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
                 }else if (position==2){
+                    //세영 담당
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
                 }else{
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
