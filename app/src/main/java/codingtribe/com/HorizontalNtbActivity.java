@@ -1,6 +1,7 @@
 package codingtribe.com;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import devlight.io.library.ntb.NavigationTabBar;
 
@@ -23,7 +25,12 @@ public class HorizontalNtbActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizontal_ntb);
         initUI();
+
     }
+    /*private String DoDayOfWeek(){
+        Calendar cal=Calendar.getInstance();
+     *//*   return strWeek;*//*
+    }*/
 
     private void initUI() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
@@ -57,6 +64,9 @@ public class HorizontalNtbActivity extends Activity {
                 }else if (position==2){
                     //세영 담당
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
+                    Intent it=new Intent(HorizontalNtbActivity.this,inherit_static.class);
+                    startActivity(it);
+
                 }else{
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
                 }
