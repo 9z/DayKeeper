@@ -9,16 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".LoginActivity"></activity>
 
-        <activity android:name=".HorizontalNtbActivity">
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity android:name=".HorizontalNtbActivity">
+        </activity>
+        <activity android:name=".inherit_static"
+            android:label="수정하기"
+            android:parentActivityName=".HorizontalNtbActivity"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

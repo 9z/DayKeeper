@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "49082759867",
+    "project_id": "firebase-daykeeper"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49082759867:android:8ce16d60a30f14a7",
+        "android_client_info": {
+          "package_name": "codingtribe.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49082759867-1hllv1i87f70nka37tc4ae8d6hk7mv5b.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "49082759867-nqmdudj79o37v4tiafc1bhsmeqhqor57.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codingtribe",
+            "certificate_hash": "9afdb6788180ed6ff4948b2f3e9fd0bb2bc156cc"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE7HcdYUp_5pHwBnu5-mc9bP6fsIzMTIU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
