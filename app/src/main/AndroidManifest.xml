@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".inherit_static"
-            android:label="수정하기"
+            android:label="차트보기"
             android:parentActivityName=".item_analysis2"
             android:screenOrientation="portrait" />
         <activity android:name=".item_analysis2"></activity>
