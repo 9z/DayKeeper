@@ -66,7 +66,7 @@ public class inherit_static extends AppCompatActivity {
 
         ArrayList<PieEntry> yValues = new ArrayList<PieEntry>();
 
-        yValues.add(new PieEntry(34f,"Japen"));  //라벨
+        yValues.add(new PieEntry(34f,"Japan"));  //라벨
         yValues.add(new PieEntry(23f,"USA"));
         yValues.add(new PieEntry(14f,"UK"));
         yValues.add(new PieEntry(35f,"India"));
