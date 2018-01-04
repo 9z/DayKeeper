@@ -27,10 +27,15 @@ public class HorizontalNtbActivity extends Activity {
         initUI();
 
     }
-    /*private String DoDayOfWeek(){
+    private String DoDayOfWeek(){
         Calendar cal=Calendar.getInstance();
-     *//*   return strWeek;*//*
-    }*/
+        String strWeek=null;
+
+        int nweek = cal.get(Calendar.DAY_OF_WEEK);
+        //nweek 1->일요일 , 2->월요일 , 3 ->화요일
+
+   return strWeek;
+    }
 
     private void initUI() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
