@@ -40,6 +40,7 @@ public class line_line extends AppCompatActivity {
             public void onClick(View v) {
                 Intent it = new Intent(line_line.this, bar_bar.class);
                 startActivity(it);
+                finish();
             }
         });
 
@@ -48,6 +49,7 @@ public class line_line extends AppCompatActivity {
             public void onClick(View v) {
                 Intent it = new Intent(line_line.this, pie_pie.class);
                 startActivity(it);
+                finish();
             }
         });
 
