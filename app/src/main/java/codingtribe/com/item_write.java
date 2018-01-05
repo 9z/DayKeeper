@@ -45,7 +45,6 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_item_write, container, false);
 
-
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) v.findViewById(R.id.weekView);
 

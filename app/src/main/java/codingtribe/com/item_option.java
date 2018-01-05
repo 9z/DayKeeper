@@ -7,10 +7,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class item_option extends Fragment {
 
     private int mPosition;
+    ArrayList<String> array = new ArrayList<>();
+    ListView lv;
 
     static item_option newInstance(int position) {
         item_option f = new item_option();	//객체 생성
@@ -29,6 +37,23 @@ public class item_option extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_item_option, container, false);
+
+        lv = (ListView)v.findViewById(R.id.list_view);
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.item_option_list);
+        lv.setAdapter(adapter);
+
+        array.add("개발자 한마디");
+        array.add("버전 정보");
+        adapter.notifyDataSetChanged(); // 어댑터새로고침
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(),array.get(position).toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return v;
     }
 }

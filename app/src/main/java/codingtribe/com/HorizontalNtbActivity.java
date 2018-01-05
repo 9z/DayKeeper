@@ -111,7 +111,7 @@ TextView percentview=null;
        models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.ic_first),
-                        Color.parseColor(colors[1]))
+                        Color.parseColor(colors[0]))
   //                      .selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
                         .title("Home")
                         //.badgeTitle("NTB")
@@ -120,7 +120,7 @@ TextView percentview=null;
         models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.ic_second),
-                        Color.parseColor(colors[0]))
+                        Color.parseColor(colors[1]))
 //                        .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
                         .title("VIEW")
                         //.badgeTitle("with")
@@ -146,7 +146,7 @@ TextView percentview=null;
         );
 
         navigationTabBar.setModels(models);
-        navigationTabBar.setViewPager(viewPager, 2);
+        navigationTabBar.setViewPager(viewPager, 0);
         navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
