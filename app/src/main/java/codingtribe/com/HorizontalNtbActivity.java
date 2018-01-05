@@ -57,10 +57,10 @@ TextView percentview=null;
 
                 View v = null;
                 if(position==0){
-                    return item_analysis2.newInstance(position);
+                    return item_home.newInstance(position);
                     //              v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
                 }else if(position==1){
-                    return item_analysis2.newInstance(position);
+                    return item_write.newInstance(position);
 
                     //               v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
                 }else if (position==2){
@@ -68,7 +68,7 @@ TextView percentview=null;
                     return item_analysis2.newInstance(position);
     //                v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_analysis2, null, false);
                 }else{
-                    return item_analysis2.newInstance(position);
+                    return item_option.newInstance(position);
        //             v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
                 }
 

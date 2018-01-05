@@ -35,7 +35,9 @@
         <activity android:name=".item_write_input" />
         <activity android:name=".pie_pie" />
         <activity android:name=".bar_bar" />
-        <activity android:name=".line_line"></activity>
+        <activity android:name=".line_line" />
+        <activity android:name=".item_home" />
+        <activity android:name=".item_option"></activity>
     </application>
 
 </manifest>

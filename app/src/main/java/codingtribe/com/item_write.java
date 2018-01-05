@@ -1,8 +1,14 @@
 package codingtribe.com;
 
+
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
@@ -12,18 +18,36 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class item_write extends AppCompatActivity implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener{
+
+
+public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener{
 
     private WeekView mWeekView;
     private ArrayList<WeekViewEvent> mNewEvents;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    private int mPosition;
+
+    static item_write newInstance(int position) {
+        item_write f = new item_write();	//객체 생성
+        Bundle args = new Bundle();					//해당 fragment에서 사용될 정보 담을 번들 객체
+        args.putInt("position", position);				//포지션 값을 저장
+        f.setArguments(args);							//fragment에 정보 전달.
+        return f;											//fragment 반환
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_write);
+        mPosition = getArguments() != null ? getArguments().getInt("position") : 0;	// 뷰페이저의 position값을  넘겨 받음
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.activity_item_write, container, false);
+
 
         // Get a reference for the week view in the layout.
-        mWeekView = (WeekView) findViewById(R.id.weekView);
+        mWeekView = (WeekView) v.findViewById(R.id.weekView);
 
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
@@ -35,6 +59,7 @@ public class item_write extends AppCompatActivity implements MonthLoader.MonthCh
         // Initially, there will be no events on the week view because the user has not tapped on
         // it yet.
         mNewEvents = new ArrayList<WeekViewEvent>();
+        return v;
     }
 
     @Override
@@ -81,12 +106,15 @@ public class item_write extends AppCompatActivity implements MonthLoader.MonthCh
         }
         return events;
     }
-
+    //시간 받는 곳
     @Override
     public void onEmptyViewClicked(Calendar time) {
+
+
         // Set the new event with duration one hour.
         Calendar endTime = (Calendar) time.clone();
         endTime.add(Calendar.MINUTE, 60);
+        updateDetail(time, endTime);
 
         // Create a new event.
 //        WeekViewEvent event = new WeekViewEvent(20, "New event", time, endTime);
@@ -94,10 +122,17 @@ public class item_write extends AppCompatActivity implements MonthLoader.MonthCh
         // mNewEvents.add(event);
 
         // Refresh the week view. onMonthChange will be called again.
-        mWeekView.notifyDatasetChanged();
-        Intent intent = new Intent(item_write.this, item_write_input.class);
+       // mWeekView.notifyDatasetChanged();
+
+
+
+    }
+
+    private void updateDetail(Calendar time, Calendar endTime) {
+        Intent intent = new Intent(getActivity(), item_write_input.class);
         intent.putExtra("time", time);
         intent.putExtra("endTime",endTime);
         startActivity(intent);
     }
+
 }
