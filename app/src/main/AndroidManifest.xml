@@ -30,11 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".inherit_static"
-            android:label="차트보기"
-            android:parentActivityName=".item_analysis2"
-            android:screenOrientation="portrait" />
         <!-- <activity android:name=".item_analysis2" /> -->
         <activity android:name=".item_write" />
         <activity android:name=".item_write_input" />
