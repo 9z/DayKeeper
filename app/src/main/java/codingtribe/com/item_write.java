@@ -2,6 +2,7 @@ package codingtribe.com;
 
 
 import android.content.Intent;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -16,11 +17,12 @@ import com.alamkanak.weekview.WeekViewEvent;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
-
-public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener{
+public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener, WeekView.EventLongPressListener {
 
     private WeekView mWeekView;
     private ArrayList<WeekViewEvent> mNewEvents;
@@ -28,16 +30,16 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     private int mPosition;
 
     static item_write newInstance(int position) {
-        item_write f = new item_write();	//객체 생성
-        Bundle args = new Bundle();					//해당 fragment에서 사용될 정보 담을 번들 객체
-        args.putInt("position", position);				//포지션 값을 저장
-        f.setArguments(args);							//fragment에 정보 전달.
-        return f;											//fragment 반환
+        item_write f = new item_write();    //객체 생성
+        Bundle args = new Bundle();                    //해당 fragment에서 사용될 정보 담을 번들 객체
+        args.putInt("position", position);                //포지션 값을 저장
+        f.setArguments(args);                            //fragment에 정보 전달.
+        return f;                                            //fragment 반환
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPosition = getArguments() != null ? getArguments().getInt("position") : 0;	// 뷰페이저의 position값을  넘겨 받음
+        mPosition = getArguments() != null ? getArguments().getInt("position") : 0;    // 뷰페이저의 position값을  넘겨 받음
     }
 
     @Nullable
@@ -55,9 +57,25 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         // Set up empty view click listener.
         mWeekView.setEmptyViewClickListener(this);
 
+        mWeekView.setEventLongPressListener(this);
+
         // Initially, there will be no events on the week view because the user has not tapped on
         // it yet.
+        Calendar cal1  = new GregorianCalendar();
+
+        Calendar endTime1 = (Calendar) cal1.clone();
+        endTime1.add(Calendar.MINUTE, 60);
+        Calendar endTime2 = (Calendar) endTime1.clone();
+        endTime2.add(Calendar.MINUTE, 60);
+
+        Calendar endTime3 = (Calendar) endTime1.clone();
+        endTime3.add(Calendar.MINUTE, -60);
+
+
+
         mNewEvents = new ArrayList<WeekViewEvent>();
+        mNewEvents.add(new WeekViewEvent(20, "olleh",endTime1,endTime2));
+        mNewEvents.add(new WeekViewEvent(19, "success?",endTime3,endTime1));
         return v;
     }
 
@@ -72,7 +90,8 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
     /**
      * Get events that were added by tapping on empty view.
-     * @param year The year currently visible on the week view.
+     *
+     * @param year  The year currently visible on the week view.
      * @param month The month currently visible on the week view.
      * @return The events of the given year and month.
      */
@@ -105,33 +124,38 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         }
         return events;
     }
+
     //시간 받는 곳
     @Override
     public void onEmptyViewClicked(Calendar time) {
-
-
         // Set the new event with duration one hour.
         Calendar endTime = (Calendar) time.clone();
         endTime.add(Calendar.MINUTE, 60);
         updateDetail(time, endTime);
 
         // Create a new event.
-//        WeekViewEvent event = new WeekViewEvent(20, "New event", time, endTime);
+        //WeekViewEvent event = new WeekViewEvent(20, "New event", time, endTime);
 
         // mNewEvents.add(event);
 
         // Refresh the week view. onMonthChange will be called again.
-       // mWeekView.notifyDatasetChanged();
-
+        // mWeekView.notifyDatasetChanged();
 
 
     }
 
     private void updateDetail(Calendar time, Calendar endTime) {
         Intent intent = new Intent(getActivity(), item_write_input.class);
-        intent.putExtra("time", time);
-        intent.putExtra("endTime",endTime);
+        long this_time = time.getTimeInMillis(); // Calendar > long
+        long this_endTime = endTime.getTimeInMillis();
+        intent.putExtra("time", this_time);
+        intent.putExtra("endTime", this_endTime);
         startActivity(intent);
     }
 
+
+    @Override
+    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+
+    }
 }
