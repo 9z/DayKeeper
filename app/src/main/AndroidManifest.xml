@@ -11,6 +11,17 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
+
+        <receiver android:name=".Widget_Provider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="Click1"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider"/>
+        </receiver>
+
         <activity android:name=".HorizontalNtbActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
