@@ -2,6 +2,7 @@ package codingtribe.com;
 
 
 import android.content.Intent;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -16,11 +17,12 @@ import com.alamkanak.weekview.WeekViewEvent;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 
-public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener {
+public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener, WeekView.EventLongPressListener {
 
     private WeekView mWeekView;
     private ArrayList<WeekViewEvent> mNewEvents;
@@ -55,31 +57,25 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         // Set up empty view click listener.
         mWeekView.setEmptyViewClickListener(this);
 
+        mWeekView.setEventLongPressListener(this);
+
         // Initially, there will be no events on the week view because the user has not tapped on
         // it yet.
         Calendar cal1  = new GregorianCalendar();
 
-        Calendar startOfMonth = Calendar.getInstance();
-        startOfMonth.set(Calendar.YEAR, 2018);
-        startOfMonth.set(Calendar.MONTH, 2 - 1);
-        startOfMonth.set(Calendar.DAY_OF_MONTH, 1);
-        startOfMonth.set(Calendar.HOUR_OF_DAY, 3);
-        startOfMonth.set(Calendar.MINUTE, 40);
-        startOfMonth.set(Calendar.SECOND, 0);
-        startOfMonth.set(Calendar.MILLISECOND, 0);
-        Calendar endOfMonth = (Calendar) startOfMonth.clone();
-        endOfMonth.set(Calendar.DAY_OF_MONTH, endOfMonth.getMaximum(Calendar.DAY_OF_MONTH));
-        endOfMonth.set(Calendar.HOUR_OF_DAY, 23);
-        endOfMonth.set(Calendar.MINUTE, 59);
-        endOfMonth.set(Calendar.SECOND, 59);
+        Calendar endTime1 = (Calendar) cal1.clone();
+        endTime1.add(Calendar.MINUTE, 60);
+        Calendar endTime2 = (Calendar) endTime1.clone();
+        endTime2.add(Calendar.MINUTE, 60);
 
-        Calendar endTime = (Calendar) cal1.clone();
-        endTime.add(Calendar.MINUTE, 60);
+        Calendar endTime3 = (Calendar) endTime1.clone();
+        endTime3.add(Calendar.MINUTE, -60);
 
 
 
         mNewEvents = new ArrayList<WeekViewEvent>();
-        mNewEvents.add(new WeekViewEvent(20, "olleh",,));
+        mNewEvents.add(new WeekViewEvent(20, "olleh",endTime1,endTime2));
+        mNewEvents.add(new WeekViewEvent(19, "success?",endTime3,endTime1));
         return v;
     }
 
@@ -150,9 +146,16 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
     private void updateDetail(Calendar time, Calendar endTime) {
         Intent intent = new Intent(getActivity(), item_write_input.class);
-        intent.putExtra("time", time);
-        intent.putExtra("endTime", endTime);
+        long this_time = time.getTimeInMillis(); // Calendar > long
+        long this_endTime = endTime.getTimeInMillis();
+        intent.putExtra("time", this_time);
+        intent.putExtra("endTime", this_endTime);
         startActivity(intent);
     }
 
+
+    @Override
+    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+
+    }
 }
