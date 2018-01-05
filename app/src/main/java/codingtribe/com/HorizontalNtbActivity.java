@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -19,7 +22,7 @@ import devlight.io.library.ntb.NavigationTabBar;
 /**
  * Created by GIGAMOLE on 28.03.2016.
  */
-public class HorizontalNtbActivity extends Activity {
+public class HorizontalNtbActivity extends FragmentActivity {
 TextView percentview=null;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -43,9 +46,39 @@ TextView percentview=null;
     private void initUI() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
 
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public int getCount() {
+                return 4;
+            }
 
+            @Override
+            public Fragment getItem(int position) {
 
-        viewPager.setAdapter(new PagerAdapter() {
+                View v = null;
+                if(position==0){
+                    return item_analysis2.newInstance(position);
+                    //              v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
+                }else if(position==1){
+                    return item_analysis2.newInstance(position);
+
+                    //               v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
+                }else if (position==2){
+                    //세영 담당
+                    return item_analysis2.newInstance(position);
+    //                v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_analysis2, null, false);
+                }else{
+                    return item_analysis2.newInstance(position);
+       //             v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
+                }
+
+        //        ((ViewPager)container).addView(v, 0);
+
+         //       return v;
+            }
+        });
+
+     /*   viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
                 return 4;
@@ -64,25 +97,11 @@ TextView percentview=null;
             @Override
             public Object instantiateItem(final ViewGroup container, final int position) {
 
-                View v = null;
-                if(position==0){
-                    v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
-                }else if(position==1){
-                    v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
-                }else if (position==2){
-                    //세영 담당
-                    v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_analysis2, null, false);
-                }else{
-                    v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
-                }
 
-                ((ViewPager)container).addView(v, 0);
-
-                return v;
 
 
             }
-        });
+        });*/
 
         final String[] colors = getResources().getStringArray(R.array.default_preview);
 
