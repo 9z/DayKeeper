@@ -38,8 +38,8 @@ public class bar_bar extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(bar_bar.this, pie_pie.class);
-                startActivity(it);
                 finish();
+                startActivity(it);
             }
         });
 
@@ -47,8 +47,8 @@ public class bar_bar extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(bar_bar.this, line_line.class);
-                startActivity(it);
                 finish();
+                startActivity(it);
             }
         });
 
