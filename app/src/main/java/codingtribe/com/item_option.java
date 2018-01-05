@@ -50,7 +50,7 @@ public class item_option extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),array.get(position).toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),adapter.getItem(position)+"",Toast.LENGTH_SHORT).show();
             }
         });
 
