@@ -38,6 +38,7 @@ public class pie_pie extends AppCompatActivity {
             public void onClick(View v) {
                 Intent it = new Intent(pie_pie.this, bar_bar.class);
                 startActivity(it);
+                finish();
             }
         });
 
@@ -46,6 +47,7 @@ public class pie_pie extends AppCompatActivity {
             public void onClick(View v) {
                 Intent it = new Intent(pie_pie.this, line_line.class);
                 startActivity(it);
+                finish();
             }
         });
 
