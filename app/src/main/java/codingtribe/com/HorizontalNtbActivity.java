@@ -68,12 +68,10 @@ TextView percentview=null;
                 if(position==0){
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
                 }else if(position==1){
-                    v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
+                    v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
                 }else if (position==2){
                     //세영 담당
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_analysis2, null, false);
-
-
                 }else{
                     v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
                 }
