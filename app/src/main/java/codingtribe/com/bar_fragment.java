@@ -17,6 +17,7 @@ public class bar_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.bar_fragment, container, false );
+
         return view;
     }
 }
