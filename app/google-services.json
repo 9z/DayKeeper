@@ -8,7 +8,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:49082759867:android:8ce16d60a30f14a7",
         "android_client_info": {
-          "package_name": "codingtribe.com"
+          "package_name": "com.codingtribe"
         }
       },
       "oauth_client": [
@@ -23,6 +23,45 @@
             "package_name": "com.codingtribe",
             "certificate_hash": "9afdb6788180ed6ff4948b2f3e9fd0bb2bc156cc"
           }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE7HcdYUp_5pHwBnu5-mc9bP6fsIzMTIU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49082759867:android:7079980aa8a1984b",
+        "android_client_info": {
+          "package_name": "codingtribe.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49082759867-r69h6irc2vp123v0s12cbmsohmrpl73j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "codingtribe.com",
+            "certificate_hash": "9afdb6788180ed6ff4948b2f3e9fd0bb2bc156cc"
+          }
+        },
+        {
+          "client_id": "49082759867-1hllv1i87f70nka37tc4ae8d6hk7mv5b.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
