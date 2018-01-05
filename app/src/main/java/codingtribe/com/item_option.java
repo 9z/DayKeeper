@@ -43,8 +43,8 @@ public class item_option extends Fragment {
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.item_option_list);
         lv.setAdapter(adapter);
 
-        array.add("개발자 한마디");
-        array.add("버전 정보");
+        adapter.add("개발자 한마디");
+        adapter.add("버전 정보");
         adapter.notifyDataSetChanged(); // 어댑터새로고침
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
