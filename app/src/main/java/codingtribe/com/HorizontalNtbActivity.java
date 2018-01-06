@@ -62,7 +62,6 @@ public class HorizontalNtbActivity extends FragmentActivity {
         display.getSize(size);
         width = size.x;
 
-
         percentview.setText(nowpercent + "%");
         progressBar.setProgress(nowpercent);//프로그레스 바 x값주기
 

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/list_menu"
-        android:title="설정"
-        app:showAsAction="always"/>
+        android:title="카테고리" >
+        <menu>
+            <item android:title="공부"/>
+            <item android:title="휴식"/>
+            <item android:title="일"/>
+        </menu>
+    </item>
 
 </menu>
