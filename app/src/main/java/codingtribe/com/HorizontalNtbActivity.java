@@ -3,19 +3,28 @@ package codingtribe.com;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import devlight.io.library.ntb.NavigationTabBar;
 
@@ -23,25 +32,67 @@ import devlight.io.library.ntb.NavigationTabBar;
  * Created by GIGAMOLE on 28.03.2016.
  */
 public class HorizontalNtbActivity extends FragmentActivity {
-TextView percentview=null;
+
+    TextView percentview = null;
+    ProgressBar progressBar = null;
+    ImageView run = null;
+    int width;
+
+
+    long now = System.currentTimeMillis();//현재 시간 구하기 msec
+    Date date = new Date(now);
+    SimpleDateFormat sdfnow = new SimpleDateFormat("HH");
+    int time = Integer.parseInt(sdfnow.format(date));//인트형 현재 24시간
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizontal_ntb);
         initUI();
-        /*int dow=DoDayOfWeek();
-        percentview=(TextView)findViewById(R.id.percentview);
-        percentview.setText(dow);*/
+
+        percentview = (TextView) findViewById(R.id.percentview);//percent 값 나타내는 텍스트 뷰
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);//프로그레스바 아이디 가져오기
+
+
+        int nowpercent = DoDayOfWeek();//몇요일인지 숫자로 꺼내욤
+
+        //화면 해상도 구하는 코드
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        width = size.x;
+
+
+        percentview.setText(nowpercent + "%");
+        progressBar.setProgress(nowpercent);//프로그레스 바 x값주기
+
+        run = (ImageView) findViewById(R.id.run);//달리는 이미지 아이디 가져오기
+
+        RelativeLayout.LayoutParams mLayoutParams =
+                (RelativeLayout.LayoutParams) run.getLayoutParams();
+        if (0 <= nowpercent && 1 >= nowpercent) {
+            mLayoutParams.leftMargin = (int) (width * 0.09);
+        } else {
+            mLayoutParams.leftMargin = (int) (width * (nowpercent * 0.01)) - (int) (width * 0.07);
+        }
+        run.setLayoutParams(mLayoutParams);
+
     }
-   /* private int DoDayOfWeek(){
-        Calendar cal=Calendar.getInstance();
-        String strWeek=null;
 
+    private int DoDayOfWeek() {//요일값 %가져오기
+        Calendar cal = Calendar.getInstance();
         int nweek = cal.get(Calendar.DAY_OF_WEEK);
-        //nweek 1->일요일 , 2->월요일 , 3 ->화요일
 
-   return nweek;
-    }*/
+        if (nweek == 1) {//nweek 1->월,2->화,3->수,4->목
+            nweek = 7;
+        } else if (nweek > 1 && nweek <= 7) {
+            nweek--;
+        }
+
+        nweek = (((nweek - 1) * 24 + time) * 100) / 168;
+        return nweek;
+    }
+
 
     private void initUI() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
@@ -56,25 +107,25 @@ TextView percentview=null;
             public Fragment getItem(int position) {
 
                 View v = null;
-                if(position==0){
+                if (position == 0) {
                     return item_home.newInstance(position);
                     //              v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
-                }else if(position==1){
+                } else if (position == 1) {
                     return item_write.newInstance(position);
 
                     //               v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_vp, null, false);
-                }else if (position==2){
+                } else if (position == 2) {
                     //세영 담당
                     return item_analysis2.newInstance(position);
-    //                v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_analysis2, null, false);
-                }else{
+                    //                v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_analysis2, null, false);
+                } else {
                     return item_option.newInstance(position);
-       //             v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
+                    //             v = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list, null, false);
                 }
 
-        //        ((ViewPager)container).addView(v, 0);
+                //        ((ViewPager)container).addView(v, 0);
 
-         //       return v;
+                //       return v;
             }
         });
 
@@ -108,11 +159,11 @@ TextView percentview=null;
         final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb_horizontal);
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
 
-       models.add(
+        models.add(
                 new NavigationTabBar.Model.Builder(
                         getResources().getDrawable(R.drawable.ic_first),
                         Color.parseColor(colors[0]))
-  //                      .selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
+                        //                      .selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
                         .title("Home")
                         //.badgeTitle("NTB")
                         .build()
