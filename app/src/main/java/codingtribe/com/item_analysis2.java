@@ -44,7 +44,7 @@ public class item_analysis2 extends Fragment {
         btn_statics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                updateDetail();
             }
         });
 

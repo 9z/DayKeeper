@@ -2,6 +2,8 @@ package codingtribe.com;
 
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,14 +18,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,11 +37,17 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 
-public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener, WeekView.EventLongPressListener{
+public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener, WeekView.EventLongPressListener {
 
     private WeekView mWeekView;
     private ArrayList<WeekViewEvent> mNewEvents;
     private int check;
+    private FloatingActionButton fab;
+    Calendar present_time;
+    Calendar next_time;
+    TimePickerDialog tpd;
+    DatePickerDialog dpd;
+    Builder time_builder;
 
     private int mPosition;
 
@@ -59,8 +70,101 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.activity_item_write, container, false);
 
+
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) v.findViewById(R.id.weekView);
+
+        // Floating Action Button을 리스트 뷰에 적용
+        fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.show();
+
+
+        // 이벤트 적용
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getActivity(),"야호",Toast.LENGTH_SHORT).show();
+
+                present_time = new GregorianCalendar();
+                present_time.add(Calendar.HOUR, -2);
+                next_time = (Calendar) present_time.clone();
+                next_time.add(Calendar.MINUTE, -75);
+
+                Calendar today = Calendar.getInstance();
+
+                final CharSequence[] items = {"일", "공부", "휴식"};
+                Builder builder = new Builder(v.getContext());
+                builder.setTitle("카테고리를 선택하세요.")
+                        .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogInterface, int item) {
+                                choice_item = item;
+                                Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
+                                final String select = items[item].toString();
+                            }
+                        });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+                builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), next_time, present_time);
+                        switch (choice_item) {
+                            case 0:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
+                                break;
+                            case 1:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                                break;
+                            case 2:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_light));
+                                break;
+                            case 3:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_dark_pressed));
+                                break;
+                        }
+
+                        mNewEvents.add(choice_event);
+                        mWeekView.notifyDatasetChanged();
+
+                    }
+                });
+                builder.create().show();
+
+                tpd =
+                        new TimePickerDialog(v.getContext(),
+                                new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view,
+                                                          int hourOfDay, int minute) {
+                                        Toast.makeText(getActivity(),
+                                                hourOfDay + "시 " + minute + "분 을 선택했습니다",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }, // 값설정시 호출될 리스너 등록
+                                today.get(Calendar.HOUR), today.get(Calendar.MINUTE), false); // 기본값 시분 등록
+                // true : 24 시간(0~23) 표시
+                // false : 오전/오후 항목이 생김
+                tpd.show();
+
+                dpd = new DatePickerDialog
+                        (v.getContext(), // 현재화면의 제어권자
+                                new DatePickerDialog.OnDateSetListener() {
+                                    public void onDateSet(DatePicker view,
+                                                          int year, int monthOfYear, int dayOfMonth) {
+                                        Toast.makeText(getActivity(),
+                                                year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 을 선택했습니다",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                , // 사용자가 날짜설정 후 다이얼로그 빠져나올때
+                                //    호출할 리스너 등록
+                                today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE)); // 기본값 연월일
+                dpd.show();
+
+            }
+        });
+
 
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
@@ -73,7 +177,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
         // Initially, there will be no events on the week view because the user has not tapped on
         // it yet.
-        Calendar cal1  = new GregorianCalendar();
+        Calendar cal1 = new GregorianCalendar();
 
         Calendar endTime1 = (Calendar) cal1.clone();
         endTime1.add(Calendar.MINUTE, 60);
@@ -84,12 +188,12 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         endTime3.add(Calendar.MINUTE, -60);
 
 
-        WeekViewEvent event1 = new WeekViewEvent(244, "olleh",endTime1,endTime2);
+        WeekViewEvent event1 = new WeekViewEvent(244, "olleh", endTime1, endTime2);
         mNewEvents = new ArrayList<WeekViewEvent>();
 
         //event1.setColor(v.getResources().getColor(Color.CYAN));
         mNewEvents.add(event1);
-        mNewEvents.add(new WeekViewEvent(1, "success?",endTime3,endTime1));
+        mNewEvents.add(new WeekViewEvent(1, "success?", endTime3, endTime1));
 
 
         return v;
@@ -145,6 +249,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     int choice_item;
     int choice_color;
     WeekViewEvent choice_event;
+
     @Override
     public void onEmptyViewClicked(final Calendar time) {
         // Set the new event with duration one hour.
@@ -163,25 +268,29 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
                         final String select = items[item].toString();
                     }
                 });
-        builder.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
             }
         });
         builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                choice_event = new WeekViewEvent(1,items[choice_item].toString(), time, endTime);
-                switch (choice_item){
+                choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                switch (choice_item) {
                     case 0:
                         choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
+                        time_builder.create().show();
                         break;
                     case 1:
                         choice_event.setColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                        time_builder.create().show();
                         break;
                     case 2:
                         choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_light));
+                        time_builder.create().show();
                         break;
                     case 3:
                         choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_dark_pressed));
+                        time_builder.create().show();
                         break;
                 }
 
@@ -192,6 +301,45 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
             }
         });
         builder.create().show();
+
+        final CharSequence[] time_item = {"10", "30", "60","기타"};
+        time_builder = new Builder(this.getContext());
+        time_builder.setTitle("카테고리를 선택하세요.")
+                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int item) {
+                        choice_item = item;
+                        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
+                        final String select = items[item].toString();
+                    }
+                });
+        time_builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        time_builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                switch (choice_item) {
+                    case 0:
+
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                }
+                mNewEvents.add(choice_event);
+                mWeekView.notifyDatasetChanged();
+
+
+            }
+        });
+
 
         /*final CharSequence[] colors = {"초록", "공부", "휴식"};
         Builder c_builder = new Builder(this.getContext());
@@ -375,7 +523,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
                 builder.show();*/
 
 
-                // Create a new event.
+        // Create a new event.
         //WeekViewEvent event = new WeekViewEvent(20, "New event", time, endTime);
 
         // mNewEvents.add(event);

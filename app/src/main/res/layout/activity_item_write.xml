@@ -26,6 +26,18 @@
             app:noOfVisibleDays="3"
             app:textSize="12sp"
             app:todayBackgroundColor="#1848adff" />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/weekView"
+            android:layout_alignRight="@+id/weekView"
+            android:layout_marginBottom="35dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="@color/progressbar"
+            android:src="@android:drawable/ic_input_add" />
+
     </RelativeLayout>
 
 </RelativeLayout>
