@@ -7,27 +7,35 @@
     android:orientation="vertical"
     tools:context="codingtribe.com.item_analysis2">
 
-    <Button
-        android:id="@+id/btn_statics"
+    <ImageButton
+        android:id="@+id/imageButton1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="45dp"
-        android:paddingTop="45dp"
-        android:text="통계" />
+        android:layout_weight="1"
+        android:src="@drawable/menuone1"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
-    <Button
-        android:id="@+id/btn_predict"
+    <ImageButton
+        android:id="@+id/imageButton2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="45dp"
-        android:paddingTop="45dp"
-        android:text="예측" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:src="@drawable/menutwo" />
 
-    <Button
-        android:id="@+id/btn_type"
+    <ImageButton
+        android:id="@+id/imageButton3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="45dp"
-        android:paddingTop="45dp"
-        android:text="성향" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:src="@drawable/menuthree" />
+
+
 </LinearLayout>

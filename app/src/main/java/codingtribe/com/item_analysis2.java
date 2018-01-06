@@ -10,11 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class item_analysis2 extends Fragment {
 
-    Button btn_statics, btn_predict, btn_type;
+    ImageButton btn_statics, btn_predict, btn_type;
     private int mPosition;
 
     static item_analysis2 newInstance(int position) {
@@ -35,16 +36,15 @@ public class item_analysis2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_item_analysis2, container, false);	//미리 알고 있는 레이아웃을 inflate 한다.
 
-        btn_statics = (Button)v.findViewById(R.id.btn_statics);
-        btn_predict = (Button)v.findViewById(R.id.btn_predict);
-        btn_type = (Button)v.findViewById(R.id.btn_type);
+        btn_statics = (ImageButton)v.findViewById(R.id.imageButton1);
+        btn_predict = (ImageButton)v.findViewById(R.id.imageButton2);
+        btn_type = (ImageButton)v.findViewById(R.id.imageButton3);
 
 
         btn_statics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("asdf", btn_statics.getText()+"");
-                updateDetail();
+
             }
         });
 
