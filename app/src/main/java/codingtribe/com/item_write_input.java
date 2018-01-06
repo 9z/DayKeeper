@@ -55,10 +55,6 @@ public class item_write_input extends AppCompatActivity {
         // it yet.
         mNewEvents = new ArrayList<WeekViewEvent>();
 
-
-
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
         Intent intent = getIntent();
         long time1 = intent.getLongExtra("time",0);
         long endTime = intent.getLongExtra("endTime",0);
@@ -67,7 +63,8 @@ public class item_write_input extends AppCompatActivity {
         Log.v("롱롱2:", String.valueOf(endTime));
 
 
-
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
         //long > Calendar
 
         cal1.setTimeInMillis(time1);
@@ -79,10 +76,10 @@ public class item_write_input extends AppCompatActivity {
         Log.v("캘린더2:", String.valueOf(cal2));
 
         // Create a new event.
+
         WeekViewEvent event = new WeekViewEvent(1, "확인해보자", cal1, cal2);
 
         mNewEvents.add(event);
-
         // Refresh the week view. onMonthChange will be called again.
        //mWeekView.notifyDatasetChanged();
 
@@ -209,8 +206,6 @@ public class item_write_input extends AppCompatActivity {
                 // false : 오전/오후 항목이 생김
                 return tpd;
         }
-
-
         return super.onCreateDialog(id);
     }
 

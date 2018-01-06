@@ -1,21 +1,29 @@
 package codingtribe.com;
 
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog.Builder;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +32,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 
-public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener, WeekView.EventLongPressListener {
+public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener, WeekView.EventLongPressListener{
 
     private WeekView mWeekView;
     private ArrayList<WeekViewEvent> mNewEvents;
@@ -45,10 +53,11 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         mPosition = getArguments() != null ? getArguments().getInt("position") : 0;    // 뷰페이저의 position값을  넘겨 받음
     }
 
+    @SuppressLint("ResourceType")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_item_write, container, false);
+        final View v = inflater.inflate(R.layout.activity_item_write, container, false);
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) v.findViewById(R.id.weekView);
@@ -75,11 +84,12 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         endTime3.add(Calendar.MINUTE, -60);
 
 
-
+        WeekViewEvent event1 = new WeekViewEvent(244, "olleh",endTime1,endTime2);
         mNewEvents = new ArrayList<WeekViewEvent>();
-        mNewEvents.add(new WeekViewEvent(20, "olleh",endTime1,endTime2));
-        mNewEvents.add(new WeekViewEvent(19, "success?",endTime3,endTime1));
 
+        //event1.setColor(v.getResources().getColor(Color.CYAN));
+        mNewEvents.add(event1);
+        mNewEvents.add(new WeekViewEvent(1, "success?",endTime3,endTime1));
 
 
         return v;
@@ -132,12 +142,221 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     }
 
     //시간 받는 곳
+    int choice_item;
+    int choice_color;
+    WeekViewEvent choice_event;
     @Override
-    public void onEmptyViewClicked(Calendar time) {
+    public void onEmptyViewClicked(final Calendar time) {
         // Set the new event with duration one hour.
-        Calendar endTime = (Calendar) time.clone();
+        final Calendar endTime = (Calendar) time.clone();
         endTime.add(Calendar.MINUTE, 60);
-        updateDetail(time, endTime);
+        //updateDetail(time, endTime);
+
+
+        final CharSequence[] items = {"일", "공부", "휴식"};
+        Builder builder = new Builder(this.getContext());
+        builder.setTitle("카테고리를 선택하세요.")
+                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int item) {
+                        choice_item = item;
+                        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
+                        final String select = items[item].toString();
+                    }
+                });
+        builder.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                choice_event = new WeekViewEvent(1,items[choice_item].toString(), time, endTime);
+                switch (choice_item){
+                    case 0:
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
+                        break;
+                    case 1:
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                        break;
+                    case 2:
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_light));
+                        break;
+                    case 3:
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_dark_pressed));
+                        break;
+                }
+
+                mNewEvents.add(choice_event);
+                mWeekView.notifyDatasetChanged();
+
+
+            }
+        });
+        builder.create().show();
+
+        /*final CharSequence[] colors = {"초록", "공부", "휴식"};
+        Builder c_builder = new Builder(this.getContext());
+        c_builder.setTitle("카테고리를 선택하세요.")
+                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int item) {
+                        choice_item = item;
+                        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
+                        final String select = items[item].toString();
+                    }
+                });
+        c_builder.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        c_builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
+                mNewEvents.add(choice_event);
+                mWeekView.notifyDatasetChanged();
+
+            }
+        });
+        c_builder.create().show();*/
+
+       /* Builder alert = new Builder(this.getContext());
+        alert.setTitle("원하시는 항목을 선택하세요.");
+        alert.setMessage("Plz, input yourname");
+        final EditText name = new EditText(this.getContext());
+        alert.setView(name);
+        alert.setPositiveButton("완료", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String username = name.getText().toString();
+
+            }
+        });
+        alert.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        alert.show();*/
+
+
+
+        /*PopupMenu p = new PopupMenu(
+                getActivity(), // 현재 화면의 제어권자
+                getView()); // anchor : 팝업을 띄울 기준될 위젯
+        p.getMenuInflater().inflate(R.menu.item_list_menu, p.getMenu());
+        // 이벤트 처리
+        p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(getActivity(),
+                        "팝업메뉴 이벤트 처리 - "
+                                + item.getTitle(),
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        p.show(); // 메뉴를 띄우기*/
+
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        builder.setTitle("Share link");
+        View selectContactView = getLayoutInflater().inflate(R.layout.contact_select_layout, null);
+        builder.setView(selectContactView);
+
+        ListView contactsListView = (ListView)selectContactView.findViewById(R.id.selectContactListView);
+
+        CursorAdapter adapter = new CursorAdapter(this, cursor, true)
+        {
+
+            @Override
+            public void bindView(View view, Context arg1, Cursor cursor)
+            {
+                final long id = cursor.getLong(cursor.getColumnIndex(Contacts._ID));
+                final String displayName = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME));
+
+                TextView displayNameTextView = (TextView)view.findViewById(R.id.displayNameTextView);
+                final CheckBox selectContactCheckBox = (CheckBox)view.findViewById(R.id.selectContactCheckBox);
+
+                displayNameTextView.setText(displayName);
+
+                boolean isChecked = selectedContactsMap.containsKey(id)?
+                        selectedContactsMap.get(id):false;
+
+                selectContactCheckBox.setChecked(isChecked);
+
+                selectContactCheckBox.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v)
+                    {
+                        boolean isChecked = selectContactCheckBox.isChecked();
+                        if(!isChecked && selectedContactsMap.containsKey(id))
+                        {
+                            Log.d(TAG, "Remove id: "+id+": "+displayName);
+                            selectedContactsMap.remove(id);
+                        }
+                        else
+                        {
+                            Log.d(TAG, "Select id: "+id+": "+displayName+" : "+isChecked);
+                            selectedContactsMap.put(id, isChecked);
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public View newView(Context context, Cursor arg1, ViewGroup arg2)
+            {
+                View selectContactItemView = getLayoutInflater().inflate(R.layout.contact_select_item_layout, null);
+                return selectContactItemView;
+            }
+
+        };
+
+        contactsListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position,
+                                    long id)
+            {
+                WebViewerFragment webViewerFrag = (WebViewerFragment)
+                        getFragmentManager().findFragmentById(R.id.web_viewer_fragment);
+
+                String currentLink = null;
+                if (webViewerFrag != null)
+                {
+                    currentLink = webViewerFrag.getCurrentLink();
+                    long _id = (Long)view.getTag();
+                    share(_id, currentLink);
+
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this,"No link is found", Toast.LENGTH_LONG).show();
+                }
+
+                shareDialog.dismiss();
+
+            }
+        });
+        contactsListView.setAdapter(adapter);
+
+        builder.setView(selectContactView);
+        builder.setPositiveButton("Share!", new OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this,":-(",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        shareDialog = builder.create();*/
+
+
+
 
 
                /* AlertDialog.Builder builder = new AlertDialog.Builder(item_write.newInstance(mPosition).getContext()); //MainActivity.this 더 많은 정보
@@ -168,13 +387,14 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     }
 
     private void updateDetail(Calendar time, Calendar endTime) {
-        Intent intent = new Intent(getActivity(), item_write_input.class);
+        /*Intent intent = new Intent(getActivity(), item_write_input.class);
         long this_time = time.getTimeInMillis(); // Calendar > long
         long this_endTime = endTime.getTimeInMillis();
         intent.putExtra("time", this_time);
         intent.putExtra("endTime", this_endTime);
         intent.putExtra("position",mPosition);
-        startActivity(intent);
+        startActivity(intent);*/
+
     }
 
 
