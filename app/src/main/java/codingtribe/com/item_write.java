@@ -1,10 +1,12 @@
 package codingtribe.com;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
     private WeekView mWeekView;
     private ArrayList<WeekViewEvent> mNewEvents;
+    private int check;
 
     private int mPosition;
 
@@ -76,6 +79,9 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         mNewEvents = new ArrayList<WeekViewEvent>();
         mNewEvents.add(new WeekViewEvent(20, "olleh",endTime1,endTime2));
         mNewEvents.add(new WeekViewEvent(19, "success?",endTime3,endTime1));
+
+
+
         return v;
     }
 
@@ -133,7 +139,24 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         endTime.add(Calendar.MINUTE, 60);
         updateDetail(time, endTime);
 
-        // Create a new event.
+
+               /* AlertDialog.Builder builder = new AlertDialog.Builder(item_write.newInstance(mPosition).getContext()); //MainActivity.this 더 많은 정보
+                builder.setTitle("삭제알림");
+                builder.setMessage("삭제하시겠습니까?");
+                builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
+
+                 //왼쪽 가운데 오른쪽
+                builder.setPositiveButton("아니오", new DialogInterface.OnClickListener() { // Positive, Negative, middle
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss(); // 사라져라
+                    }
+                }
+
+                builder.show();*/
+
+
+                // Create a new event.
         //WeekViewEvent event = new WeekViewEvent(20, "New event", time, endTime);
 
         // mNewEvents.add(event);
@@ -150,6 +173,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         long this_endTime = endTime.getTimeInMillis();
         intent.putExtra("time", this_time);
         intent.putExtra("endTime", this_endTime);
+        intent.putExtra("position",mPosition);
         startActivity(intent);
     }
 
