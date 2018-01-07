@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -44,7 +45,12 @@ public class ActionDB extends SQLiteOpenHelper {
         dateEnd.setMonth(1    -1);
         dateEnd.setDate(7    -1);
         dateEnd.setHours(17);
-        dateTimeEnd = dateEnd.getTime();
+
+        //마지막 날짜를 지정하고 싶을 때
+        //        dateTimeEnd = dateEnd.getTime();
+
+        //현재 시각을 지정하고 싶을 때
+        dateTimeEnd = System.currentTimeMillis();
 
         //더미데이터 생성 첫번째 날짜 생성
         dateStart.setYear(2017    -1900);
