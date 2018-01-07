@@ -139,7 +139,6 @@ public class item_home extends Fragment {
                         catArrayList = CatDbHelper.getAllCat();
                         adapter = new CategoryAdapter(getActivity(), R.layout.category, catArrayList, id);
                         lv.setAdapter(adapter);
-
                     }
                 });
 
