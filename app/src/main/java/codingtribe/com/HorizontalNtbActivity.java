@@ -163,37 +163,37 @@ public class HorizontalNtbActivity extends FragmentActivity {
 
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_first),
+                        getResources().getDrawable(R.drawable.home),
                         Color.parseColor(colors[0]))
                         //                      .selectedIcon(getResources().getDrawable(R.drawable.ic_sixth))
-                        .title("Home")
+                        .title("홈")
                         //.badgeTitle("NTB")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_second),
+                        getResources().getDrawable(R.drawable.history),
                         Color.parseColor(colors[1]))
 //                        .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
-                        .title("VIEW")
+                        .title("기록")
                         //.badgeTitle("with")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_third),
+                        getResources().getDrawable(R.drawable.analysis),
                         Color.parseColor(colors[2]))
 //                        .selectedIcon(getResources().getDrawable(R.drawable.ic_seventh))
-                        .title("INFO")
+                        .title("분석")
                         //.badgeTitle("state")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        getResources().getDrawable(R.drawable.ic_fourth),
+                        getResources().getDrawable(R.drawable.settings),
                         Color.parseColor(colors[3]))
 //                        .selectedIcon(getResources().getDrawable(R.drawable.ic_eighth))
-                        .title("OPTION")
+                        .title("설정")
                         //.badgeTitle("icon")
                         .build()
         );
