@@ -31,9 +31,12 @@ public class item_option extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPosition = getArguments() != null ? getArguments().getInt("position") : 0;	// 뷰페이저의 position값을  넘겨 받음
+
+
+
     }
 
-    @Nullable
+   /* @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_item_option, container, false);
@@ -55,5 +58,5 @@ public class item_option extends Fragment {
         });
 
         return v;
-    }
+    }*/
 }
