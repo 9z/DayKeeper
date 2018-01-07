@@ -223,6 +223,8 @@ public class pie_pie extends AppCompatActivity {
         long firstActionStartTime;
         long lastActionEndTime;
 
+        Log.v("하루시작","============="+ this.year+" "+ (this.month+1) +" "+ this.date +"=============");
+
         for (int i = 0; i<actionArrayList.size(); i++){
             ActionVO action = actionArrayList.get(i);
             long ntm = action.getStart_time();
@@ -230,7 +232,9 @@ public class pie_pie extends AppCompatActivity {
             if (actionArrayList.get(i).getStart_time()> stm && actionArrayList.get(i).getStart_time()< etm){
                 //하루 사이에 있는 애들 바로 전 아이를 12시부터 세팅하기
                 //정확히 하루 사이에 있는 애들
-                Log.v("하루의 사이 행동",action.getAction_id()+" "+timeFormat(ntm)+" "+action.getCat_name());
+
+                actionLog(action, "하루 사이의 행동");
+
                 if(startActionID==0)startActionID = action.getAction_id(); //if 문 내부에 들어왔다면 가장 최초로 입력되는 i 값이다.
                 lastActionID =i;
             }
@@ -238,7 +242,7 @@ public class pie_pie extends AppCompatActivity {
         Log.v("하루구분선","===========");
         if(startActionID!=0){
             firstAction = actionArrayList.get(startActionID-2);
-            Log.v("하루의 최초 행동", firstAction.getCat_id()+" "+ firstAction.getCat_name() +" "+ timeFormat(firstAction.getStart_time()));
+            actionLog(firstAction,"하루 최초의 행동");
 
             //시작시간 설정
             cal = Calendar.getInstance();
@@ -310,7 +314,7 @@ public class pie_pie extends AppCompatActivity {
                 lastActionEndTime = cal.getTimeInMillis();
             }
             Log.v("하루구분선","===========");
-            Log.v("하루의 마지막 행동", lastAction.getCat_id()+" "+lastAction.getCat_name()+ " "+timeFormat(lastAction.getStart_time()));
+            actionLog(lastAction,"하루 마지막 행동");
             Log.v("하루의 마지막 행동의 끝 시간", timeFormat(lastActionEndTime)+"");
 
         }
@@ -318,8 +322,12 @@ public class pie_pie extends AppCompatActivity {
 
         Log.v("stm",stmResult+" "+stm);
         Log.v("etm",etmResult+" "+etm);
-
+        Log.v("하루구분선","===========");
        return null;
+    }
+
+    private void actionLog(ActionVO action, String s) {
+        Log.v(s, timeFormat(action.start_time)+" "+ action.getAction_id() +" "+action.getCat_name() +"("+action.getCat_id()+")");
     }
 
     private String timeFormat(long firstActionStartTime) {
