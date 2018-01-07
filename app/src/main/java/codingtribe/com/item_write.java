@@ -186,8 +186,8 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         Calendar endTime3 = (Calendar) endTime1.clone();
         endTime3.add(Calendar.MINUTE, -60);
 
-        WeekViewEvent event1 = new WeekViewEvent(244, "olleh", endTime1, endTime2);
-        mNewEvents.add(event1);
+       /* WeekViewEvent event1 = new WeekViewEvent(244, "olleh", endTime1, endTime2);
+        mNewEvents.add(event1);*/
         //event1.setColor(v.getResources().getColor(Color.CYAN));
 
         mNewEvents = new ArrayList<WeekViewEvent>();
