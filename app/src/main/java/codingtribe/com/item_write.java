@@ -48,6 +48,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     TimePickerDialog tpd;
     DatePickerDialog dpd;
     Builder time_builder;
+    Builder builder;
 
     private int mPosition;
 
@@ -247,19 +248,58 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
     //시간 받는 곳
     int choice_item;
-    int choice_color;
+    int choice_time;
     WeekViewEvent choice_event;
+    EditText name;
 
     @Override
     public void onEmptyViewClicked(final Calendar time) {
         // Set the new event with duration one hour.
         final Calendar endTime = (Calendar) time.clone();
-        endTime.add(Calendar.MINUTE, 60);
         //updateDetail(time, endTime);
 
+        //시간 옵션
+        final CharSequence[] time_item = {"10", "30", "60","기타"};
+        time_builder = new Builder(this.getContext());
+        time_builder.setTitle("카테고리를 선택하세요.")
+                .setSingleChoiceItems(time_item, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int item) {
+                        choice_time = item;
+                        Toast.makeText(getActivity(), time_item[item], Toast.LENGTH_SHORT).show();
+                        final String select = time_item[item].toString();
+                    }
+                });
+        time_builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        time_builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                switch (choice_time){
+                    case 0:
+                        endTime.add(Calendar.MINUTE, 10);
+                        builder.create().show();
+                        break;
+                    case 1:
+                        endTime.add(Calendar.MINUTE, 30);
+                        builder.create().show();
+                        break;
+                    case 2:
+                        endTime.add(Calendar.MINUTE, 60);
+                        builder.create().show();
+                        break;
+                    case 3:
+                        endTime.add(Calendar.MINUTE, 120);
+                        builder.create().show();
+                        break;
+                }
+            }
+        });
+        time_builder.create().show();
 
-        final CharSequence[] items = {"일", "공부", "휴식"};
-        Builder builder = new Builder(this.getContext());
+        //한 일 옵션
+        final CharSequence[] items = {"일", "공부", "휴식","수면"};
+       builder = new Builder(this.getContext());
         builder.setTitle("카테고리를 선택하세요.")
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogInterface, int item) {
@@ -274,96 +314,29 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         });
         builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
                 switch (choice_item) {
                     case 0:
-                        choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
-                        time_builder.create().show();
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.dasol6));
                         break;
                     case 1:
-                        choice_event.setColor(getActivity().getResources().getColor(R.color.colorPrimary));
-                        time_builder.create().show();
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.dasol1));
                         break;
                     case 2:
-                        choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_light));
-                        time_builder.create().show();
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.dasol4));
                         break;
                     case 3:
-                        choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_dark_pressed));
-                        time_builder.create().show();
-                        break;
-                }
-
-                mNewEvents.add(choice_event);
-                mWeekView.notifyDatasetChanged();
-
-
-            }
-        });
-        builder.create().show();
-
-        final CharSequence[] time_item = {"10", "30", "60","기타"};
-        time_builder = new Builder(this.getContext());
-        time_builder.setTitle("카테고리를 선택하세요.")
-                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int item) {
-                        choice_item = item;
-                        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
-                        final String select = items[item].toString();
-                    }
-                });
-        time_builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
-        time_builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
-                switch (choice_item) {
-                    case 0:
-
-                        break;
-                    case 1:
-
-                        break;
-                    case 2:
-
-                        break;
-                    case 3:
-
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.dasol2));
                         break;
                 }
                 mNewEvents.add(choice_event);
                 mWeekView.notifyDatasetChanged();
 
-
             }
         });
-
-
-        /*final CharSequence[] colors = {"초록", "공부", "휴식"};
-        Builder c_builder = new Builder(this.getContext());
-        c_builder.setTitle("카테고리를 선택하세요.")
-                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int item) {
-                        choice_item = item;
-                        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
-                        final String select = items[item].toString();
-                    }
-                });
-        c_builder.setNegativeButton("취소",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
-        c_builder.setPositiveButton("완료", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
-                mNewEvents.add(choice_event);
-                mWeekView.notifyDatasetChanged();
-
-            }
-        });
-        c_builder.create().show();*/
 
        /* Builder alert = new Builder(this.getContext());
         alert.setTitle("원하시는 항목을 선택하세요.");
