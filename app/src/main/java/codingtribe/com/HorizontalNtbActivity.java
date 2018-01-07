@@ -75,7 +75,6 @@ public class HorizontalNtbActivity extends FragmentActivity {
             mLayoutParams.leftMargin = (int) (width * (nowpercent * 0.01)) - (int) (width * 0.07);
         }
         run.setLayoutParams(mLayoutParams);
-
     }
 
     private int DoDayOfWeek() {//요일값 %가져오기
@@ -94,7 +93,9 @@ public class HorizontalNtbActivity extends FragmentActivity {
 
 
     private void initUI() {
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
+        final CustomViewPager viewPager = (CustomViewPager)findViewById(R.id.vp_horizontal_ntb);
+
+        viewPager.setPagingEnabled(false);
 
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -126,6 +127,8 @@ public class HorizontalNtbActivity extends FragmentActivity {
 
                 //       return v;
             }
+
+
         });
 
      /*   viewPager.setAdapter(new PagerAdapter() {
@@ -196,7 +199,7 @@ public class HorizontalNtbActivity extends FragmentActivity {
         );
 
         navigationTabBar.setModels(models);
-        navigationTabBar.setViewPager(viewPager, 0);
+        navigationTabBar.setViewPager(viewPager, 0); //처음 화면 띄울때 어떤 화면을 띄워줄지 설정
         navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
@@ -205,7 +208,7 @@ public class HorizontalNtbActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(final int position) {
-                navigationTabBar.getModels().get(position).hideBadge();
+                //navigationTabBar.getModels().get(position).hideBadge();
             }
 
             @Override
@@ -219,10 +222,11 @@ public class HorizontalNtbActivity extends FragmentActivity {
             public void run() {
                 for (int i = 0; i < navigationTabBar.getModels().size(); i++) {
                     final NavigationTabBar.Model model = navigationTabBar.getModels().get(i);
+
                     navigationTabBar.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            model.showBadge();
+                           // model.showBadge();
                         }
                     }, i * 100);
                 }
