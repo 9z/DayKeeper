@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class item_analysis2 extends Fragment {
 
 
@@ -72,6 +74,9 @@ public class item_analysis2 extends Fragment {
     private void updateDetail() {
 
         Intent intent = new Intent(getActivity(), pie_pie.class);
+        intent.putExtra("year",Calendar.getInstance().get(Calendar.YEAR));
+        intent.putExtra("month",Calendar.getInstance().get(Calendar.MONTH));
+        intent.putExtra("date",Calendar.getInstance().get(Calendar.DATE));
         startActivity(intent);
     }
 

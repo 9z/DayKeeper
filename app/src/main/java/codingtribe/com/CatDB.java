@@ -63,8 +63,8 @@ public class CatDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public String getCatname(int cat_id){
-        SQLiteDatabase db = getWritableDatabase();
+    public String getCatName(int cat_id){
+        SQLiteDatabase db = getReadableDatabase();
 
         String catName="";
         Cursor cursor = db.rawQuery("SELECT cat_name FROM CAT_INFO WHERE cat_id = "+cat_id+";", null);
@@ -87,11 +87,13 @@ public class CatDB extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM CAT_INFO;", null);
 
         while (cursor.moveToNext()) {
+
+            Log.v("CatDB정보",cursor.getInt(0)+" "+cursor.getString(1)+" "+cursor.getInt(2));
             tempCatVO = new CategoryVO(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), (cursor.getInt(3)==0?false:true));
             if(!tempCatVO.isDel)tempArrayList.add(tempCatVO);
 
         }
-        Log.v("DB정보","");
+
 
         return tempArrayList;
     }

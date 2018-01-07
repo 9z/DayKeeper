@@ -209,15 +209,12 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         ArrayList<WeekViewEvent> tempWVE_array = new ArrayList<>();
         Calendar startTime = null;
         Calendar endTime = null;
-                Log.v("들어오냐?","");
         for(int i=0; i <actionArrayList.size();i++){
             startTime = Calendar.getInstance();
             endTime = Calendar.getInstance();
 
             check_id = actionArrayList.get(i).getCat_id();
-            Log.v("시간확인롱",actionArrayList.get(i).getStart_time()+"");
             startTime.setTimeInMillis(actionArrayList.get(i).getStart_time());
-            Log.v("시간확인캘",startTime+"");
 
             if (i+1 == actionArrayList.size()){
                 endTime.setTimeInMillis(System.currentTimeMillis()); //현재시간

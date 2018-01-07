@@ -54,11 +54,13 @@ public class item_home extends Fragment {
 
     Button btn_addCat;
 
-    CatDB CatDbHelper;
+    static CatDB CatDbHelper;
     ActionDB ActionDbHelper;
 
     int nowSelectedCatId;
 
+    Button btn_callActDB;
+    Button btn_callCatDB;
     static int mem_id = 0; //멤버 ID 는 가입되지 않은 경우 0으로 설정하기로 한다. 나중에 구글 로그인 이후 서버에서 받아온 아이디를 사용한다.
 
     private int mPosition;
@@ -90,12 +92,28 @@ public class item_home extends Fragment {
 
 //        id = getIntent().getStringExtra("id");
 
+        btn_callActDB = (Button)v.findViewById(R.id.btn_callActDB);
+        btn_callCatDB = (Button)v.findViewById(R.id.btn_callCatDb);
+
         CatDbHelper = new CatDB(getActivity());
         ActionDbHelper = new ActionDB(getActivity());
 
         catArrayList = CatDbHelper.getAllCat();
         actionArrayList = ActionDbHelper.getAllAction(getActivity());
 
+        btn_callActDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActionDbHelper.getAllAction(getActivity());
+            }
+        });
+
+        btn_callCatDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CatDbHelper.getAllCat();
+            }
+        });
         adapter = new CategoryAdapter(getActivity(), R.layout.category, catArrayList, id);
         lv = (ListView) v.findViewById(R.id.lv_category);
         lv.setAdapter(adapter);

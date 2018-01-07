@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+import static codingtribe.com.item_home.CatDbHelper;
+
 /**
  * Created by pc-05 on 2018-01-07.
  */
@@ -118,8 +120,8 @@ public class ActionDB extends SQLiteOpenHelper {
 
             Log.v("DB정보", cursor.getInt(0)+" "+cursor.getInt(1)+" "+ now);
 
-            CatDB catDBHelper = new CatDB(act);
-            String catName = catDBHelper.getCatname(cursor.getInt(1));
+
+            String catName = CatDbHelper.getCatName(cursor.getInt(1));
 
 
             tempActionVO = new ActionVO(cursor.getInt(0), cursor.getInt(1), cursor.getLong(2), catName);
