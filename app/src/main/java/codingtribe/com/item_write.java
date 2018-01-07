@@ -165,7 +165,6 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
             }
         });
 
-
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
         mWeekView.setMonthChangeListener(this);
@@ -187,13 +186,11 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         Calendar endTime3 = (Calendar) endTime1.clone();
         endTime3.add(Calendar.MINUTE, -60);
 
-        WeekViewEvent event1 = new WeekViewEvent(244, "olleh", endTime1, endTime2);
-        mNewEvents = new ArrayList<WeekViewEvent>();
-
+       /* WeekViewEvent event1 = new WeekViewEvent(244, "olleh", endTime1, endTime2);
+        mNewEvents.add(event1);*/
         //event1.setColor(v.getResources().getColor(Color.CYAN));
-        mNewEvents.add(event1);
-        mNewEvents.add(new WeekViewEvent(1, "success?", endTime3, endTime1));
 
+        mNewEvents = new ArrayList<WeekViewEvent>();
         mNewEvents = changeType(actionArrayList);
 
         return v;
@@ -419,6 +416,28 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
             }
         });
 
+
+
+    }
+
+    private void updateDetail(Calendar time, Calendar endTime) {
+        /*Intent intent = new Intent(getActivity(), item_write_input.class);
+        long this_time = time.getTimeInMillis(); // Calendar > long
+        long this_endTime = endTime.getTimeInMillis();
+        intent.putExtra("time", this_time);
+        intent.putExtra("endTime", this_endTime);
+        intent.putExtra("position",mPosition);
+        startActivity(intent);*/
+
+    }
+
+
+    @Override
+    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+        Toast.makeText(getActivity(),"롱누름",Toast.LENGTH_SHORT);
+    }
+}
+
        /* Builder alert = new Builder(this.getContext());
         alert.setTitle("원하시는 항목을 선택하세요.");
         alert.setMessage("Plz, input yourname");
@@ -577,31 +596,11 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
                 builder.show();*/
 
 
-        // Create a new event.
-        //WeekViewEvent event = new WeekViewEvent(20, "New event", time, endTime);
+// Create a new event.
+//WeekViewEvent event = new WeekViewEvent(20, "New event", time, endTime);
 
-        // mNewEvents.add(event);
+// mNewEvents.add(event);
 
-        // Refresh the week view. onMonthChange will be called again.
-        // mWeekView.notifyDatasetChanged();
+// Refresh the week view. onMonthChange will be called again.
+// mWeekView.notifyDatasetChanged();
 
-
-    }
-
-    private void updateDetail(Calendar time, Calendar endTime) {
-        /*Intent intent = new Intent(getActivity(), item_write_input.class);
-        long this_time = time.getTimeInMillis(); // Calendar > long
-        long this_endTime = endTime.getTimeInMillis();
-        intent.putExtra("time", this_time);
-        intent.putExtra("endTime", this_endTime);
-        intent.putExtra("position",mPosition);
-        startActivity(intent);*/
-
-    }
-
-
-    @Override
-    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(getActivity(),"롱누름",Toast.LENGTH_SHORT);
-    }
-}

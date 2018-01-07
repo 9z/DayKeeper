@@ -22,6 +22,54 @@ public class ActionDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE ACTION_INFO (action_id INTEGER PRIMARY KEY AUTOINCREMENT, cat_id INTEGER, start_time INTEGER);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(1,3,1515053392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(2,9,1515064192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(3,5,1515067792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(4,1,1515069592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(5,5,1515074992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(6,7,1515085792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(7,6,1515089392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(8,10,1515091192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(9,1,1515096592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(10,1,1515107392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(11,3,1515110992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(12,7,1515112792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(13,8,1515118192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(14,1,1515128992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(15,5,1515132592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(16,6,1515134392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(17,7,1515139792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(18,3,1515150592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(19,4,1515154192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(20,4,1515155992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(21,6,1515161392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(22,6,1515172192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(23,4,1515175792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(24,6,1515177592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(25,6,1515182992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(26,10,1515193792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(27,6,1515197392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(28,4,1515199192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(29,5,1515204592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(30,6,1515215392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(31,6,1515218992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(32,8,1515220792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(33,2,1515226192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(34,6,1515236992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(35,9,1515240592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(36,10,1515242392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(37,6,1515247792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(38,5,1515258592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(39,6,1515262192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(40,8,1515263992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(41,3,1515269392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(42,5,1515280192173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(43,6,1515283792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(44,8,1515285592173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(45,4,1515290992173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(46,6,1515301792173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(47,7,1515305392173);");
+        sqLiteDatabase.execSQL("INSERT INTO ACTION_INFO VALUES(48,7,1515307192173);");
 
     }
 
@@ -72,7 +120,7 @@ public class ActionDB extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
 
-            SimpleDateFormat sdf = new SimpleDateFormat("aa HH:mm z");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd 일 aa HH:mm z");
 
 
             long timeMillis = cursor.getLong(2);
