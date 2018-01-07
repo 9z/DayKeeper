@@ -17,12 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Monday"
+            android:paddingLeft="10dp"
+            android:text="Mon"
             android:textColor="@color/progressbar"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:paddingLeft="10dp"
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/percentview"
@@ -47,12 +46,12 @@
             android:layout_toLeftOf="@+id/run"
             android:layout_toStartOf="@+id/run"
             android:layout_weight="1"
-            android:text="  Sunday"
+            android:paddingRight="10dp"
+            android:text="  Sun"
             android:textAlignment="textEnd"
             android:textColor="@color/progressbar"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:paddingRight="10dp"/>
+            android:textStyle="bold" />
 
 
     </LinearLayout>
