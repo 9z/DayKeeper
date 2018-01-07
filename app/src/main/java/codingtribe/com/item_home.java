@@ -62,6 +62,7 @@ public class item_home extends Fragment {
     static int mem_id = 0; //멤버 ID 는 가입되지 않은 경우 0으로 설정하기로 한다. 나중에 구글 로그인 이후 서버에서 받아온 아이디를 사용한다.
 
     private int mPosition;
+    private boolean threadReset;
 
     static item_home newInstance(int position) {
         item_home f = new item_home();	//객체 생성
@@ -74,6 +75,8 @@ public class item_home extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPosition = getArguments() != null ? getArguments().getInt("position") : 0;	// 뷰페이저의 position값을  넘겨 받음
+        thread = new Thread(new timeThread());
+        thread.start();
     }
 
     //찬울 : onCreate안에 있던 코드 넣는 곳
@@ -115,9 +118,7 @@ public class item_home extends Fragment {
         tv_startTime = (TextView) v.findViewById(R.id.tv_startTime);
         tv_startTime.setText(getTimeInHHmm(spf_startTime.getLong("appStartTime",-9*3600*1000))+"");
 
-        thread = new Thread(new timeThread());
 
-        if(spf_startTime.getLong("appStartTime",0)!=0)thread.start();
 
         btn_addCat = (Button) v.findViewById(R.id.btn_addCat);
 
@@ -160,7 +161,6 @@ public class item_home extends Fragment {
                 if(nowSelectedCatId == catArrayList.get(i).getCat_id()) {
                     Toast.makeText(view.getContext(),"이미 선택한 항목을 기록하고 있습니다.",Toast.LENGTH_SHORT).show();
                 } else {
-                    thread.interrupt();
 
                     if(selectedView!=null){
                         selectedView.setBackgroundColor(Color.WHITE);
@@ -181,14 +181,10 @@ public class item_home extends Fragment {
                     nowSelectedCatId = catArrayList.get(i).getCat_id();
                     spf_catID.edit().putInt("select", nowSelectedCatId).commit();
 
-
-                    startTime = 0;
-
-                    thread = new Thread(new timeThread());
-                    thread.start();
-
                     ActionDbHelper.insert(nowSelectedCatId,now);
                     ActionDbHelper.getAllAction();
+
+                    threadReset = true;
                 }
 
 
@@ -252,7 +248,7 @@ public class item_home extends Fragment {
 
     boolean isRunning = true;
 
-    public class timeThread implements Runnable {
+    public class  timeThread implements Runnable {
         final int start = (int)startTime/10;
         int i = start;
 
@@ -263,7 +259,12 @@ public class item_home extends Fragment {
                     Message msg = new Message();
                     msg.arg1 = i++;
                     handler.sendMessage(msg);
-
+                    
+                    if(threadReset){
+                        i=0;
+                        threadReset = false;
+                    }
+                    
                     try {
                         Thread.sleep(10); //쓰레드가 쉬는 동안에 다른 쓰레드가 들어올수 있다.
                     } catch (InterruptedException e) {
