@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog.Builder;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -176,7 +177,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
         // Initially, there will be no events on the week view because the user has not tapped on
         // it yet.
-        Calendar cal1 = new GregorianCalendar();
+        /*Calendar cal1 = new GregorianCalendar();
 
         Calendar endTime1 = (Calendar) cal1.clone();
         endTime1.add(Calendar.MINUTE, 60);
@@ -184,34 +185,41 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         endTime2.add(Calendar.MINUTE, 60);
 
         Calendar endTime3 = (Calendar) endTime1.clone();
-        endTime3.add(Calendar.MINUTE, -60);
+        endTime3.add(Calendar.MINUTE, -60);*/
 
        /* WeekViewEvent event1 = new WeekViewEvent(244, "olleh", endTime1, endTime2);
         mNewEvents.add(event1);*/
         //event1.setColor(v.getResources().getColor(Color.CYAN));
+        Log.v("여기","");
 
         mNewEvents = new ArrayList<WeekViewEvent>();
-        mNewEvents = changeType(actionArrayList);
+        Log.v("여기는??","");
+        mNewEvents.addAll(changeType(actionArrayList));
+        Log.v("여긴????ㅇㅇ","");
 
         return v;
     }
 
     private ArrayList<WeekViewEvent> changeType(ArrayList<ActionVO> actionArrayList) {
         ArrayList<WeekViewEvent> tempWVE_array = new ArrayList<>();
-        Calendar startTime = Calendar.getInstance();
-        Calendar endTime = Calendar.getInstance();
-
+        Calendar startTime = null;
+        Calendar endTime = null;
+                Log.v("들어오냐?","");
         for(int i=0; i <actionArrayList.size();i++){
+            startTime = Calendar.getInstance();
+            endTime = Calendar.getInstance();
+
             check_id = actionArrayList.get(i).getCat_id();
+            Log.v("시간확인롱",actionArrayList.get(i).getStart_time()+"");
             startTime.setTimeInMillis(actionArrayList.get(i).getStart_time());
+            Log.v("시간확인캘",startTime+"");
 
             if (i+1 == actionArrayList.size()){
                 endTime.setTimeInMillis(System.currentTimeMillis()); //현재시간
             }else {
                 endTime.setTimeInMillis(actionArrayList.get(i+1).getStart_time());
             }
-            WeekViewEvent event = new WeekViewEvent(actionArrayList.get(i).getCat_id(),
-                    actionArrayList.get(i).getAction_id()+"",startTime,endTime);
+            WeekViewEvent event = new WeekViewEvent(actionArrayList.get(i).getCat_id(),actionArrayList.get(i).getAction_id()+"",startTime,endTime);
             switch (check_id){
                 case 1:
                     event.setColor(getActivity().getResources().getColor(R.color.dasol6));
@@ -255,6 +263,8 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
         ArrayList<WeekViewEvent> newEvents = getNewEvents(newYear, newMonth);
         events.addAll(newEvents);
+      /*  ArrayList<WeekViewEvent> newEvents = mNewEvents;
+        events.addAll(newEvents);*/
         return events;
     }
 
