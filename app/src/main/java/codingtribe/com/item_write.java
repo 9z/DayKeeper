@@ -47,8 +47,10 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
     ArrayList<ActionVO> actionArrayList;
     ActionDB ActionDbHelper;
+    CatDB CatDbHelper;
 
     private int mPosition;
+    private ArrayList<CategoryVO> catArrayList;
 
     static item_write newInstance(int position) {
         item_write f = new item_write();    //객체 생성
@@ -71,6 +73,9 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
         ActionDbHelper = new ActionDB(getActivity());
         actionArrayList = ActionDbHelper.getAllAction();
+        CatDbHelper = new CatDB(getActivity());
+        catArrayList = CatDbHelper.getAllCat();
+
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) v.findViewById(R.id.weekView);
@@ -219,7 +224,9 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
             }else {
                 endTime.setTimeInMillis(actionArrayList.get(i+1).getStart_time());
             }
-            WeekViewEvent event = new WeekViewEvent(actionArrayList.get(i).getCat_id(),actionArrayList.get(i).getAction_id()+"",startTime,endTime);
+            WeekViewEvent event = new WeekViewEvent(actionArrayList.get(i).getCat_id(),getCatName(i)+"",startTime,endTime);
+
+
             switch (check_id){
                 case 1:
                     event.setColor(getActivity().getResources().getColor(R.color.dasol6));
@@ -255,6 +262,21 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
             tempWVE_array.add(event);
         }
         return tempWVE_array;
+    }
+
+    private String getCatName(int i) {
+
+        int checkID = actionArrayList.get(i).getCat_id();
+        String catName = "";
+
+        for (int j=0;j<catArrayList.size();j++){
+            if(checkID==catArrayList.get(j).getCat_id()){
+                catName= catArrayList.get(j).getCategoryName();
+            }
+
+        }
+
+        return catName;
     }
 
     @Override
@@ -446,6 +468,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(getActivity(),"롱누름",Toast.LENGTH_SHORT);
     }
+
 }
 
        /* Builder alert = new Builder(this.getContext());

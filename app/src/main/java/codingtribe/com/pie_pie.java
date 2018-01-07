@@ -1,11 +1,14 @@
 package codingtribe.com;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -16,11 +19,13 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class pie_pie extends AppCompatActivity {
 
     private PieChart mPieChart; //piechart
-    private Button btn_pie1, btn_bar1, btn_line1;
+    private Button btn_pie1, btn_bar1, btn_line1, btn_date;
+    DatePickerDialog dpd;
 
 
     @Override
@@ -32,6 +37,7 @@ public class pie_pie extends AppCompatActivity {
         btn_pie1 = (Button)findViewById(R.id.btn_pie1);
         btn_bar1 = (Button)findViewById(R.id.btn_bar1);
         btn_line1 = (Button)findViewById(R.id.btn_line1);
+        btn_date = (Button)findViewById(R.id.btn_next_month);
 
         btn_bar1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +56,27 @@ public class pie_pie extends AppCompatActivity {
                 startActivity(it);
             }
         });
+        final Calendar today = Calendar.getInstance();
+
+        btn_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dpd = new DatePickerDialog
+                        (v.getContext(), // 현재화면의 제어권자
+                                new DatePickerDialog.OnDateSetListener() {
+                                    public void onDateSet(DatePicker view,
+                                                          int year, int monthOfYear, int dayOfMonth) {
+                                        Toast.makeText(getApplicationContext()                                               ,
+                                                year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 을 선택했습니다",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                , // 사용자가 날짜설정 후 다이얼로그 빠져나올때
+                                //    호출할 리스너 등록
+                                today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE)); // 기본값 연월일
+                dpd.show();
+            }
+        });
 
         //piechart
 
@@ -65,15 +92,14 @@ public class pie_pie extends AppCompatActivity {
 
         ArrayList<PieEntry> yValues = new ArrayList<PieEntry>();
 
-        yValues.add(new PieEntry(34f,"Japan"));  //라벨
-        yValues.add(new PieEntry(23f,"USA"));
-        yValues.add(new PieEntry(14f,"UK"));
-        yValues.add(new PieEntry(35f,"India"));
-        yValues.add(new PieEntry(40f,"Russia"));
-        yValues.add(new PieEntry(40f,"Korea"));
+        yValues.add(new PieEntry(34f,"공부"));  //라벨
+        yValues.add(new PieEntry(23f,"휴식"));
+        yValues.add(new PieEntry(35f,"운동"));
+        yValues.add(new PieEntry(70f,"수면"));
+        yValues.add(new PieEntry(40f,"일"));
 
         Description description = new Description();
-        description.setText("세계 국가"); //라벨
+        description.setText("나의 하루"); //라벨
         description.setTextSize(15);
         mPieChart.setDescription(description);
 
