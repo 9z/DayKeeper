@@ -60,7 +60,8 @@ public class item_analysis2 extends Fragment {
         btn_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                JsonSend js = new JsonSend();
+                js.createJson(getActivity());
             }
         });
 

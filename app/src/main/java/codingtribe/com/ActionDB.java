@@ -1,5 +1,6 @@
 package codingtribe.com;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +21,7 @@ public class ActionDB extends SQLiteOpenHelper {
     public ActionDB(Context context) {
         super(context, "actionDB.db", null, 2);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -96,7 +98,7 @@ public class ActionDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<ActionVO> getAllAction() {
+    public ArrayList<ActionVO> getAllAction(Activity act) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         ActionVO tempActionVO;
@@ -115,7 +117,12 @@ public class ActionDB extends SQLiteOpenHelper {
 
 
             Log.v("DB정보", cursor.getInt(0)+" "+cursor.getInt(1)+" "+ now);
-            tempActionVO = new ActionVO(cursor.getInt(0), cursor.getInt(1), cursor.getLong(2));
+
+            CatDB catDBHelper = new CatDB(act);
+            String catName = catDBHelper.getCatname(cursor.getInt(1));
+
+
+            tempActionVO = new ActionVO(cursor.getInt(0), cursor.getInt(1), cursor.getLong(2), catName);
             tempArrayList.add(tempActionVO);
 
 

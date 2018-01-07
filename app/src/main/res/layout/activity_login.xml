@@ -7,6 +7,10 @@
     android:orientation="vertical"
     android:weightSum="4">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -20,7 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="Google Sign In"
+            android:text="하루지기"
+            android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="36sp" />
 
@@ -30,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/signed_out"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

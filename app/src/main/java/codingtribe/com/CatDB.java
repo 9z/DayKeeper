@@ -24,7 +24,7 @@ public class CatDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE CAT_INFO (cat_id INTEGER PRIMARY KEY AUTOINCREMENT, cat_name TEXT, mem_id INTEGER, IS_DEL INTEGER DEFAULT 0);");
 
-        String[] basicCat = new String[]{"공부", "잠", "식사", "이동", "휴식", "취미", "운동", "모임", "일"};
+        String[] basicCat = new String[]{"공부", "잠", "식사", "이동", "휴식", "취미", "운동", "모임", "일", "봉사"};
         for(int iter = 0; iter < basicCat.length ;iter++){
             sqLiteDatabase.execSQL("INSERT INTO CAT_INFO VALUES(null, '"+basicCat[iter]+"',"+mem_id+",null);");
         }
@@ -38,6 +38,7 @@ public class CatDB extends SQLiteOpenHelper {
     }
 
     public void insert(String cat_name, int mem_id) {
+
         // 읽고 쓰기가 가능하게 DB 열기
         SQLiteDatabase db = getWritableDatabase();
         // DB에 입력한 값으로 행 추가
@@ -62,7 +63,21 @@ public class CatDB extends SQLiteOpenHelper {
         db.close();
     }
 
+    public String getCatname(int cat_id){
+        SQLiteDatabase db = getWritableDatabase();
+
+        String catName="";
+        Cursor cursor = db.rawQuery("SELECT cat_name FROM CAT_INFO WHERE cat_id = "+cat_id+";", null);
+        while(cursor.moveToNext()){
+            catName = cursor.getString(0);
+        }
+
+        db.close();
+        return catName;
+    }
+
     public ArrayList<CategoryVO> getAllCat() {
+
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         CategoryVO tempCatVO;
@@ -74,7 +89,6 @@ public class CatDB extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             tempCatVO = new CategoryVO(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), (cursor.getInt(3)==0?false:true));
             if(!tempCatVO.isDel)tempArrayList.add(tempCatVO);
-
 
         }
         Log.v("DB정보","");

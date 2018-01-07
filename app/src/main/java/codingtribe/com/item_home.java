@@ -94,7 +94,7 @@ public class item_home extends Fragment {
         ActionDbHelper = new ActionDB(getActivity());
 
         catArrayList = CatDbHelper.getAllCat();
-        actionArrayList = ActionDbHelper.getAllAction();
+        actionArrayList = ActionDbHelper.getAllAction(getActivity());
 
         adapter = new CategoryAdapter(getActivity(), R.layout.category, catArrayList, id);
         lv = (ListView) v.findViewById(R.id.lv_category);
@@ -182,7 +182,7 @@ public class item_home extends Fragment {
                     spf_catID.edit().putInt("select", nowSelectedCatId).commit();
 
                     ActionDbHelper.insert(nowSelectedCatId,now);
-                    ActionDbHelper.getAllAction();
+                    ActionDbHelper.getAllAction(getActivity());
 
                     threadReset = true;
                 }

@@ -72,7 +72,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         final View v = inflater.inflate(R.layout.activity_item_write, container, false);
 
         ActionDbHelper = new ActionDB(getActivity());
-        actionArrayList = ActionDbHelper.getAllAction();
+        actionArrayList = ActionDbHelper.getAllAction(getActivity());
         CatDbHelper = new CatDB(getActivity());
         catArrayList = CatDbHelper.getAllCat();
 

@@ -48,6 +48,9 @@ public class item_option extends Fragment {
 
         adapter.add("개발자 한마디");
         adapter.add("버전 정보");
+        adapter.add("로그아웃");
+        adapter.add("탈퇴하기");
+
         adapter.notifyDataSetChanged(); // 어댑터새로고침
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
