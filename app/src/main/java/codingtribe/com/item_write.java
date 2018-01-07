@@ -5,29 +5,23 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.PopupMenu;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -50,6 +44,9 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     Builder time_builder;
     Builder builder;
 
+    ArrayList<ActionVO> actionArrayList;
+    ActionDB ActionDbHelper;
+
     private int mPosition;
 
     static item_write newInstance(int position) {
@@ -71,6 +68,8 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.activity_item_write, container, false);
 
+        ActionDbHelper = new ActionDB(getActivity());
+        actionArrayList = ActionDbHelper.getAllAction();
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) v.findViewById(R.id.weekView);
@@ -188,7 +187,6 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         Calendar endTime3 = (Calendar) endTime1.clone();
         endTime3.add(Calendar.MINUTE, -60);
 
-
         WeekViewEvent event1 = new WeekViewEvent(244, "olleh", endTime1, endTime2);
         mNewEvents = new ArrayList<WeekViewEvent>();
 
@@ -196,8 +194,62 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         mNewEvents.add(event1);
         mNewEvents.add(new WeekViewEvent(1, "success?", endTime3, endTime1));
 
+        mNewEvents = changeType(actionArrayList);
 
         return v;
+    }
+
+    private ArrayList<WeekViewEvent> changeType(ArrayList<ActionVO> actionArrayList) {
+        ArrayList<WeekViewEvent> tempWVE_array = new ArrayList<>();
+        Calendar startTime = Calendar.getInstance();
+        Calendar endTime = Calendar.getInstance();
+
+        for(int i=0; i <actionArrayList.size();i++){
+            check_id = actionArrayList.get(i).getCat_id();
+            startTime.setTimeInMillis(actionArrayList.get(i).getStart_time());
+
+            if (i+1 == actionArrayList.size()){
+                endTime.setTimeInMillis(System.currentTimeMillis()); //현재시간
+            }else {
+                endTime.setTimeInMillis(actionArrayList.get(i+1).getStart_time());
+            }
+            WeekViewEvent event = new WeekViewEvent(actionArrayList.get(i).getCat_id(),
+                    actionArrayList.get(i).getAction_id()+"",startTime,endTime);
+            switch (check_id){
+                case 1:
+                    event.setColor(getActivity().getResources().getColor(R.color.dasol6));
+                    break;
+                case 2:
+                    event.setColor(getActivity().getResources().getColor(R.color.dasol1));
+                    break;
+                case 3:
+                    event.setColor(getActivity().getResources().getColor(R.color.dasol4));
+                    break;
+                case 4:
+                    event.setColor(getActivity().getResources().getColor(R.color.dasol2));
+                    break;
+                case 5:
+                    event.setColor(getActivity().getResources().getColor(R.color.dasol5));
+                    break;
+                case 6:
+                    event.setColor(getActivity().getResources().getColor(R.color.dasol3));
+                    break;
+                case 7:
+                    event.setColor(getActivity().getResources().getColor(R.color.bora));
+                    break;
+                case 8:
+                    event.setColor(getActivity().getResources().getColor(R.color.down));
+                    break;
+                case 9:
+                    event.setColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    break;
+                case 10:
+                    event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
+                    break;
+            }
+            tempWVE_array.add(event);
+        }
+        return tempWVE_array;
     }
 
     @Override
@@ -251,6 +303,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
     int choice_time;
     WeekViewEvent choice_event;
     EditText name;
+    int check_id;
 
     @Override
     public void onEmptyViewClicked(final Calendar time) {
@@ -330,6 +383,34 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
                     case 3:
                         choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
                         choice_event.setColor(getActivity().getResources().getColor(R.color.dasol2));
+                        break;
+                    case 4:
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.dasol5));
+                        break;
+                    case 5:
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.dasol3));
+                        break;
+                    case 6:
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                        break;
+                    case 7:
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                        break;
+                    case 8:
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                        break;
+                    case 9:
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                        break;
+                    case 10:
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
                         break;
                 }
                 mNewEvents.add(choice_event);
@@ -521,6 +602,6 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-
+        Toast.makeText(getActivity(),"롱누름",Toast.LENGTH_SHORT);
     }
 }

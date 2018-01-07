@@ -22,6 +22,7 @@ public class ActionDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE ACTION_INFO (action_id INTEGER PRIMARY KEY AUTOINCREMENT, cat_id INTEGER, start_time INTEGER);");
+
     }
 
     @Override
