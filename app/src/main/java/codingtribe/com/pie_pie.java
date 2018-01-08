@@ -118,7 +118,7 @@ public class pie_pie extends AppCompatActivity {
                                         checkChange = true;
                                         text_date.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일");
                                         dateNowArr = new int[]{year,monthOfYear,dayOfMonth};
-                                       Intent intent = new Intent(pie_pie.this, pie_pie.class);
+                                        Intent intent = new Intent(pie_pie.this, pie_pie.class);
                                         intent.putExtra("year",year);
                                         intent.putExtra("month",monthOfYear);
                                         intent.putExtra("date",dayOfMonth);
@@ -217,15 +217,6 @@ public class pie_pie extends AppCompatActivity {
         long stm = startDate.getTimeInMillis();
         long etm = endDate.getTimeInMillis();
 
-        Date date;
-        sdf = new SimpleDateFormat("yyyy MM dd aa HH:mm");
-
-        date = new Date(stm);
-        String stmResult=sdf.format(date);
-
-        date = new Date(etm);
-        String etmResult=sdf.format(date);
-
         //받아온 날짜의 00시 00분 의 timemillis 반환
         int startActionID=0;
         int lastActionID=0;
@@ -234,6 +225,7 @@ public class pie_pie extends AppCompatActivity {
 
         long firstActionStartTime;
         long lastActionEndTime;
+        int count = 0;
 
         for (int i = 0; i<actionArrayList.size(); i++){
             ActionVO action = actionArrayList.get(i);
@@ -246,7 +238,40 @@ public class pie_pie extends AppCompatActivity {
                 Log.v("하루의 사이 행동",action.getAction_id()+" "+timeFormat(ntm)+" "+action.getCat_name()+ntm);
                 if(startActionID==0)startActionID = action.getAction_id(); //if 문 내부에 들어왔다면 가장 최초로 입력되는 i 값이다.
                 lastActionID =i;
+                count++;
             }
+        }
+
+        if(count==0){
+            //이 if 문 내부에 들어왔다는 것은,  해당 날짜에 검색된 action 이 없다는 것이다. 이 때 세 가지 가능성이 있다.
+            //CASE1 : DB 에 아무 자료도 저장되어 있지 않거나,
+            //CASE2 : 이전 날에 기록이 시작된 action 이 하루를 넘겨버린 것이 그 케이스이거나,
+            //CASE3 : 미래의 날짜를 선택한 경우이다.
+
+
+            //선택된 날짜 값 세팅
+            cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR,this.year);
+            cal.set(Calendar.MONTH,this.month);
+            cal.set(Calendar.DATE,this.date);
+
+
+
+
+            if(ActionDbHelper.getAllAction(getParent()).size() == 0){            //CASE1 의 해결 (DB에 저장된 정보가 없을 때)
+                //DB 에 기록된 자료가 아직 없을 경우.
+
+
+            } else {                                                             //CASE2 의 해결 (이전 날에 기록이 시작된 action 인 경우)
+                //DB 에 기록된 자료가 있는 경우.
+
+                ActionDbHelper.getOneActionByTime(cal.getTimeInMillis());
+            };
+
+
+
+
+
         }
 
 
@@ -355,8 +380,8 @@ public class pie_pie extends AppCompatActivity {
 
         }
 
-        Log.v("stm",stmResult+" "+stm);
-        Log.v("etm",etmResult+" "+etm);
+        Log.v("stm",timeFormat(stm));
+        Log.v("etm",timeFormat(etm));
 
        return resultStat;
     }

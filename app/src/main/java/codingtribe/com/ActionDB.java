@@ -137,4 +137,58 @@ public class ActionDB extends SQLiteOpenHelper {
         }
         return tempArrayList;
     }
+
+    public ActionVO getOneActionByTime(long timeInMillis) {
+        SQLiteDatabase db = getReadableDatabase();
+        ActionVO tempActionVO = null;
+        ArrayList<ActionVO> tempArrayList = new ArrayList<ActionVO>();
+
+        long max = 0;
+        int actionIdMaxTime = 0;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM ACTION_INFO WHERE start_time < "+timeInMillis+";", null);
+
+
+
+        while (cursor.moveToNext()) {
+
+            int action_id = cursor.getInt(0);
+            int cat_id = cursor.getInt(1);
+            long start_time = cursor.getLong(2);
+
+            Log.v("getOneActionByTime", action_id+" "+cat_id+" "+ start_time);
+
+            String catName = CatDbHelper.getCatName(cursor.getInt(1));
+
+            tempActionVO = new ActionVO(cursor.getInt(0), cursor.getInt(1), cursor.getLong(2), catName);
+            tempArrayList.add(tempActionVO);
+
+        }
+
+        for(int i =0;i<tempArrayList.size();i++){
+            if(max<tempArrayList.get(i).getStart_time()){
+                max = tempArrayList.get(i).getStart_time();
+                actionIdMaxTime = tempArrayList.get(i).getAction_id();
+            }
+        }
+
+        Log.v("설정 시간의 max 타임 액션 정보", getActionById(actionIdMaxTime).getAction_id()+" "+getActionById(actionIdMaxTime).getStart_time()+" "+getActionById(actionIdMaxTime).getCat_name() );
+
+        return tempActionVO;
+    }
+
+    public ActionVO getActionById(int action_id) {
+        // 읽기가 가능하게 DB 열기
+        SQLiteDatabase db = getReadableDatabase();
+        ActionVO tempActionVO=null;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM ACTION_INFO WHERE action_id = "+action_id+";", null);
+
+        while (cursor.moveToNext()) {
+
+            String catName = CatDbHelper.getCatName(cursor.getInt(1));
+            tempActionVO = new ActionVO(cursor.getInt(0), cursor.getInt(1), cursor.getLong(2), catName);
+        }
+        return tempActionVO;
+    }
 }
