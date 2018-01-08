@@ -27,7 +27,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+import static codingtribe.com.item_home.CatDbHelper;
 
 public class bar_bar extends AppCompatActivity {
 
@@ -37,9 +43,9 @@ public class bar_bar extends AppCompatActivity {
 
     ArrayList<ActionVO> actionArrayList;
     ActionDB ActionDbHelper;
-    ArrayList<StatWeekVO> statArray;
-    CatDB CatDbHelper;
+    ArrayList<StatWeekVO> statWeekArray;
     ArrayList<CategoryVO> catArrayList;
+    ArrayList<StatVO> statArray;
 
     int[] dateNowArr;
     TextView text_week;
@@ -50,7 +56,11 @@ public class bar_bar extends AppCompatActivity {
 
     boolean checkChange = false;
 
+    private  Calendar today;
     Calendar cal;
+
+    long firstActionStartTime;
+    long lastActionEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,22 +92,23 @@ public class bar_bar extends AppCompatActivity {
             }
         });
 
-        final Calendar today = Calendar.getInstance();
-
         Intent intent = getIntent();
 
-        year = Calendar.getInstance().get(Calendar.YEAR);
-        month = Calendar.getInstance().get(Calendar.MONTH);
-        date = Calendar.getInstance().get(Calendar.DATE);
+        today = Calendar.getInstance();
 
-        if(intent != null){
-            year = intent.getIntExtra("year",2018);
-            month= intent.getIntExtra("month",1);
-            date = intent.getIntExtra("date",1);
+        year = today.get(Calendar.YEAR);
+        month = today.get(Calendar.MONTH);
+        date = today.get(Calendar.DATE);
+        int check = intent.getIntExtra("yearWeek", 0);
+
+        if(check != 0){
+            year = intent.getIntExtra("yearWeek",2018);
+            month= intent.getIntExtra("monthWeek",1);
+            date = intent.getIntExtra("dateWeek",1);
         }
 
         dateNowArr = new int[]{year,month,date}; //선택된시간
-        text_week = (TextView) findViewById(R.id.text_date);
+        text_week = (TextView) findViewById(R.id.text_week);
         text_week.setText((month + 1) + "월 " + date + "일");
 
         btn_week.setOnClickListener(new View.OnClickListener() {
@@ -115,10 +126,10 @@ public class bar_bar extends AppCompatActivity {
                                         text_week.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일");
                                         dateNowArr = new int[]{year,monthOfYear,dayOfMonth};
                                         Intent intent = new Intent(bar_bar.this, bar_bar.class);
-                                        intent.putExtra("year",year);
-                                        intent.putExtra("month",monthOfYear);
-                                        intent.putExtra("date",dayOfMonth);
-                                        Log.v("하...",intent.getIntExtra("year",0)+"");
+                                        intent.putExtra("yearWeek",year);
+                                        intent.putExtra("monthWeek",monthOfYear);
+                                        intent.putExtra("dateWeek",dayOfMonth);
+                                        Log.v("하...",intent.getIntExtra("yearWeek",0)+"");
                                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                         startActivity(intent);
                                         finish();
@@ -131,11 +142,9 @@ public class bar_bar extends AppCompatActivity {
             }
         });
 
-        CatDbHelper = new CatDB(getApplicationContext());
         ActionDbHelper = new ActionDB(getApplicationContext());
-
-        catArrayList = CatDbHelper.getAllCat();
-        actionArrayList = ActionDbHelper.getAllAction(getParent());
+       catArrayList = CatDbHelper.getAllCat();
+       actionArrayList = ActionDbHelper.getAllAction(getParent());
 
         Calendar choiceDate = Calendar.getInstance();
         statArray = new ArrayList<>();
@@ -143,18 +152,35 @@ public class bar_bar extends AppCompatActivity {
         choiceDate.set(Calendar.YEAR,year);
         choiceDate.set(Calendar.MONTH,month);
         choiceDate.set(Calendar.DATE,date);
-        statArray = takeWeekData(choiceDate);
+
+
+        float[][] test = new float[statArray.size()][];
+        float testDate = 1;
+
+       for (int i = 0; i<7;i++) {
+
+           statArray = takeOneDayData(choiceDate);
+
+           for (int j = 0; j < test.length; j++) {
+               test[j] = statArray.get(j).getTime();
+               testDate += statArray.get(j).getTime();
+           }
+           for (int k = 0; k < test.length; k++) {
+               test[k] = test[k] * (24 / testDate);
+           }
+
+       }
 
         //barchart
 
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0f, new float[] { 8,2,4,8,2 }));
-        entries.add(new BarEntry(1f, new float[] { 13,2,4,5,0 }));
+        entries.add(new BarEntry(1f, new float[] { 13,2,4,5 }));
         entries.add(new BarEntry(2f, new float[] { 8,10,4,0,2 }));
         entries.add(new BarEntry(3f, new float[] { 8,6,4,4,2 }));
         entries.add(new BarEntry(4f, new float[] { 0,0,0,0,0 }));
         entries.add(new BarEntry(5f, new float[] { 8,2,0,12,2 }));
-        entries.add(new BarEntry(6f, new float[] { 8,2,4,10,0 }));
+        entries.add(new BarEntry(6f, test));
 
         /*final List<Integer> colors = new ArrayList<>();
         colors.add(ColorTemplate.COLORFUL_COLORS[0]);
@@ -202,5 +228,223 @@ public class bar_bar extends AppCompatActivity {
 
     private ArrayList<StatWeekVO> takeWeekData(Calendar choiceDate) {
         return null;
+    }
+
+    private ArrayList<StatVO> takeOneDayData(Calendar choiceDate) {
+
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        ArrayList<StatVO> preprocessingStat = new ArrayList<>();
+        ArrayList<StatVO> resultStat = new ArrayList<>();
+        ArrayList<StatVO> afterProcessingResultStat = new ArrayList<StatVO>();
+
+        startDate = choiceDate;
+        startDate.set(Calendar.AM_PM,0);
+        startDate.set(Calendar.HOUR,0);
+        startDate.set(Calendar.MINUTE,0);
+        startDate.set(Calendar.SECOND,0);
+        startDate.set(Calendar.MILLISECOND,1);
+        long startDateTimeMillis = startDate.getTimeInMillis();
+        startDateTimeMillis += 1000*60*60*24;
+        endDate.setTimeInMillis(startDateTimeMillis);
+
+        long stm = startDate.getTimeInMillis();
+        long etm = endDate.getTimeInMillis();
+
+        //받아온 날짜의 00시 00분 의 timemillis 반환
+        int startActionID=0;
+        int lastActionID=0;
+        ActionVO firstAction=null;
+        ActionVO lastAction = null;
+
+        int count = 0;
+
+        for (int i = 0; i<actionArrayList.size(); i++){
+            ActionVO action = actionArrayList.get(i);
+            long ntm = action.getStart_time();
+
+            if (actionArrayList.get(i).getStart_time()> stm && actionArrayList.get(i).getStart_time()< etm){
+                //하루 사이에 있는 애들 바로 전 아이를 12시부터 세팅하기
+                //정확히 하루 사이에 있는 애들
+
+                preprocessingStat.add(new StatVO(action.getCat_name(),ntm,action.getCat_id()));
+
+                Log.v("하루의 사이 행동",action.getAction_id()+" "+timeFormat(ntm)+" "+action.getCat_name()+ntm);
+                if(startActionID==0)startActionID = action.getAction_id(); //if 문 내부에 들어왔다면 가장 최초로 입력되는 i 값이다.
+                lastActionID =i;
+                count++;
+            }
+        }
+
+        if(count==0){
+            //이 if 문 내부에 들어왔다는 것은,  해당 날짜에 검색된 action 이 없다는 것이다. 이 때 세 가지 가능성이 있다.
+            //CASE1 : DB 에 아무 자료도 저장되어 있지 않거나,
+            //CASE2 : 이전 날에 기록이 시작된 action 이 하루를 넘겨버린 것이 그 케이스이거나,
+            //CASE3 : 미래의 날짜를 선택한 경우이다.
+
+
+            //선택된 날짜 값 세팅
+            cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR,this.year);
+            cal.set(Calendar.MONTH,this.month);
+            cal.set(Calendar.DATE,this.date);
+
+
+
+
+            if(ActionDbHelper.getAllAction(getParent()).size() == 0){            //CASE1 의 해결 (DB에 저장된 정보가 없을 때)
+                //DB 에 기록된 자료가 아직 없을 경우.
+
+            } else {                                                             //CASE2 의 해결 (이전 날에 기록이 시작된 action 인 경우)
+                //DB 에 기록된 자료가 있는 경우.
+                ActionDbHelper.getOneActionByTime(cal.getTimeInMillis());
+            };
+        }
+
+
+        Log.v("하루구분선","===========");
+        if(startActionID!=0){
+            firstAction = actionArrayList.get(startActionID-2);
+            Log.v("하루의 최초 행동", firstAction.getCat_id()+" "+ firstAction.getCat_name() +" "+ timeFormat(firstAction.getStart_time()));
+
+            //시작시간 설정
+            cal = Calendar.getInstance();
+            cal.setTimeInMillis(firstAction.getStart_time()+1000*60*60*24);
+            int ampm =0;
+            int hour = 0;
+            int minute = 0;
+            int second = 0;
+            int milliSec= 1;
+            cal.set(Calendar.AM_PM, ampm);
+            cal.set(Calendar.HOUR,hour);
+            cal.set(Calendar.MINUTE,minute);
+            cal.set(Calendar.SECOND,second);
+            cal.set(Calendar.MILLISECOND,milliSec);
+
+            firstActionStartTime = cal.getTimeInMillis();
+            Log.v("하루의 최초 행동의 시작 시간", timeFormat(firstActionStartTime)+"");
+        }
+        if(lastActionID!=0){
+            lastAction = actionArrayList.get(lastActionID);
+
+            //현재 시간의 날짜정보(365일로 표현) 가져오고 년도 정보 가져오기
+            int nowDay365 = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+            int nowYear = Calendar.getInstance().get(Calendar.YEAR);
+
+            //해당 액션의 날짜정보(365일로 표현) 가져오고 년도 정보 가져오기
+            cal = Calendar.getInstance();
+            cal.setTimeInMillis(lastAction.getStart_time());
+            int actionDay365 = cal.get(Calendar.DAY_OF_YEAR);
+            int actionYear = cal.get(Calendar.YEAR);
+
+            //해당 액션이 오늘인지 판단
+            boolean isToday = (nowDay365 == actionDay365) && (nowYear == actionYear);
+
+            //마지막 액션의 끝시간 설정
+            if(isToday){
+                //해당 액션이 오늘일 경우 현재 시간을 기준으로 마지막 시간을 세팅
+                cal = Calendar.getInstance();
+
+                int ampm = cal.get(Calendar.AM_PM);
+                int hour = cal.get(Calendar.HOUR);
+                int minute = cal.get(Calendar.MINUTE);
+                int second = cal.get(Calendar.SECOND);
+                int milliSec = cal.get(Calendar.MILLISECOND);
+                cal.set(Calendar.HOUR, hour);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.SECOND,second);
+                cal.set(Calendar.MILLISECOND,milliSec);
+
+                lastActionEndTime = cal.getTimeInMillis();
+            } else {
+                //해당 액션이 오늘이 아닐 경우 자정을 끝으로 지정
+                cal = Calendar.getInstance();
+                cal.setTimeInMillis(lastAction.getStart_time());
+
+                int ampm = 1;
+                int hour = 11;
+                int minute = 59;
+                int second = 59;
+                int milliSec = 0;
+                cal.set(Calendar.AM_PM, ampm);
+                cal.set(Calendar.HOUR, hour);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.SECOND,second);
+                cal.set(Calendar.MILLISECOND,milliSec);
+
+
+                lastActionEndTime = cal.getTimeInMillis();
+            }
+            Log.v("하루구분선","===========");
+            Log.v("하루의 마지막 행동", lastAction.getCat_id()+" "+lastAction.getCat_name()+ " "+timeFormat(lastAction.getStart_time()));
+            Log.v("하루의 마지막 행동의 끝 시간", timeFormat(lastActionEndTime)+"");
+            Log.v("하루 이 행동을 한 시간",lastAction.getStart_time()+"호"+lastActionEndTime);
+            Log.v("하루 이 행동을 한 시간",(lastActionEndTime-lastAction.getStart_time())/(60*1000)+"");
+            Log.v("하루 이 행동을 한 시간",timeFormat(lastActionEndTime-lastAction.getStart_time()));
+
+            //preprocessingStat 에 하루 최초 자료 넣기
+            preprocessingStat.add(0,new StatVO(firstAction.getCat_name(),firstActionStartTime,firstAction.getCat_id()));
+
+            for (int i = 0 ; i<preprocessingStat.size();i++){
+                if(i+1!=preprocessingStat.size()){
+                    resultStat.add(new StatVO(preprocessingStat.get(i).getCatName(),(preprocessingStat.get(i+1).getTime()-preprocessingStat.get(i).getTime())/(60*1000),preprocessingStat.get(i).getCat_id()));
+                    Log.v("하루 한 일",(preprocessingStat.get(i+1).getTime()-preprocessingStat.get(i).getTime())/(60*1000)+preprocessingStat.get(i).getCatName());
+                }else{
+                    resultStat.add(new StatVO(preprocessingStat.get(i).getCatName(),(lastActionEndTime - lastAction.getStart_time())/(60*1000),preprocessingStat.get(i).getCat_id()));
+                    Log.v("하루 한 일",(lastActionEndTime - lastAction.getStart_time())/(60*1000)+preprocessingStat.get(i).getCatName());
+                }
+            }
+
+            Set<String> set = new HashSet<String>();
+
+            for (StatVO statVO:resultStat) {
+                set.add(statVO.getCat_id()+"");
+            }
+
+            int catId;
+            String catName;
+
+
+            for(Iterator i = set.iterator(); i.hasNext();){
+                catId = Integer.parseInt(i.next().toString());
+                catName = CatDbHelper.getCatName(catId);
+                afterProcessingResultStat.add(new StatVO(catName,0,catId));
+
+            }
+
+            String tempCatName;
+            long tempTime;
+            int tempCatID;
+
+            int[] catArr;
+            long settedTime;
+
+            for(StatVO stat:resultStat){
+                tempCatName = stat.getCatName();
+                tempTime = stat.getTime();
+                tempCatID = stat.getCat_id();
+
+                for(StatVO cat : afterProcessingResultStat){
+                    if(cat.getCat_id()==stat.getCat_id()){
+                        settedTime = cat.getTime()+stat.getTime();
+                        cat.setTime(settedTime);
+                    }
+                }
+            }
+        }
+
+        for(StatVO stat:afterProcessingResultStat){
+
+        }
+
+        return afterProcessingResultStat;
+    }
+
+    private String timeFormat(long firstActionStartTime) {
+        sdf = new SimpleDateFormat("yyyy MM dd aa HH:mm");
+        Date date = new Date(firstActionStartTime);
+
+        return sdf.format(date);
     }
 }

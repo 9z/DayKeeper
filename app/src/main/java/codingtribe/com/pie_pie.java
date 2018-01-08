@@ -100,12 +100,6 @@ public class pie_pie extends AppCompatActivity {
             date = intent.getIntExtra("date",1);
         }
 
-        /*if(check){
-            year = intent.getIntExtra("year",2018);
-            month= intent.getIntExtra("month",1);
-            date = intent.getIntExtra("date",1);
-        }*/
-
         dateNowArr = new int[]{year,month,date}; //선택된시간
         text_date = (TextView) findViewById(R.id.text_date);
         text_date.setText(year + "년 " + (month + 1) + "월 " + date + "일");
