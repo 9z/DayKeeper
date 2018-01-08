@@ -1,6 +1,5 @@
 package codingtribe.com;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,10 +34,11 @@ public class pie_pie extends AppCompatActivity {
     ArrayList<ActionVO> actionArrayList;
     ActionDB ActionDbHelper;
     ArrayList<StatVO> statArray;
+    CatDB CatDbHelper;
+    ArrayList<CategoryVO> catArrayList;
 
     boolean checkChange = false;
-    private ArrayList<CategoryVO> catArrayList;
-    private CatDB CatDbHelper;
+    boolean check = false;
 
     int[] dateNowArr;
     TextView text_date;
@@ -59,7 +59,7 @@ public class pie_pie extends AppCompatActivity {
         btn_pie1 = (Button)findViewById(R.id.btn_pie1);
         btn_bar1 = (Button)findViewById(R.id.btn_bar1);
         btn_line1 = (Button)findViewById(R.id.btn_line1);
-        btn_date = (Button)findViewById(R.id.btn_next_month);
+        btn_date = (Button)findViewById(R.id.btn_month);
 
         btn_bar1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,13 +87,19 @@ public class pie_pie extends AppCompatActivity {
         date = Calendar.getInstance().get(Calendar.DATE);
 
 
-        if(intent != null){
-            year = intent.getIntExtra("year",2017);
+       if(intent != null){
+            year = intent.getIntExtra("year",2018);
             month= intent.getIntExtra("month",1);
             date = intent.getIntExtra("date",1);
         }
 
-        dateNowArr = new int[]{year,month,date};
+        /*if(check){
+            year = intent.getIntExtra("year",2018);
+            month= intent.getIntExtra("month",1);
+            date = intent.getIntExtra("date",1);
+        }*/
+
+        dateNowArr = new int[]{year,month,date}; //선택된시간
         text_date = (TextView) findViewById(R.id.text_date);
         text_date.setText(year + "년 " + (month + 1) + "월 " + date + "일");
 
@@ -111,24 +117,22 @@ public class pie_pie extends AppCompatActivity {
                                         checkChange = true;
                                         text_date.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일");
                                         dateNowArr = new int[]{year,monthOfYear,dayOfMonth};
-
-                                        Intent intent = new Intent(pie_pie.this, pie_pie.class);
+                                       Intent intent = new Intent(pie_pie.this, pie_pie.class);
                                         intent.putExtra("year",year);
                                         intent.putExtra("month",monthOfYear);
                                         intent.putExtra("date",dayOfMonth);
                                         Log.v("하...",intent.getIntExtra("year",0)+"");
-
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                         startActivity(intent);
                                         finish();
+                                //       mPieChart.notifyDataSetChanged();
+                                       /* check = true;*/
                                     }
                                 }
                                 , // 사용자가 날짜설정 후 다이얼로그 빠져나올때
                                 //    호출할 리스너 등록
                                 dateNowArr[0], dateNowArr[1], dateNowArr[2]); // 기본값 연월일
                 dpd.show();
-
-
-
             }
         });
 
@@ -160,11 +164,15 @@ public class pie_pie extends AppCompatActivity {
 
         ArrayList<PieEntry> yValues = new ArrayList<PieEntry>();
 
-        yValues.add(new PieEntry(34f,"공부"));  //라벨
+        for(int i = 0; i<statArray.size();i++){
+            yValues.add(new PieEntry(statArray.get(i).getTime(),statArray.get(i).getCatName()));
+        }
+
+        /*yValues.add(new PieEntry(34f,"공부"));  //라벨
         yValues.add(new PieEntry(23f,"휴식"));
         yValues.add(new PieEntry(35f,"운동"));
         yValues.add(new PieEntry(70f,"수면"));
-        yValues.add(new PieEntry(40f,"일"));
+        yValues.add(new PieEntry(40f,"일"));*/
 
         Description description = new Description();
         description.setText("나의 하루"); //라벨
@@ -176,7 +184,7 @@ public class pie_pie extends AppCompatActivity {
         PieDataSet dataSet = new PieDataSet(yValues,"");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS); //색바꾸는 속성
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS); //색바꾸는 속성
 
         PieData pie_data = new PieData((dataSet));
         pie_data.setValueTextSize(10f);
@@ -191,6 +199,9 @@ public class pie_pie extends AppCompatActivity {
 
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
+        ArrayList<StatVO> preprocessingStat = new ArrayList<>();
+        ArrayList<StatVO> resultStat = new ArrayList<>();
+
 
         startDate = choiceDate;
         startDate.set(Calendar.AM_PM,0);
@@ -230,11 +241,14 @@ public class pie_pie extends AppCompatActivity {
             if (actionArrayList.get(i).getStart_time()> stm && actionArrayList.get(i).getStart_time()< etm){
                 //하루 사이에 있는 애들 바로 전 아이를 12시부터 세팅하기
                 //정확히 하루 사이에 있는 애들
-                Log.v("하루의 사이 행동",action.getAction_id()+" "+timeFormat(ntm)+" "+action.getCat_name());
+                preprocessingStat.add(new StatVO(action.getCat_name(),(int)ntm));
+                Log.v("하루의 사이 행동",action.getAction_id()+" "+timeFormat(ntm)+" "+action.getCat_name()+ntm);
                 if(startActionID==0)startActionID = action.getAction_id(); //if 문 내부에 들어왔다면 가장 최초로 입력되는 i 값이다.
                 lastActionID =i;
             }
         }
+
+
         Log.v("하루구분선","===========");
         if(startActionID!=0){
             firstAction = actionArrayList.get(startActionID-2);
@@ -312,14 +326,38 @@ public class pie_pie extends AppCompatActivity {
             Log.v("하루구분선","===========");
             Log.v("하루의 마지막 행동", lastAction.getCat_id()+" "+lastAction.getCat_name()+ " "+timeFormat(lastAction.getStart_time()));
             Log.v("하루의 마지막 행동의 끝 시간", timeFormat(lastActionEndTime)+"");
+            Log.v("하루 이 행동을 한 시간",lastAction.getStart_time()+"호"+lastActionEndTime);
+            Log.v("하루 이 행동을 한 시간",(lastActionEndTime-lastAction.getStart_time())/(60*1000)+"");
+            Log.v("하루 이 행동을 한 시간",timeFormat(lastActionEndTime-lastAction.getStart_time()));
+
+            for (int i = 0 ; i<preprocessingStat.size();i++){
+                if(i+1!=preprocessingStat.size()){
+                    resultStat.add(new StatVO(preprocessingStat.get(i).getCatName(),(int)(preprocessingStat.get(i+1).getTime()-preprocessingStat.get(i).getTime())/(60*1000)));
+                    Log.v("하루 한 일",(preprocessingStat.get(i+1).getTime()-preprocessingStat.get(i).getTime())/(60*1000)+preprocessingStat.get(i).getCatName());
+                }else{
+                    resultStat.add(new StatVO(preprocessingStat.get(i).getCatName(),(int)(lastActionEndTime - lastAction.getStart_time())/(60*1000)));
+                    Log.v("하루 한 일",(lastActionEndTime - lastAction.getStart_time())/(60*1000)+preprocessingStat.get(i).getCatName());
+                }
+            }
+
+            //중복제거
+
+            /*for (int i = 0; i<resultStat.size();i++){
+                for (int j = i+1; j< resultStat.size();i++){
+                    if(resultStat.get(i).getCatName() == resultStat.get(j).getCatName()){
+                        resultStat.add(new StatVO(resultStat.get(i).getCatName(),resultStat.get(i).getTime()+resultStat.get(j).getTime()));
+                        resultStat.remove(j);
+                        resultStat.remove(i);
+                    }
+                }
+            }*/
 
         }
-
 
         Log.v("stm",stmResult+" "+stm);
         Log.v("etm",etmResult+" "+etm);
 
-       return null;
+       return resultStat;
     }
 
     private String timeFormat(long firstActionStartTime) {
