@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="codingtribe.com">
-    <!--유저 권한 -->
+    <!--유저 인터넷 권한 JSON통신-->
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
