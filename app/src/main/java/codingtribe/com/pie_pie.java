@@ -92,9 +92,10 @@ public class pie_pie extends AppCompatActivity {
         year = Calendar.getInstance().get(Calendar.YEAR);
         month = Calendar.getInstance().get(Calendar.MONTH);
         date = Calendar.getInstance().get(Calendar.DATE);
+        int check = intent.getIntExtra("yearWeek", 0);
 
 
-       if(intent != null){
+       if(check != 0){
             year = intent.getIntExtra("year",2018);
             month= intent.getIntExtra("month",1);
             date = intent.getIntExtra("date",1);
@@ -177,7 +178,7 @@ public class pie_pie extends AppCompatActivity {
 
         Description description = new Description();
         description.setText("나의 하루"); //라벨
-        description.setTextSize(15);
+        description.setTextSize(20);
         mPieChart.setDescription(description);
 
         mPieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic); //애니메이션
@@ -188,7 +189,7 @@ public class pie_pie extends AppCompatActivity {
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS); //색바꾸는 속성
 
         PieData pie_data = new PieData((dataSet));
-        pie_data.setValueTextSize(10f);
+        pie_data.setValueTextSize(15f);
         pie_data.setValueTextColor(Color.YELLOW); //퍼센트 색깔
 
         mPieChart.setData(pie_data);

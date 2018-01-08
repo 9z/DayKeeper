@@ -203,7 +203,7 @@ public class bar_bar extends AppCompatActivity {
         bar_xAxis.setDrawGridLines(false);
         /*bar_xAxis.setDrawLabels(true);*/
         String[] name = {"월","화","수","목","금","토","일"};
-        String[] task = {"일","공부","취미","수면","운동"};
+        String[] task = {"공부", "잠", "식사", "이동", "휴식", "취미", "운동", "모임", "일", "봉사"};
         bar_xAxis.setValueFormatter(new IndexAxisValueFormatter(name));
 
         BarDataSet set = new BarDataSet(entries, "");
