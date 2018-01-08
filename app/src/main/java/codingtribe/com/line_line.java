@@ -37,10 +37,10 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
     private Button btn_pie3, btn_bar3, btn_line3, btn_month;
     TextView text_month;
 
-    ArrayList<ActionVO> actionArrayList;
-    ActionDB ActionDbHelper;
-    ArrayList<StatMonthVO> statArray;
-    ArrayList<CategoryVO> catArrayList;
+    //ArrayList<ActionVO> actionArrayList;
+    //ActionDB ActionDbHelper;
+    //ArrayList<StatMonthVO> statArray;
+    //ArrayList<CategoryVO> catArrayList;
 
     int year;
     int month;
@@ -90,13 +90,9 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
             }
         });
 
-        ActionDbHelper = new ActionDB(getApplicationContext());
-        catArrayList = CatDbHelper.getAllCat();
-        actionArrayList = ActionDbHelper.getAllAction(getParent());
-
-
-
-        final Calendar today = Calendar.getInstance();
+        //ActionDbHelper = new ActionDB(getApplicationContext());
+        //catArrayList = CatDbHelper.getAllCat();
+        //actionArrayList = ActionDbHelper.getAllAction(getParent());
 
         Intent intent = getIntent();
 
@@ -107,7 +103,7 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         text_month = (TextView) findViewById(R.id.text_month);
         text_month.setText(year + "년 " + (month + 1) + "월 " + date + "일");
 
-        statArray = takeMonthData(selectCat);
+        //statArray = takeMonthData(selectCat);
 
         /*for(int i=0;i<statArray.size();i++){
             switch (i){
@@ -126,6 +122,12 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         List<Entry> case2 = new ArrayList<Entry>();
         List<Entry> case3 = new ArrayList<Entry>();
         List<Entry> case4 = new ArrayList<Entry>();
+        List<Entry> case5 = new ArrayList<Entry>();
+        List<Entry> case6 = new ArrayList<Entry>();
+        List<Entry> case7 = new ArrayList<Entry>();
+        List<Entry> case8 = new ArrayList<Entry>();
+        List<Entry> case9 = new ArrayList<Entry>();
+        List<Entry> case10 = new ArrayList<Entry>();
 
         case1.add(new Entry(0f, 100f));
         case1.add(new Entry(1f, 230f));
@@ -147,12 +149,22 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         case4.add(new Entry(2f, 20f));
         case4.add(new Entry(3f, 220f));
 
+        case5.add(new Entry(0f, 100f));
+        case5.add(new Entry(1f, 60f));
+        case5.add(new Entry(2f, 20f));
+        case5.add(new Entry(3f, 220f));
+
+        case6.add(new Entry(0f, 100f));
+        case6.add(new Entry(1f, 60f));
+        case6.add(new Entry(2f, 20f));
+        case6.add(new Entry(3f, 220f));
+
         LineDataSet setcase1 = new LineDataSet(case1, "공부");
         setcase1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setcase1.setColors(ColorTemplate.JOYFUL_COLORS[0]);
         setcase1.setCircleColor(ColorTemplate.JOYFUL_COLORS[0]);
         
-        LineDataSet setcase2 = new LineDataSet(case2, "일");
+        LineDataSet setcase2 = new LineDataSet(case2, "잠");
         setcase2.setAxisDependency(YAxis.AxisDependency.LEFT);
         setcase2.setColors(ColorTemplate.JOYFUL_COLORS[1]);
         setcase2.setCircleColor(ColorTemplate.JOYFUL_COLORS[1]);
@@ -162,16 +174,28 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         setcase3.setColors(ColorTemplate.JOYFUL_COLORS[4]);
         setcase3.setCircleColor(ColorTemplate.JOYFUL_COLORS[4]);
 
-        LineDataSet setcase4 = new LineDataSet(case4, "운동");
+        LineDataSet setcase4 = new LineDataSet(case4, "이동");
         setcase4.setAxisDependency(YAxis.AxisDependency.LEFT);
         setcase4.setColors(ColorTemplate.JOYFUL_COLORS[3]);
         setcase4.setCircleColor(ColorTemplate.JOYFUL_COLORS[3]);
+
+        LineDataSet setcase5 = new LineDataSet(case5, "휴식");
+        setcase5.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase5.setColors(ColorTemplate.COLORFUL_COLORS[0]);
+        setcase5.setCircleColor(ColorTemplate.COLORFUL_COLORS[0]);
+
+        LineDataSet setcase6 = new LineDataSet(case6, "취미");
+        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase6.setColors(ColorTemplate.COLORFUL_COLORS[1]);
+        setcase6.setCircleColor(ColorTemplate.COLORFUL_COLORS[1]);
 
         List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         dataSets.add(setcase1);
         dataSets.add(setcase2);
         dataSets.add(setcase3);
         dataSets.add(setcase4);
+        dataSets.add(setcase5);
+        dataSets.add(setcase6);
 
         LineData line_data = new LineData(dataSets);
 
@@ -206,9 +230,9 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         }*/
     }
 
-    private ArrayList<StatMonthVO> takeMonthData(ArrayList<String> selectCat) {
+    /*private ArrayList<StatMonthVO> takeMonthData(ArrayList<String> selectCat) {
         return null;
-    }
+    }*/
 
     @Override
 
@@ -216,7 +240,7 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
 
         // TODO Auto-generated method stub
         final String[] items = {"공부", "잠", "식사", "이동", "휴식","취미","운동","모임","일","봉사"};
-        final boolean[] checkedItems = {false, false, false, false, false, false, false, false, false, false};
+        final boolean[] checkedItems = {true, true, true, true, false, false, false, false, false, false};
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(line_line.this);
         builder.setTitle("확인하고 싶은 항목을 선택해주세요.");
@@ -251,6 +275,7 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
                         }
                     }
                     Toast.makeText(line_line.this, str, Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
