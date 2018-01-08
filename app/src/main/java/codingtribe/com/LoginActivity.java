@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_login);
 
         // Views
-        mStatusTextView = (TextView) findViewById(R.id.status);
+        //mStatusTextView = (TextView) findViewById(R.id.status);
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
