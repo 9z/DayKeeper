@@ -98,7 +98,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
                 Calendar today = Calendar.getInstance();
 
-                final CharSequence[] items = {"일", "공부", "휴식"};
+                final CharSequence[] items = {"공부", "잠", "식사", "이동", "휴식", "취미", "운동", "모임", "일", "봉사"};
                 Builder builder = new Builder(v.getContext());
                 builder.setTitle("카테고리를 선택하세요.")
                         .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
@@ -116,20 +116,39 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
                     public void onClick(DialogInterface dialog, int whichButton) {
                         choice_event = new WeekViewEvent(1, items[choice_item].toString(), next_time, present_time);
                         switch (choice_item) {
-                            case 0:
-                                choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
-                                break;
                             case 1:
-                                choice_event.setColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.dasol6));
                                 break;
                             case 2:
-                                choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_light));
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.dasol1));
                                 break;
                             case 3:
-                                choice_event.setColor(getActivity().getResources().getColor(R.color.common_google_signin_btn_text_dark_pressed));
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.dasol4));
+                                break;
+                            case 4:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.dasol2));
+                                break;
+                            case 5:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.dasol5));
+                                break;
+                            case 6:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.dasol3));
+                                break;
+                            case 7:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                                break;
+                            case 8:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.down));
+                                break;
+                            case 9:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                                break;
+                            case 10:
+                                choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
+                                break;
+                            default:
                                 break;
                         }
-
                         mNewEvents.add(choice_event);
                         mWeekView.notifyDatasetChanged();
 
@@ -223,7 +242,6 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
             }
             WeekViewEvent event = new WeekViewEvent(actionArrayList.get(i).getCat_id(),getCatName(i)+"",startTime,endTime);
 
-
             switch (check_id){
                 case 1:
                     event.setColor(getActivity().getResources().getColor(R.color.dasol6));
@@ -254,6 +272,8 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
                     break;
                 case 10:
                     event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
+                    break;
+                default:
                     break;
             }
             tempWVE_array.add(event);
@@ -377,7 +397,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
         time_builder.create().show();
 
         //한 일 옵션
-        final CharSequence[] items = {"일", "공부", "휴식","수면"};
+        final CharSequence[] items = {"공부", "잠", "식사", "이동", "휴식", "취미", "운동", "모임", "일", "봉사"};
        builder = new Builder(this.getContext());
         builder.setTitle("카테고리를 선택하세요.")
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
@@ -420,7 +440,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
                         break;
                     case 6:
                         choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
-                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.dasol3));
                         break;
                     case 7:
                         choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
@@ -428,15 +448,18 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
                         break;
                     case 8:
                         choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
-                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.down));
                         break;
                     case 9:
                         choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
-                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.colorPrimary));
                         break;
                     case 10:
                         choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
-                        choice_event.setColor(getActivity().getResources().getColor(R.color.bora));
+                        choice_event.setColor(getActivity().getResources().getColor(R.color.colorAccent));
+                        break;
+                    default:
+                        choice_event = new WeekViewEvent(1, items[choice_item].toString(), time, endTime);
                         break;
                 }
                 mNewEvents.add(choice_event);

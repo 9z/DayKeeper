@@ -46,7 +46,6 @@ public class bar_bar extends AppCompatActivity {
 
     ArrayList<ActionVO> actionArrayList;
     ActionDB ActionDbHelper;
-    ArrayList<StatWeekVO> statWeekArray;
     ArrayList<CategoryVO> catArrayList;
     ArrayList<StatVO> statArray;
 
@@ -112,7 +111,7 @@ public class bar_bar extends AppCompatActivity {
 
         dateNowArr = new int[]{year,month,date}; //선택된시간
         text_week = (TextView) findViewById(R.id.text_week);
-        text_week.setText((month + 1) + "월 " + date + "일");
+        text_week.setText((year)+"년 "+(month + 1) + "월 " + date + "일");
 
         btn_week.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,11 +158,13 @@ public class bar_bar extends AppCompatActivity {
 
         float[][] test = new float[7][];
         float testDate = 1;
+        String[] name = new String[7];
 
        for (int i = 0; i<test.length;i++) {
            long l = choiceDate.getTimeInMillis()-(1000*60*60*24*i);
            Calendar temp = Calendar.getInstance();
            temp.setTimeInMillis(l);
+           name[6-i] = temp.get(Calendar.MONTH)+1+"월"+temp.get(Calendar.DATE)+"일";
            statArray = takeOneDayData(temp);
            test[i] = new float[statArray.size()];
            for (int j = 0; j <statArray.size() ; j++) {
@@ -180,13 +181,13 @@ public class bar_bar extends AppCompatActivity {
         //barchart
 
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, test[0]));
-        entries.add(new BarEntry(1f, test[1]));
-        entries.add(new BarEntry(2f, test[2]));
+        entries.add(new BarEntry(0f, test[6]));
+        entries.add(new BarEntry(1f, test[5]));
+        entries.add(new BarEntry(2f, test[4]));
         entries.add(new BarEntry(3f, test[3]));
-        entries.add(new BarEntry(4f, test[4]));
-        entries.add(new BarEntry(5f, test[5]));
-        entries.add(new BarEntry(6f, test[6]));
+        entries.add(new BarEntry(4f, test[2]));
+        entries.add(new BarEntry(5f, test[1]));
+        entries.add(new BarEntry(6f, test[0]));
 
         /*final List<Integer> colors = new ArrayList<>();
         colors.add(ColorTemplate.COLORFUL_COLORS[0]);
@@ -205,7 +206,7 @@ public class bar_bar extends AppCompatActivity {
         bar_xAxis.setDrawAxisLine(true);
         bar_xAxis.setDrawGridLines(false);
         /*bar_xAxis.setDrawLabels(true);*/
-        String[] name = {"월","화","수","목","금","토","일"};
+       // name = {"월","화","수","목","금","토","일"};
         String[] task = {"공부", "잠", "식사", "이동", "휴식", "취미", "운동", "모임", "일", "봉사"};
         bar_xAxis.setValueFormatter(new IndexAxisValueFormatter(name));
 
@@ -230,10 +231,6 @@ public class bar_bar extends AppCompatActivity {
         mBarChart.invalidate(); // refresh
 
         mBarChart.animateXY(1000,1000);
-    }
-
-    private ArrayList<StatWeekVO> takeWeekData(Calendar choiceDate) {
-        return null;
     }
 
     private ArrayList<StatVO> takeOneDayData(Calendar choiceDate) {

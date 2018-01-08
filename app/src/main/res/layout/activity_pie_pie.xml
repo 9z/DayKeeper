@@ -14,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/btn_month"
@@ -24,9 +23,10 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="22dp"
-            android:layout_marginRight="22dp"
-            android:text="날짜변경" />
+            android:layout_marginEnd="29dp"
+            android:layout_marginRight="29dp"
+            android:text="날짜변경"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/text_date"
@@ -34,9 +34,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/btn_month"
             android:layout_alignBottom="@+id/btn_month"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="53dp"
+            android:layout_marginStart="53dp"
             android:text="2018년 1월 7일"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -46,16 +49,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="80dp"
         android:layout_marginTop="75dp">
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/piechart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:layout_marginBottom="48dp">
 
         </com.github.mikephil.charting.charts.PieChart>
     </RelativeLayout>
@@ -67,10 +71,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:text="하루" />
+        android:text="하루"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btn_bar1"
@@ -79,7 +84,9 @@
         android:layout_alignBaseline="@+id/btn_line1"
         android:layout_alignBottom="@+id/btn_line1"
         android:layout_centerHorizontal="true"
-        android:text="일주일" />
+        android:layout_marginBottom="15dp"
+        android:text="일주일"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btn_line1"
@@ -88,9 +95,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
-        android:text="한 달" />
+        android:text="한 달"
+        android:textSize="18sp" />
 
 </RelativeLayout>

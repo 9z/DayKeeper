@@ -1,5 +1,6 @@
 package codingtribe.com;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -22,20 +23,21 @@ public class item_option extends Fragment {
     private int mPosition;
     ArrayList<String> array = new ArrayList<>();
     ListView lv;
-    TextView Logout=null;
-    TextView Serviceout=null;
+    TextView Logout = null;
+    TextView Serviceout = null;
     TextView app = null;
+
     static item_option newInstance(int position) {
-        item_option f = new item_option();	//객체 생성
-        Bundle args = new Bundle();					//해당 fragment에서 사용될 정보 담을 번들 객체
-        args.putInt("position", position);				//포지션 값을 저장
-        f.setArguments(args);							//fragment에 정보 전달.
-        return f;											//fragment 반환
+        item_option f = new item_option();    //객체 생성
+        Bundle args = new Bundle();                    //해당 fragment에서 사용될 정보 담을 번들 객체
+        args.putInt("position", position);                //포지션 값을 저장
+        f.setArguments(args);                            //fragment에 정보 전달.
+        return f;                                            //fragment 반환
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPosition = getArguments() != null ? getArguments().getInt("position") : 0;	// 뷰페이저의 position값을  넘겨 받음
+        mPosition = getArguments() != null ? getArguments().getInt("position") : 0;    // 뷰페이저의 position값을  넘겨 받음
 
     }
 
@@ -44,12 +46,22 @@ public class item_option extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_item_option, container, false);
 
-        app = (TextView)v.findViewById(R.id.app);
+        app = (TextView) v.findViewById(R.id.app);
+        Logout = (TextView) v.findViewById(R.id.Logout);
+
+
+        Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // Intent intent = new Intent(item_option.this, LoginActivity.class);
+               // startActivity(intent);
+            }
+        });
 
         app.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"앱권한",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "앱권한", Toast.LENGTH_SHORT).show();
             }
         });
 
