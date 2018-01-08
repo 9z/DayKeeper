@@ -11,11 +11,11 @@
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
 
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="161dp"
         android:visibility="visible"
         tools:visibility="visible" />
 

@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
         // [END customize_button]
+        /*signInButton.setColorScheme();*/
     }
 
     @Override

@@ -115,14 +115,24 @@ android:paddingTop="4dp"
             android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/button"
+            android:id="@+id/Logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="19dp"
             android:paddingLeft="10dp"
+            android:paddingTop="19dp"
 
             android:text="로그아웃"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/Serviceout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingTop="19dp"
+            android:text="서비스 탈퇴"
             android:textSize="22sp" />
     </LinearLayout>
 
