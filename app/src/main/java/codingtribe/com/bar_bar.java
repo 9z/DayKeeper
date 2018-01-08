@@ -178,7 +178,7 @@ public class bar_bar extends AppCompatActivity {
         entries.add(new BarEntry(3f, new float[] { 8,6,4,4,2 }));
         entries.add(new BarEntry(4f, new float[] { 0,0,0,0,0 }));
         entries.add(new BarEntry(5f, new float[] { 8,2,0,12,2 }));
-        entries.add(new BarEntry(6f, test));
+        //entries.add(new BarEntry(6f, test));
 
         /*final List<Integer> colors = new ArrayList<>();
         colors.add(ColorTemplate.COLORFUL_COLORS[0]);
