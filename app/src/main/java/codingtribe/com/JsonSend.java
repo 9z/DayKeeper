@@ -16,9 +16,9 @@ import java.net.URL;
  */
 
 public class JsonSend extends AsyncTask<String, Void, String> {
-    public static String ip = "knjas.or.kr"; //자신의 IP번호
+    public static String ip = "localhost"; //자신의 IP번호
     public static String sendMsg, receiveMsg;
-    String serverip = "http://" + ip + ":8082/smart2/smart2.jsp"; // 연결할 jsp주소
+    String serverip = "http://" + ip + ":8080/json/jsonCon"; // 연결할 jsp주소
 
 
     JsonSend(String sendmsg) {

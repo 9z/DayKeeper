@@ -27,27 +27,26 @@ public class JsonCreate {
     ArrayList<ActionVO> actionVOArrayList;
 
 
-    public String createJson(Activity activity) {//SQLite에서 값 가져와서 JSON 형식으로 변환
+    public JSONArray createJson(Activity activity) {//SQLite에서 값 가져와서 JSON 형식으로 변환
         ActionDbHelper = new ActionDB(activity);
         actionVOArrayList = ActionDbHelper.getAllAction(activity);
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         String json="";
-        // Log.v(" DB 출력", actionVOArrayList.size() + "");
+        Log.v(" DB 출력", actionVOArrayList.size() + "");
         try {
         for (int i = 0; i < actionVOArrayList.size(); i++) {
             jsonObject.put("action_id", actionVOArrayList.get(i).getAction_id()+"");
             jsonObject.put("cat_id", actionVOArrayList.get(i).getCat_id()+"");
             jsonObject.put("start_time", actionVOArrayList.get(i).getStart_time()+"");
             jsonObject.put("cat_name", actionVOArrayList.get(i).getCat_name()+"");
-            // Log.v("DB 출력",action_id+" "+ cat_id+" "+ start_time+" "+cat_name);
+            //Log.v("DB 출력",action_id+" "+ cat_id+" "+ start_time+" "+cat_name);
             jsonArray.put(jsonObject);
-            json = jsonObject.put("list",jsonArray).toString();
         }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-         return json;
+         return jsonArray;
     }
 }

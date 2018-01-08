@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
-    private TextView mStatusTextView;
+   // private TextView mStatusTextView;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -41,8 +41,8 @@ public class LoginActivity extends AppCompatActivity implements
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        findViewById(R.id.sign_out_button).setOnClickListener(this);
-        findViewById(R.id.disconnect_button).setOnClickListener(this);
+       // findViewById(R.id.sign_out_button).setOnClickListener(this);
+       // findViewById(R.id.disconnect_button).setOnClickListener(this);
 
         // [START configure_signin]
         // Configure sign-in to request the user's ID, email address, and basic
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText(acct.getDisplayName());
+          //  mStatusTextView.setText(acct.getDisplayName());
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -196,12 +196,12 @@ public class LoginActivity extends AppCompatActivity implements
             finish();
 
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+         //   findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
-            mStatusTextView.setText(R.string.signed_out);
+          //  mStatusTextView.setText(R.string.signed_out);
 
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+         //   findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
     }
 
@@ -211,12 +211,12 @@ public class LoginActivity extends AppCompatActivity implements
             case R.id.sign_in_button:
                 signIn();
                 break;
-            case R.id.sign_out_button:
-                signOut();
-                break;
-            case R.id.disconnect_button:
-                revokeAccess();
-                break;
+        //    case R.id.sign_out_button:
+        //        signOut();
+        //        break;
+     //       case R.id.disconnect_button:
+        //        revokeAccess();
+        //        break;
         }
     }
 }

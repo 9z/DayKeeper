@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,11 +56,11 @@ public class item_analysis2 extends Fragment {
         btn_predict.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JsonCreate js = new JsonCreate();
+                JsonCreate jc = new JsonCreate();
 
                 String sendmsg = "vision_write";
-                String result = js.createJson(getActivity()); //자신이 보내고싶은 값을 보내시면됩니다
-
+                String result = jc.createJson(getActivity()).toString(); //JSONArray 형태로 리턴.
+                //
                 try{
 
                     new JsonSend(sendmsg).execute(result,"vision_write").get();//보내는것
