@@ -47,7 +47,7 @@ public class item_option extends Fragment {
         View v = inflater.inflate(R.layout.activity_item_option, container, false);
 
         app = (TextView) v.findViewById(R.id.app);
-        Logout = (TextView) v.findViewById(R.id.Signout);
+        Logout = (TextView) v.findViewById(R.id.Logout);
 
 
         Logout.setOnClickListener(new View.OnClickListener() {
