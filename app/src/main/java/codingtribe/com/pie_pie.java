@@ -92,8 +92,7 @@ public class pie_pie extends AppCompatActivity {
         year = Calendar.getInstance().get(Calendar.YEAR);
         month = Calendar.getInstance().get(Calendar.MONTH);
         date = Calendar.getInstance().get(Calendar.DATE);
-        int check = intent.getIntExtra("yearWeek", 0);
-
+        int check = intent.getIntExtra("year", 0);
 
        if(check != 0){
             year = intent.getIntExtra("year",2018);
@@ -127,7 +126,7 @@ public class pie_pie extends AppCompatActivity {
                                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                         startActivity(intent);
                                         finish();
-                                //       mPieChart.notifyDataSetChanged();
+                                        //       mPieChart.notifyDataSetChanged();
                                        /* check = true;*/
                                     }
                                 }
