@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -53,6 +54,73 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
 
     int choice_item;
 
+    ArrayList<Integer> checkArray = new ArrayList<>();
+
+    @Override
+
+    protected Dialog onCreateDialog(int id) {
+
+        // TODO Auto-generated method stub
+        final String[] items = {"공부", "잠", "식사", "이동", "휴식","취미","운동","모임","일","봉사"};
+        final boolean[] checkedItems = {true, true, true, true, false, false, false, false, false, false};
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(line_line.this);
+        builder.setTitle("확인하고 싶은 항목을 선택해주세요.");
+        // builder.setMessage("메시지");
+        builder.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // TODO Auto-generated method stub
+                // 바뀐 것을 적용한다.
+                checkedItems[which] = isChecked;
+
+            }
+        });
+
+        // 같은 onclick을 쓰기때문에 DialogInterface를 적어주어야 에러발생하지 않는다.
+
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Toast로 현제 체크된 항목 표시하기
+                   String str = "";
+                    for (int i = 0; i<items.length; i++){
+                        if(checkedItems[i]) {
+                            checkArray.add(i);
+                        }
+                    }
+                for (int i = 0; i<items.length; i++){
+                    if(checkedItems[i]) {
+                        str += items[i];
+                        if (i <= items.length-1) {
+                            str += ",";
+                        }
+                    }
+                }
+                    if (checkArray.size()>4){
+                        Toast.makeText(getApplicationContext(),"4개만 선택하세요.",Toast.LENGTH_SHORT).show();
+                        checkArray.clear();
+                    }else if(checkArray.size() == 0){
+                        Toast.makeText(getApplicationContext(),"1개 이상 선택하세요.",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(line_line.this, str, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(line_line.this, line_line.class);
+                        intent.putExtra("check",str);
+                        intent.putExtra("change",1);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
+            }
+        });
+        return builder.create();
+    }
+    @Override
+    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+    }
+    int checkIt;
+    String[] array = {"공부","잠","식사","휴식"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +162,16 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         //catArrayList = CatDbHelper.getAllCat();
         //actionArrayList = ActionDbHelper.getAllAction(getParent());
 
-        Intent intent = getIntent();
+        Intent intent1 = getIntent();
+
+        checkIt = intent1.getIntExtra("change",0);
+
+        if(checkIt != 0){
+            String check = intent1.getStringExtra("check");
+            Log.v("나와",check);
+            checkIt = 0;
+            array = check.split(",");
+        }
 
         year = Calendar.getInstance().get(Calendar.YEAR);
         month = Calendar.getInstance().get(Calendar.MONTH);
@@ -149,21 +226,41 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         case4.add(new Entry(2f, 20f));
         case4.add(new Entry(3f, 220f));
 
-        case5.add(new Entry(0f, 100f));
-        case5.add(new Entry(1f, 60f));
-        case5.add(new Entry(2f, 20f));
-        case5.add(new Entry(3f, 220f));
+        case5.add(new Entry(0f, 56f));
+        case5.add(new Entry(1f, 90f));
+        case5.add(new Entry(2f, 120f));
+        case5.add(new Entry(3f, 280f));
 
-        case6.add(new Entry(0f, 100f));
-        case6.add(new Entry(1f, 60f));
-        case6.add(new Entry(2f, 20f));
-        case6.add(new Entry(3f, 220f));
+        case6.add(new Entry(0f, 160f));
+        case6.add(new Entry(1f, 98f));
+        case6.add(new Entry(2f, 160f));
+        case6.add(new Entry(3f, 260f));
+
+        case7.add(new Entry(0f, 130f));
+        case7.add(new Entry(1f, 230f));
+        case7.add(new Entry(2f, 70f));
+        case7.add(new Entry(3f, 130f));
+
+        case8.add(new Entry(0f, 145f));
+        case8.add(new Entry(1f, 88f));
+        case8.add(new Entry(2f, 123f));
+        case8.add(new Entry(3f, 200f));
+
+        case9.add(new Entry(0f, 131f));
+        case9.add(new Entry(1f, 69f));
+        case9.add(new Entry(2f, 110f));
+        case9.add(new Entry(3f, 155f));
+
+        case10.add(new Entry(0f, 230f));
+        case10.add(new Entry(1f, 20f));
+        case10.add(new Entry(2f, 50f));
+        case10.add(new Entry(3f, 234f));
 
         LineDataSet setcase1 = new LineDataSet(case1, "공부");
         setcase1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setcase1.setColors(ColorTemplate.JOYFUL_COLORS[0]);
         setcase1.setCircleColor(ColorTemplate.JOYFUL_COLORS[0]);
-        
+
         LineDataSet setcase2 = new LineDataSet(case2, "잠");
         setcase2.setAxisDependency(YAxis.AxisDependency.LEFT);
         setcase2.setColors(ColorTemplate.JOYFUL_COLORS[1]);
@@ -189,13 +286,68 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         setcase6.setColors(ColorTemplate.COLORFUL_COLORS[1]);
         setcase6.setCircleColor(ColorTemplate.COLORFUL_COLORS[1]);
 
+        LineDataSet setcase7 = new LineDataSet(case7, "운동");
+        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase6.setColors(ColorTemplate.COLORFUL_COLORS[2]);
+        setcase6.setCircleColor(ColorTemplate.COLORFUL_COLORS[2]);
+
+        LineDataSet setcase8 = new LineDataSet(case8, "모임");
+        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase6.setColors(ColorTemplate.COLORFUL_COLORS[3]);
+        setcase6.setCircleColor(ColorTemplate.COLORFUL_COLORS[3]);
+
+        LineDataSet setcase9 = new LineDataSet(case9, "일");
+        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase6.setColors(ColorTemplate.PASTEL_COLORS[0]);
+        setcase6.setCircleColor(ColorTemplate.PASTEL_COLORS[0]);
+
+        LineDataSet setcase10 = new LineDataSet(case10, "봉사");
+        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase6.setColors(ColorTemplate.PASTEL_COLORS[1]);
+        setcase6.setCircleColor(ColorTemplate.PASTEL_COLORS[1]);
+
         List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(setcase1);
-        dataSets.add(setcase2);
-        dataSets.add(setcase3);
-        dataSets.add(setcase4);
-        dataSets.add(setcase5);
-        dataSets.add(setcase6);
+        //for (int i = 0;i<)
+        for (int i =0; i< array.length;i++){
+            switch (array[i]){
+                case "공부":
+                    dataSets.add(setcase1);
+                    break;
+                case "잠":
+                    dataSets.add(setcase2);
+                    break;
+                case "식사":
+                    dataSets.add(setcase3);
+                    break;
+                case "이동":
+                    dataSets.add(setcase4);
+                    break;
+                case "휴식":
+                    dataSets.add(setcase5);
+                    break;
+                case "취미":
+                    dataSets.add(setcase6);
+                    break;
+                case "운동":
+                    break;
+                case "모임":
+                    break;
+                case "일":
+                    break;
+                case "봉사":
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+
+
+
+
+
+
 
         LineData line_data = new LineData(dataSets);
 
@@ -233,56 +385,4 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
     /*private ArrayList<StatMonthVO> takeMonthData(ArrayList<String> selectCat) {
         return null;
     }*/
-
-    @Override
-
-    protected Dialog onCreateDialog(int id) {
-
-        // TODO Auto-generated method stub
-        final String[] items = {"공부", "잠", "식사", "이동", "휴식","취미","운동","모임","일","봉사"};
-        final boolean[] checkedItems = {true, true, true, true, false, false, false, false, false, false};
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(line_line.this);
-        builder.setTitle("확인하고 싶은 항목을 선택해주세요.");
-        // builder.setMessage("메시지");
-        builder.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                // TODO Auto-generated method stub
-                // 바뀐 것을 적용한다.
-                checkedItems[which] = isChecked;
-
-            }
-        });
-
-        // 같은 onclick을 쓰기때문에 DialogInterface를 적어주어야 에러발생하지 않는다.
-
-        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Toast로 현제 체크된 항목 표시하기
-                if (items.length > 4){
-                    Toast.makeText(line_line.this, "4개만 선택해 주세요.", Toast.LENGTH_SHORT).show();
-                }else{
-                    String str = "";
-                    for (int i = 0; i<items.length; i++){
-                        if(checkedItems[i]) {
-                            str += items[i];
-                            if (i != items.length-1) {
-                                str += ", ";
-                            }
-
-                        }
-                    }
-                    Toast.makeText(line_line.this, str, Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-        return builder.create();
-    }
-    @Override
-    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-
-    }
 }
