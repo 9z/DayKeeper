@@ -96,9 +96,9 @@ public class bar_bar extends AppCompatActivity {
 
         today = Calendar.getInstance();
 
-        year = today.get(Calendar.YEAR);
-        month = today.get(Calendar.MONTH);
-        date = today.get(Calendar.DATE);
+        this.year = today.get(Calendar.YEAR);
+        this.month = today.get(Calendar.MONTH);
+        this.date = today.get(Calendar.DATE);
         int check = intent.getIntExtra("yearWeek", 0);
 
         if(check != 0){
@@ -158,13 +158,18 @@ public class bar_bar extends AppCompatActivity {
         float testDate = 1;
 
        for (int i = 0; i<test.length;i++) {
-           statArray = takeOneDayData(choiceDate);
+           long l = choiceDate.getTimeInMillis()-(1000*60*60*24*i);
+           Calendar temp = Calendar.getInstance();
+           temp.setTimeInMillis(l);
+           statArray = takeOneDayData(temp);
+           test[i] = new float[statArray.size()];
            for (int j = 0; j <statArray.size() ; j++) {
+               Log.v("하루 스탯", statArray.get(j).getCatName()+"");
                test[i][j] = statArray.get(j).getTime();
                testDate += statArray.get(j).getTime();
            }
-           for (int k = 0; k < test.length; k++) {
-               //test[k] = test[k] * (24 / testDate);
+           for (int k = 0; k < statArray.size(); k++) {
+               test[i][k] = test[i][k] * (24 / testDate);
            }
            testDate=0;
        }
@@ -172,13 +177,13 @@ public class bar_bar extends AppCompatActivity {
         //barchart
 
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, new float[] { 8,2,4,8,2 }));
-        entries.add(new BarEntry(1f, new float[] { 13,2,4,5 }));
-        entries.add(new BarEntry(2f, new float[] { 8,10,4,0,2 }));
-        entries.add(new BarEntry(3f, new float[] { 8,6,4,4,2 }));
-        entries.add(new BarEntry(4f, new float[] { 0,0,0,0,0 }));
-        entries.add(new BarEntry(5f, new float[] { 8,2,0,12,2 }));
-        //entries.add(new BarEntry(6f, test));
+        entries.add(new BarEntry(0f, test[0]));
+        entries.add(new BarEntry(1f, test[1]));
+        entries.add(new BarEntry(2f, test[2]));
+        entries.add(new BarEntry(3f, test[3]));
+        entries.add(new BarEntry(4f, test[4]));
+        entries.add(new BarEntry(5f, test[5]));
+        entries.add(new BarEntry(6f, test[6]));
 
         /*final List<Integer> colors = new ArrayList<>();
         colors.add(ColorTemplate.COLORFUL_COLORS[0]);
@@ -435,7 +440,7 @@ public class bar_bar extends AppCompatActivity {
         for(StatVO stat:afterProcessingResultStat){
 
         }
-
+        Log.v("하루액션사이즈",afterProcessingResultStat.size()+"");
         return afterProcessingResultStat;
     }
 

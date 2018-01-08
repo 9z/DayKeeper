@@ -31,6 +31,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static codingtribe.com.item_home.CatDbHelper;
+
 
 public class item_write extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EmptyViewClickListener, WeekView.EventLongPressListener {
 
@@ -47,7 +49,6 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
     ArrayList<ActionVO> actionArrayList;
     ActionDB ActionDbHelper;
-    CatDB CatDbHelper;
 
     private int mPosition;
     private ArrayList<CategoryVO> catArrayList;
@@ -73,8 +74,7 @@ public class item_write extends Fragment implements MonthLoader.MonthChangeListe
 
         ActionDbHelper = new ActionDB(getActivity());
         actionArrayList = ActionDbHelper.getAllAction(getActivity());
-        CatDbHelper = new CatDB(getActivity());
-        catArrayList = CatDbHelper.getAllCat();
+        catArrayList = item_home.CatDbHelper.getAllCat();
 
 
         // Get a reference for the week view in the layout.
