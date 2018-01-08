@@ -62,7 +62,7 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
 
         // TODO Auto-generated method stub
         final String[] items = {"공부", "잠", "식사", "이동", "휴식","취미","운동","모임","일","봉사"};
-        final boolean[] checkedItems = {true, true, true, true, false, false, false, false, false, false};
+        final boolean[] checkedItems = {false, false, false, false, false, false, false, false, false, false};
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(line_line.this);
         builder.setTitle("확인하고 싶은 항목을 선택해주세요.");
@@ -206,55 +206,55 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         List<Entry> case9 = new ArrayList<Entry>();
         List<Entry> case10 = new ArrayList<Entry>();
 
-        case1.add(new Entry(0f, 100f));
-        case1.add(new Entry(1f, 230f));
-        case1.add(new Entry(2f, 130f));
-        case1.add(new Entry(3f, 290f));
+        case1.add(new Entry(0f, 28f)); //공부
+        case1.add(new Entry(1f, 29f));
+        case1.add(new Entry(2f, 26f));
+        case1.add(new Entry(3f, 24f));
 
-        case2.add(new Entry(0f, 290f));
-        case2.add(new Entry(1f, 100f));
-        case2.add(new Entry(2f, 40f));
-        case2.add(new Entry(3f, 120f));
+        case2.add(new Entry(0f, 56f)); //잠
+        case2.add(new Entry(1f, 58f));
+        case2.add(new Entry(2f, 55f));
+        case2.add(new Entry(3f, 54f));
 
-        case3.add(new Entry(0f, 200f));
-        case3.add(new Entry(1f, 105f));
-        case3.add(new Entry(2f, 60f));
-        case3.add(new Entry(3f, 180f));
+        case3.add(new Entry(0f, 20f)); //식사
+        case3.add(new Entry(1f, 21f));
+        case3.add(new Entry(2f, 22f));
+        case3.add(new Entry(3f, 20f));
 
-        case4.add(new Entry(0f, 100f));
-        case4.add(new Entry(1f, 60f));
+        case4.add(new Entry(0f, 19f)); //이동
+        case4.add(new Entry(1f, 18f));
         case4.add(new Entry(2f, 20f));
-        case4.add(new Entry(3f, 220f));
+        case4.add(new Entry(3f, 21f));
 
-        case5.add(new Entry(0f, 56f));
-        case5.add(new Entry(1f, 90f));
-        case5.add(new Entry(2f, 120f));
-        case5.add(new Entry(3f, 280f));
+        case5.add(new Entry(0f, 8f)); //휴식
+        case5.add(new Entry(1f, 10f));
+        case5.add(new Entry(2f, 11f));
+        case5.add(new Entry(3f, 9f));
 
-        case6.add(new Entry(0f, 160f));
-        case6.add(new Entry(1f, 98f));
-        case6.add(new Entry(2f, 160f));
-        case6.add(new Entry(3f, 260f));
+        case6.add(new Entry(0f, 4f)); //취미
+        case6.add(new Entry(1f, 3f));
+        case6.add(new Entry(2f, 5f));
+        case6.add(new Entry(3f, 6f));
 
-        case7.add(new Entry(0f, 130f));
-        case7.add(new Entry(1f, 230f));
-        case7.add(new Entry(2f, 70f));
-        case7.add(new Entry(3f, 130f));
+        case7.add(new Entry(0f, 8f)); //운동
+        case7.add(new Entry(1f, 5f));
+        case7.add(new Entry(2f, 11f));
+        case7.add(new Entry(3f, 7f));
 
-        case8.add(new Entry(0f, 145f));
-        case8.add(new Entry(1f, 88f));
-        case8.add(new Entry(2f, 123f));
-        case8.add(new Entry(3f, 200f));
+        case8.add(new Entry(0f, 4f)); //모임
+        case8.add(new Entry(1f, 5f));
+        case8.add(new Entry(2f, 12f));
+        case8.add(new Entry(3f, 9f));
 
-        case9.add(new Entry(0f, 131f));
-        case9.add(new Entry(1f, 69f));
-        case9.add(new Entry(2f, 110f));
-        case9.add(new Entry(3f, 155f));
+        case9.add(new Entry(0f, 56f)); //일
+        case9.add(new Entry(1f, 54f));
+        case9.add(new Entry(2f, 53f));
+        case9.add(new Entry(3f, 55f));
 
-        case10.add(new Entry(0f, 230f));
-        case10.add(new Entry(1f, 20f));
-        case10.add(new Entry(2f, 50f));
-        case10.add(new Entry(3f, 234f));
+        case10.add(new Entry(0f, 0f)); //봉사
+        case10.add(new Entry(1f, 1f));
+        case10.add(new Entry(2f, 0f));
+        case10.add(new Entry(3f, 2f));
 
         LineDataSet setcase1 = new LineDataSet(case1, "공부");
         setcase1.setAxisDependency(YAxis.AxisDependency.LEFT);
