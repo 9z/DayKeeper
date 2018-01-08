@@ -124,7 +124,7 @@ public class ActionDB extends SQLiteOpenHelper {
             String now = sdf.format(timeMillis);
 
 
-            Log.v("DB정보", cursor.getInt(0)+" "+cursor.getInt(1)+" "+ now);
+//            Log.v("DB정보", cursor.getInt(0)+" "+cursor.getInt(1)+" "+ now);
 
 
             String catName = CatDbHelper.getCatName(cursor.getInt(1));
@@ -156,7 +156,7 @@ public class ActionDB extends SQLiteOpenHelper {
             int cat_id = cursor.getInt(1);
             long start_time = cursor.getLong(2);
 
-            Log.v("getOneActionByTime", action_id+" "+cat_id+" "+ start_time);
+//            Log.v("getOneActionByTime", action_id+" "+cat_id+" "+ start_time);
 
             String catName = CatDbHelper.getCatName(cursor.getInt(1));
 
@@ -172,7 +172,7 @@ public class ActionDB extends SQLiteOpenHelper {
             }
         }
 
-        Log.v("설정 시간의 max 타임 액션 정보", getActionById(actionIdMaxTime).getAction_id()+" "+getActionById(actionIdMaxTime).getStart_time()+" "+getActionById(actionIdMaxTime).getCat_name() );
+//        Log.v("설정 시간의 max 타임 액션 정보", getActionById(actionIdMaxTime).getAction_id()+" "+getActionById(actionIdMaxTime).getStart_time()+" "+getActionById(actionIdMaxTime).getCat_name() );
 
         return tempActionVO;
     }

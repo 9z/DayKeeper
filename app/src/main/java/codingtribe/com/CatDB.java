@@ -88,7 +88,7 @@ public class CatDB extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
 
-            Log.v("CatDB정보",cursor.getInt(0)+" "+cursor.getString(1)+" "+cursor.getInt(2));
+//            Log.v("CatDB정보",cursor.getInt(0)+" "+cursor.getString(1)+" "+cursor.getInt(2));
             tempCatVO = new CategoryVO(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), (cursor.getInt(3)==0?false:true));
             if(!tempCatVO.isDel)tempArrayList.add(tempCatVO);
 

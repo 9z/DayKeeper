@@ -14,6 +14,7 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class item_analysis2 extends Fragment {
@@ -56,6 +57,13 @@ public class item_analysis2 extends Fragment {
         btn_predict.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //찬울 테스트 이제 완성입니다. makerStatTable 메소드는 매시간별로 어떤 행동을 했는지 판단하여 기록된 모든 정보를 시간단위로 각 카테고리명을  ArrayList 형태로 반환해줍니다.
+                ActionDB actionDB = new ActionDB(getContext());
+                ArrayList<ActionVO> actionArrayList = actionDB.getAllAction(getActivity());
+                ActPreProcessor act = new ActPreProcessor();
+                act.makeStatTable(actionArrayList);
+
                 JsonCreate jc = new JsonCreate();
 
                 String sendmsg = "vision_write";

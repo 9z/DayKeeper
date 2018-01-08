@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +59,6 @@ public class item_home extends Fragment {
     ActionDB ActionDbHelper;
 
     int nowSelectedCatId;
-
-    Button btn_callActDB;
-    Button btn_callCatDB;
     static int mem_id = 0; //멤버 ID 는 가입되지 않은 경우 0으로 설정하기로 한다. 나중에 구글 로그인 이후 서버에서 받아온 아이디를 사용한다.
 
     private int mPosition;
@@ -77,8 +75,7 @@ public class item_home extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPosition = getArguments() != null ? getArguments().getInt("position") : 0;	// 뷰페이저의 position값을  넘겨 받음
-        thread = new Thread(new timeThread());
-        thread.start();
+
     }
 
     //찬울 : onCreate안에 있던 코드 넣는 곳
@@ -92,28 +89,12 @@ public class item_home extends Fragment {
 
 //        id = getIntent().getStringExtra("id");
 
-        btn_callActDB = (Button)v.findViewById(R.id.btn_callActDB);
-        btn_callCatDB = (Button)v.findViewById(R.id.btn_callCatDb);
-
         CatDbHelper = new CatDB(getActivity());
         ActionDbHelper = new ActionDB(getActivity());
 
         catArrayList = CatDbHelper.getAllCat();
         actionArrayList = ActionDbHelper.getAllAction(getActivity());
 
-        btn_callActDB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActionDbHelper.getAllAction(getActivity());
-            }
-        });
-
-        btn_callCatDB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CatDbHelper.getAllCat();
-            }
-        });
         adapter = new CategoryAdapter(getActivity(), R.layout.category, catArrayList, id);
         lv = (ListView) v.findViewById(R.id.lv_category);
         lv.setAdapter(adapter);
@@ -121,11 +102,10 @@ public class item_home extends Fragment {
         spf_catID = v.getContext().getSharedPreferences("select", MODE_PRIVATE);
         spf_startTime = v.getContext().getSharedPreferences("appStartTime", MODE_PRIVATE);
 
-
         name_nowCat = spf_catID.getString("selectCat","");
         nowSelectedCatId = spf_catID.getInt("select", 0);
 
-        startTime = System.currentTimeMillis() - spf_startTime.getLong("appStartTime",0);
+        startTime = System.currentTimeMillis() - spf_startTime.getLong("appStartTime",System.currentTimeMillis());
 
         tv_nowCat = (TextView) v.findViewById(R.id.tv_nowCat);
 
@@ -136,10 +116,10 @@ public class item_home extends Fragment {
         tv_startTime = (TextView) v.findViewById(R.id.tv_startTime);
         tv_startTime.setText(getTimeInHHmm(spf_startTime.getLong("appStartTime",-9*3600*1000))+"");
 
-
-
         btn_addCat = (Button) v.findViewById(R.id.btn_addCat);
 
+        thread = new Thread(new timeThread());
+        thread.start();
         //카테고리 추가 버튼을 눌렀을 때, 카테고리명을 입력받는 다이얼로그
         btn_addCat.setOnClickListener(new View.OnClickListener() {
             @Override
