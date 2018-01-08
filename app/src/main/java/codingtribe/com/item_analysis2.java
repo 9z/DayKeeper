@@ -56,20 +56,21 @@ public class item_analysis2 extends Fragment {
         btn_predict.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //예측 새창 띄우기
+                updateDetail_predict();
+                //SQLite에서 DB값 가져와 서버로 보내기
                 JsonCreate jc = new JsonCreate();
-
                 String sendmsg = "vision_write";
                 String result = jc.createJson(getActivity()).toString(); //JSONArray 형태로 리턴.
-                //
+                //Log.v("jason",result);
                 try{
-
                     new JsonSend(sendmsg).execute(result,"vision_write").get();//보내는것
-
                 }catch (Exception e){
-
                     e.printStackTrace();
-
                 }
+
+
+
             }
         });
 
@@ -90,6 +91,12 @@ public class item_analysis2 extends Fragment {
         intent.putExtra("year",Calendar.getInstance().get(Calendar.YEAR));
         intent.putExtra("month",Calendar.getInstance().get(Calendar.MONTH));
         intent.putExtra("date",Calendar.getInstance().get(Calendar.DATE));
+        startActivity(intent);
+    }
+
+
+    private void updateDetail_predict(){
+        Intent intent = new Intent(getActivity(), item_predict.class);
         startActivity(intent);
     }
 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="codingtribe.com">
-    <!--유저 인터넷 권한 JSON통신-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- 유저 인터넷 권한 JSON통신 -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,10 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity" >
-
-        </activity>
-
+        <activity android:name=".LoginActivity"></activity>
 
         <receiver android:name=".Widget_Provider">
             <intent-filter>
@@ -30,17 +28,21 @@
         <activity android:name=".HorizontalNtbActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!-- <activity android:name=".item_analysis2" /> -->
-        <!--<activity android:name=".item_write" />-->
+        <!-- <activity android:name=".item_write" /> -->
         <activity android:name=".item_write_input" />
         <activity android:name=".pie_pie" />
         <activity android:name=".bar_bar" />
         <activity android:name=".line_line" />
-        <!--<activity android:name=".item_home" />
-        <activity android:name=".item_option"></activity>-->
+        <!--
+        <activity android:name=".item_home" />
+        <activity android:name=".item_option"></activity>
+        -->
+        <activity android:name=".item_predict"></activity>
     </application>
 
 </manifest>

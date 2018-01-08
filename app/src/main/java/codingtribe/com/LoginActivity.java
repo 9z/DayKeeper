@@ -25,14 +25,14 @@ public class LoginActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
-    private static final String TAG = "LoginActivity";
-    private static final int RC_SIGN_IN = 9001;
-    private GoogleApiClient mGoogleApiClient;
+    public static final String TAG = "LoginActivity";
+    public static final int RC_SIGN_IN = 9001;
+    public GoogleApiClient mGoogleApiClient;
    // private TextView mStatusTextView;
-    private ProgressDialog mProgressDialog;
+    public ProgressDialog mProgressDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements
     // [END onActivityResult]
 
     // [START handleSignInResult]
-    private void handleSignInResult(GoogleSignInResult result) {
+    public void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
@@ -131,14 +131,14 @@ public class LoginActivity extends AppCompatActivity implements
     // [END handleSignInResult]
 
     // [START signIn]
-    private void signIn() {
+    public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
     // [END signIn]
 
     // [START signOut]
-    private void signOut() {
+    public void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements
     // [END signOut]
 
     // [START revokeAccess]
-    private void revokeAccess() {
+    public void revokeAccess() {
         Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
@@ -172,7 +172,7 @@ public class LoginActivity extends AppCompatActivity implements
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
     }
 
-    private void showProgressDialog() {
+    public void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage(getString(R.string.loading));
@@ -184,13 +184,13 @@ public class LoginActivity extends AppCompatActivity implements
         mProgressDialog.dismiss();
     }
 
-    private void hideProgressDialog() {
+    public void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }
     }
 
-    private void updateUI(boolean signedIn) {
+    public void updateUI(boolean signedIn) {
         if (signedIn) {
             Intent intent = new Intent(LoginActivity.this, HorizontalNtbActivity.class);
             startActivity(intent);
