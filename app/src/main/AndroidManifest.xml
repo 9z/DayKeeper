@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
 
         <receiver android:name=".Widget_Provider">
             <intent-filter>
@@ -42,7 +42,8 @@
         <activity android:name=".item_home" />
         <activity android:name=".item_option"></activity>
         -->
-        <activity android:name=".item_predict"></activity>
+        <activity android:name=".item_predict" />
+        <activity android:name=".item_type"></activity>
     </application>
 
 </manifest>

@@ -48,7 +48,6 @@ public class item_analysis2 extends Fragment {
         btn_statics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"응답",Toast.LENGTH_SHORT).show();
                 updateDetail();
             }
         });
@@ -77,7 +76,8 @@ public class item_analysis2 extends Fragment {
         btn_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), item_type.class);
+                startActivity(intent);
             }
         });
 

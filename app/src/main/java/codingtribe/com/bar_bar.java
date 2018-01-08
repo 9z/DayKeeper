@@ -46,7 +46,6 @@ public class bar_bar extends AppCompatActivity {
 
     ArrayList<ActionVO> actionArrayList;
     ActionDB ActionDbHelper;
-    ArrayList<StatWeekVO> statWeekArray;
     ArrayList<CategoryVO> catArrayList;
     ArrayList<StatVO> statArray;
 
@@ -232,10 +231,6 @@ public class bar_bar extends AppCompatActivity {
         mBarChart.invalidate(); // refresh
 
         mBarChart.animateXY(1000,1000);
-    }
-
-    private ArrayList<StatWeekVO> takeWeekData(Calendar choiceDate) {
-        return null;
     }
 
     private ArrayList<StatVO> takeOneDayData(Calendar choiceDate) {
