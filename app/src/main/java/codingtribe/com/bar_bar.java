@@ -154,21 +154,19 @@ public class bar_bar extends AppCompatActivity {
         choiceDate.set(Calendar.DATE,date);
 
 
-        float[][] test = new float[statArray.size()][];
+        float[][] test = new float[7][];
         float testDate = 1;
 
-       for (int i = 0; i<7;i++) {
-
+       for (int i = 0; i<test.length;i++) {
            statArray = takeOneDayData(choiceDate);
-
-           for (int j = 0; j < test.length; j++) {
-               test[j] = statArray.get(j).getTime();
+           for (int j = 0; j <statArray.size() ; j++) {
+               test[i][j] = statArray.get(j).getTime();
                testDate += statArray.get(j).getTime();
            }
            for (int k = 0; k < test.length; k++) {
-               test[k] = test[k] * (24 / testDate);
+               //test[k] = test[k] * (24 / testDate);
            }
-
+           testDate=0;
        }
 
         //barchart
