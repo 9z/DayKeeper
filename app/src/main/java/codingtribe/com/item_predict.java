@@ -9,7 +9,7 @@ public class item_predict extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_predict);
-
+//predict 작성 시작
 
 
     }
