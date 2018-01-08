@@ -36,12 +36,12 @@ public class item_option extends Fragment {
 
     }
 
-   /* @Nullable
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_item_option, container, false);
 
-        lv = (ListView)v.findViewById(R.id.list_view);
+        /*lv = (ListView)v.findViewById(R.id.list_view);
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.item_option_list);
         lv.setAdapter(adapter);
@@ -58,8 +58,8 @@ public class item_option extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getActivity(),adapter.getItem(position)+"",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         return v;
-    }*/
+    }
 }
