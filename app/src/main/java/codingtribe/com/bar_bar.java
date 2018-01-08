@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -240,6 +243,7 @@ public class bar_bar extends AppCompatActivity {
         ArrayList<StatVO> preprocessingStat = new ArrayList<>();
         ArrayList<StatVO> resultStat = new ArrayList<>();
         ArrayList<StatVO> afterProcessingResultStat = new ArrayList<StatVO>();
+        ArrayList<StatVO> sortArray = new ArrayList<StatVO>();
 
         startDate = choiceDate;
         startDate.set(Calendar.AM_PM,0);
@@ -259,6 +263,7 @@ public class bar_bar extends AppCompatActivity {
         int lastActionID=0;
         ActionVO firstAction=null;
         ActionVO lastAction = null;
+
 
         int count = 0;
 
@@ -434,12 +439,19 @@ public class bar_bar extends AppCompatActivity {
                         cat.setTime(settedTime);
                     }
                 }
+
+
+                sortArray = afterProcessingResultStat;
+                StatVO tempVO;
+                Log.v("정렬사이즈",sortArray.size()+"");
+
+
             }
         }
 
-        for(StatVO stat:afterProcessingResultStat){
+        Compare comp = new Compare();
+        Collections.sort(afterProcessingResultStat,comp);
 
-        }
         Log.v("하루액션사이즈",afterProcessingResultStat.size()+"");
         return afterProcessingResultStat;
     }
@@ -450,4 +462,21 @@ public class bar_bar extends AppCompatActivity {
 
         return sdf.format(date);
     }
+
+    class Compare implements Comparator<StatVO>{
+
+        @Override
+        public int compare(StatVO stat1, StatVO stat2) {
+
+            long t1 = stat1.getTime();
+            long t2 = stat2.getTime();
+
+            if(t1>t2){
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+    }
+
 }
