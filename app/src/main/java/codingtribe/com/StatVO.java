@@ -7,11 +7,13 @@ package codingtribe.com;
 class StatVO {
 
     String catName;
-    int time;
+    long time;
+    int cat_id;
 
-    public StatVO(String catName, int time) {
+    public StatVO(String catName, long time, int cat_id) {
         this.catName = catName;
         this.time = time;
+        this.cat_id = cat_id;
     }
 
     public String getCatName() {
@@ -22,11 +24,15 @@ class StatVO {
         this.catName = catName;
     }
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(long time) {
         this.time = time;
+    }
+
+    public int getCat_id() {
+        return cat_id;
     }
 }

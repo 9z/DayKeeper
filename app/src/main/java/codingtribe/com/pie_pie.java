@@ -25,6 +25,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class pie_pie extends AppCompatActivity {
 
@@ -50,6 +53,9 @@ public class pie_pie extends AppCompatActivity {
     SimpleDateFormat sdf;
 
     Calendar cal;
+
+    long firstActionStartTime;
+    long lastActionEndTime;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -202,7 +208,7 @@ public class pie_pie extends AppCompatActivity {
         Calendar endDate = Calendar.getInstance();
         ArrayList<StatVO> preprocessingStat = new ArrayList<>();
         ArrayList<StatVO> resultStat = new ArrayList<>();
-
+        ArrayList<StatVO> afterProcessingResultStat = new ArrayList<StatVO>();
 
         startDate = choiceDate;
         startDate.set(Calendar.AM_PM,0);
@@ -223,8 +229,6 @@ public class pie_pie extends AppCompatActivity {
         ActionVO firstAction=null;
         ActionVO lastAction = null;
 
-        long firstActionStartTime;
-        long lastActionEndTime;
         int count = 0;
 
         for (int i = 0; i<actionArrayList.size(); i++){
@@ -234,7 +238,11 @@ public class pie_pie extends AppCompatActivity {
             if (actionArrayList.get(i).getStart_time()> stm && actionArrayList.get(i).getStart_time()< etm){
                 //하루 사이에 있는 애들 바로 전 아이를 12시부터 세팅하기
                 //정확히 하루 사이에 있는 애들
-                preprocessingStat.add(new StatVO(action.getCat_name(),(int)ntm));
+
+
+                preprocessingStat.add(new StatVO(action.getCat_name(),ntm,action.getCat_id()));
+
+
                 Log.v("하루의 사이 행동",action.getAction_id()+" "+timeFormat(ntm)+" "+action.getCat_name()+ntm);
                 if(startActionID==0)startActionID = action.getAction_id(); //if 문 내부에 들어왔다면 가장 최초로 입력되는 i 값이다.
                 lastActionID =i;
@@ -261,17 +269,10 @@ public class pie_pie extends AppCompatActivity {
             if(ActionDbHelper.getAllAction(getParent()).size() == 0){            //CASE1 의 해결 (DB에 저장된 정보가 없을 때)
                 //DB 에 기록된 자료가 아직 없을 경우.
 
-
             } else {                                                             //CASE2 의 해결 (이전 날에 기록이 시작된 action 인 경우)
                 //DB 에 기록된 자료가 있는 경우.
-
                 ActionDbHelper.getOneActionByTime(cal.getTimeInMillis());
             };
-
-
-
-
-
         }
 
 
@@ -356,34 +357,62 @@ public class pie_pie extends AppCompatActivity {
             Log.v("하루 이 행동을 한 시간",(lastActionEndTime-lastAction.getStart_time())/(60*1000)+"");
             Log.v("하루 이 행동을 한 시간",timeFormat(lastActionEndTime-lastAction.getStart_time()));
 
+            //preprocessingStat 에 하루 최초 자료 넣기
+            preprocessingStat.add(0,new StatVO(firstAction.getCat_name(),firstActionStartTime,firstAction.getCat_id()));
+
             for (int i = 0 ; i<preprocessingStat.size();i++){
-                if(i+1!=preprocessingStat.size()){
-                    resultStat.add(new StatVO(preprocessingStat.get(i).getCatName(),(int)(preprocessingStat.get(i+1).getTime()-preprocessingStat.get(i).getTime())/(60*1000)));
+                    if(i+1!=preprocessingStat.size()){
+                    resultStat.add(new StatVO(preprocessingStat.get(i).getCatName(),(preprocessingStat.get(i+1).getTime()-preprocessingStat.get(i).getTime())/(60*1000),preprocessingStat.get(i).getCat_id()));
                     Log.v("하루 한 일",(preprocessingStat.get(i+1).getTime()-preprocessingStat.get(i).getTime())/(60*1000)+preprocessingStat.get(i).getCatName());
                 }else{
-                    resultStat.add(new StatVO(preprocessingStat.get(i).getCatName(),(int)(lastActionEndTime - lastAction.getStart_time())/(60*1000)));
+                    resultStat.add(new StatVO(preprocessingStat.get(i).getCatName(),(lastActionEndTime - lastAction.getStart_time())/(60*1000),preprocessingStat.get(i).getCat_id()));
                     Log.v("하루 한 일",(lastActionEndTime - lastAction.getStart_time())/(60*1000)+preprocessingStat.get(i).getCatName());
                 }
             }
 
-            //중복제거
+            Set<String> set = new HashSet<String>();
 
-            /*for (int i = 0; i<resultStat.size();i++){
-                for (int j = i+1; j< resultStat.size();i++){
-                    if(resultStat.get(i).getCatName() == resultStat.get(j).getCatName()){
-                        resultStat.add(new StatVO(resultStat.get(i).getCatName(),resultStat.get(i).getTime()+resultStat.get(j).getTime()));
-                        resultStat.remove(j);
-                        resultStat.remove(i);
+            for (StatVO statVO:resultStat) {
+                set.add(statVO.getCat_id()+"");
+            }
+
+            int catId;
+            String catName;
+
+
+            for(Iterator i = set.iterator(); i.hasNext();){
+                catId = Integer.parseInt(i.next().toString());
+                catName = CatDbHelper.getCatName(catId);
+                afterProcessingResultStat.add(new StatVO(catName,0,catId));
+
+            }
+
+            String tempCatName;
+            long tempTime;
+            int tempCatID;
+
+            int[] catArr;
+            long settedTime;
+
+            for(StatVO stat:resultStat){
+                tempCatName = stat.getCatName();
+                tempTime = stat.getTime();
+                tempCatID = stat.getCat_id();
+
+                for(StatVO cat : afterProcessingResultStat){
+                    if(cat.getCat_id()==stat.getCat_id()){
+                        settedTime = cat.getTime()+stat.getTime();
+                        cat.setTime(settedTime);
                     }
                 }
-            }*/
+            }
+        }
+
+        for(StatVO stat:afterProcessingResultStat){
 
         }
 
-        Log.v("stm",timeFormat(stm));
-        Log.v("etm",timeFormat(etm));
-
-       return resultStat;
+       return afterProcessingResultStat;
     }
 
     private String timeFormat(long firstActionStartTime) {
