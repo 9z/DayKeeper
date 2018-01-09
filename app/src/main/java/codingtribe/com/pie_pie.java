@@ -123,7 +123,7 @@ public class pie_pie extends AppCompatActivity {
                                         intent.putExtra("month",monthOfYear);
                                         intent.putExtra("date",dayOfMonth);
                                         Log.v("하...",intent.getIntExtra("year",0)+"");
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                         startActivity(intent);
                                         finish();
                                         //       mPieChart.notifyDataSetChanged();
