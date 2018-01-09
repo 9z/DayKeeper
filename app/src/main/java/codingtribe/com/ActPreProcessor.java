@@ -133,8 +133,10 @@ public class ActPreProcessor {
                         int minute = getMinute(vo);
                         if(minute<30){
                             row.setCatName(vo.getCat_name());
+                            row.setCatid(vo.getCat_id());
                         } else {
                             row.setCatName(dbArr.get(vo.action_id-2).getCat_name());
+                            row.setCatid(dbArr.get(vo.action_id-2).getCat_id());
                         }
                     }
                 }
@@ -150,6 +152,7 @@ public class ActPreProcessor {
                         int minLength =0;
                         int max = 0;
                         String maxCat = dbArr.get(voI).getCat_name();
+                        int maxCatId = dbArr.get(voI).getCat_id();
                         for(int rowi=0; rowi<row.getActionCount();rowi++){
 
                             if(rowi==0){
@@ -166,6 +169,7 @@ public class ActPreProcessor {
                             if(minLength>max){
                                 max = minLength;
                                 maxCat = dbArr.get(voI-1).getCat_name();
+                                maxCatId = dbArr.get(voI-1).getCat_id();
                             }
 
                             if((rowi+1)==row.getActionCount()){
@@ -175,6 +179,7 @@ public class ActPreProcessor {
                                 if(minLength>max){
                                     max = minLength;
                                     maxCat = dbArr.get(voI).getCat_name();
+                                    maxCatId = dbArr.get(voI).getCat_id();
                                 }
                             }
 
@@ -184,6 +189,7 @@ public class ActPreProcessor {
                         }
 //                        Log.v("확인",max+" "+maxCat);
                         row.setCatName(maxCat);
+                        row.setCatid(maxCatId);
                     }
                 }
 
@@ -225,6 +231,7 @@ public class ActPreProcessor {
         SimpleDateFormat sdf;
         Date date;
         for(StatRowVO vo : statTable){
+            Log.v("CatId----------",vo.getCatName()+" "+vo.getCatid());
             long rowTime = vo.getStartTime();
             catId = vo.getCatid();
 
