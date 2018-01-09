@@ -227,7 +227,7 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
                     test[i] = new float[statArray.size()];
                     for (int j = 0; j <statArray.size() ; j++) {
                         Log.v("하루 스탯", statArray.get(j).getCatName()+"");
-                        test[i][j] = statArray.get(j).getTime();
+                        test[i][j] = statArray.get(j).getTime();mn
                     }
                 }
             }else{
@@ -339,24 +339,24 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
         setcase6.setCircleColor(ColorTemplate.COLORFUL_COLORS[1]);
 
         LineDataSet setcase7 = new LineDataSet(case7, "운동");
-        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
-        setcase6.setColors(ColorTemplate.COLORFUL_COLORS[2]);
-        setcase6.setCircleColor(ColorTemplate.COLORFUL_COLORS[2]);
+        setcase7.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase7.setColors(ColorTemplate.COLORFUL_COLORS[2]);
+        setcase7.setCircleColor(ColorTemplate.COLORFUL_COLORS[2]);
 
         LineDataSet setcase8 = new LineDataSet(case8, "모임");
-        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
-        setcase6.setColors(ColorTemplate.COLORFUL_COLORS[3]);
-        setcase6.setCircleColor(ColorTemplate.COLORFUL_COLORS[3]);
+        setcase8.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase8.setColors(ColorTemplate.COLORFUL_COLORS[3]);
+        setcase8.setCircleColor(ColorTemplate.COLORFUL_COLORS[3]);
 
         LineDataSet setcase9 = new LineDataSet(case9, "일");
-        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
-        setcase6.setColors(ColorTemplate.PASTEL_COLORS[0]);
-        setcase6.setCircleColor(ColorTemplate.PASTEL_COLORS[0]);
+        setcase9.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase9.setColors(ColorTemplate.PASTEL_COLORS[0]);
+        setcase9.setCircleColor(ColorTemplate.PASTEL_COLORS[0]);
 
         LineDataSet setcase10 = new LineDataSet(case10, "봉사");
-        setcase6.setAxisDependency(YAxis.AxisDependency.LEFT);
-        setcase6.setColors(ColorTemplate.PASTEL_COLORS[1]);
-        setcase6.setCircleColor(ColorTemplate.PASTEL_COLORS[1]);
+        setcase10.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setcase10.setColors(ColorTemplate.PASTEL_COLORS[1]);
+        setcase10.setCircleColor(ColorTemplate.PASTEL_COLORS[1]);
 
         List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         //for (int i = 0;i<)
@@ -381,12 +381,16 @@ public class line_line extends AppCompatActivity implements DialogInterface.OnMu
                     dataSets.add(setcase6);
                     break;
                 case "운동":
+                    dataSets.add(setcase7);
                     break;
                 case "모임":
+                    dataSets.add(setcase8);
                     break;
                 case "일":
+                    dataSets.add(setcase9);
                     break;
                 case "봉사":
+                    dataSets.add(setcase10);
                     break;
                 default:
                     break;
