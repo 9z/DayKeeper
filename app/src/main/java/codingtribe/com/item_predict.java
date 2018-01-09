@@ -41,6 +41,8 @@ public class item_predict extends AppCompatActivity {
     int[] dateNowArr;
 
     ArrayList<PredictVO> arrayList;
+    String result1;
+    String array;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +90,15 @@ public class item_predict extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        String array="";
-        array = getIntent().getStringExtra("resultString");
-        Log.v("흐흐",array);
 
+        if(getIntent().getStringExtra("resultString") == null){
+            array = result1;
+        }else {
+            array = getIntent().getStringExtra("resultString");
+        };
+
+
+        Log.v("제발",array);
         lv = (ListView)findViewById(R.id.listView);
         btn_listChanDate = (Button)findViewById(R.id.listChanDate);
         text_listChanDate = (TextView)findViewById(R.id.listDate);
@@ -99,10 +106,21 @@ public class item_predict extends AppCompatActivity {
         Gson gson = new Gson();
         ArrayList<jsonVO> jsonArray = gson.fromJson(array, new TypeToken<ArrayList<jsonVO>>(){}.getType());
 
+        for(jsonVO vo : jsonArray){
+            Log.v("허허",vo.getCatID()+"");
+        }
+
+
         arrayList = new ArrayList<PredictVO>();
 
+        int id;
+        String name;
+        float prob;
         for(int i = 0; i<24;i++){
-                arrayList.add(new PredictVO(i+":00~",i+1+":00", CatDbHelper.getCatName(jsonArray.get(i).getCatID()),jsonArray.get(i).getCarProb()/0.01f));
+            id = jsonArray.get(i).getCatID();
+            name = CatDbHelper.getCatName(id);
+            prob = jsonArray.get(i).getCarProb()/0.01f;
+                arrayList.add(new PredictVO(i+":00~",i+1+":00", name,prob));
         }
 
         year = Calendar.getInstance().get(Calendar.YEAR);
@@ -144,10 +162,31 @@ public class item_predict extends AppCompatActivity {
                                         intent.putExtra("year",year);
                                         intent.putExtra("month",monthOfYear);
                                         intent.putExtra("date",dayOfMonth);
-                                        Log.v("하...",intent.getIntExtra("year",0)+"");
                                         //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                                        ActionDB actionDB = new ActionDB(getApplicationContext());
+                                        ArrayList<ActionVO> actionArrayList = actionDB.getAllAction(getParent());
+                                        ActPreProcessor act = new ActPreProcessor();
+
+                                        String result;
+                                        Calendar cal = Calendar.getInstance();
+
+                                        String selectedDay = year+"-"+monthOfYear+1+"-"+dayOfMonth;
+                                        Log.v("날짜라도",selectedDay);
+                                        try {
+                                            result = act.makeStatTable(actionArrayList);
+                                            JsonSend jsonSend = new JsonSend("vision_write");
+                                            result1 = jsonSend.execute(result+"`"+selectedDay, "vision_write").get();
+                                            Log.v("허허",result1);
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        intent.putExtra("resultString",result1);
+
                                         startActivity(intent);
                                         finish();
+
                                     }
                                 }
                                 , // 사용자가 날짜설정 후 다이얼로그 빠져나올때

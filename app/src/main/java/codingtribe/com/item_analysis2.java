@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class item_analysis2 extends Fragment {
 
@@ -71,12 +72,14 @@ public class item_analysis2 extends Fragment {
                 //Log.v("jason",result);
 
                 //찬울 테스트 데이터 JSON으로 보내기
-                String sendmsg = "vision_write";
-                String result = null;
+                String result;
+                Calendar cal = Calendar.getInstance();
+
+                String selectedDay = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
                 try {
                     result = act.makeStatTable(actionArrayList);
-                    JsonSend jsonSend = new JsonSend(sendmsg);
-                    result1 = jsonSend.execute(result, "vision_write").get();
+                    JsonSend jsonSend = new JsonSend("vision_write");
+                    result1 = jsonSend.execute(result+"`"+selectedDay, "vision_write").get();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -112,7 +115,6 @@ public class item_analysis2 extends Fragment {
     private void updateDetail_predict() {
         Intent intent = new Intent(getActivity(), item_predict.class);
         intent.putExtra("resultString", result1);
-        Log.v("로그",result1);
         startActivity(intent);
     }
 
