@@ -4,15 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.drm.DrmStore;
 import android.util.Log;
+import android.widget.Switch;
+
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by pc-05 on 2018-01-09.
@@ -22,9 +27,6 @@ public class ActPreProcessor {
 
     ActionDB actionDB;
     StatRowVO statRowVO;
-
-    JSONObject jsonObject = new JSONObject();
-    JSONArray jsonArray = new JSONArray();
 
     ArrayList<ActionTimeInfoVO> actTimeInfoVO;
     ArrayList<StatRowVO> statTable;
@@ -191,13 +193,17 @@ public class ActPreProcessor {
         for(StatRowVO vo : statTable){
             if(vo.getCatName()==null){
                 String cat_name = "";
+                int cat_id = 0;
                 for(int dbi = 0; dbi<dbArr.size();dbi++){
                     if(dbi==0){
                         cat_name = dbArr.get(dbi).getCat_name();
+                        cat_id = dbArr.get(dbi).getCat_id();
                     }else{
                         cat_name = dbArr.get(dbi-1).getCat_name();
+                        cat_id = dbArr.get(dbi-1).getCat_id();
                     }
                     vo.setCatName(cat_name);
+                    vo.setCatid(cat_id);
                     if(dbArr.get(dbi).getStart_time()>vo.getStartTime()){
                         break;
                     };
@@ -205,13 +211,76 @@ public class ActPreProcessor {
             }
         }
 
-        for(StatRowVO vo : statTable){
-          //  Log.v("일차확인",getDateFormat(vo.getStartTime())+" "+vo.getCatName());
-            jsonObject.put("cat_name",vo.getCatName());
-            jsonObject.put("time",vo.getStartTime());
-            statTableString = jsonArray.put(jsonObject).toString();
+        //분석 테이블용 ArrayList 만들기
+        ArrayList<TimeTableRowVO> timeTable = new ArrayList<>();
+        int dayOfWeek;
+        int weekOfMonth;
+        int isWeekend;
+        int hour;
+        int month;
 
+        int catId;
+        String catName;
+
+        SimpleDateFormat sdf;
+        Date date;
+        for(StatRowVO vo : statTable){
+            long rowTime = vo.getStartTime();
+            catId = vo.getCatid();
+
+            cal = Calendar.getInstance();
+            cal.setTimeInMillis(rowTime);
+
+            hour = cal.get(Calendar.HOUR_OF_DAY);
+//
+//            sdf = new SimpleDateFormat("MM", new Locale("en"));
+//            sdf.setCalendar(cal);
+//            date = new Date(cal.getTimeInMillis());
+//            month = sdf.format(date);
+            month = cal.get(Calendar.MONTH);
+
+
+//            sdf = new SimpleDateFormat("EEE", new Locale("en"));
+//            sdf.setCalendar(cal);
+//            date = new Date(cal.getTimeInMillis());
+//            dayOfWeek = sdf.format(date);
+            dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+            cal.get(Calendar.WEEK_OF_MONTH);
+            weekOfMonth = cal.get(Calendar.WEEK_OF_MONTH);
+            switch (cal.get(Calendar.WEEK_OF_MONTH)){
+                case 1:
+                    weekOfMonth = 0;
+                    break;
+                case 2:
+                    weekOfMonth = 1;
+                    break;
+                case 3:
+                    weekOfMonth = 2;
+                    break;
+                case 4:
+                    weekOfMonth = 3;
+                    break;
+                case 5:
+                    weekOfMonth = 4;
+                    break;
+                case 6:
+                    weekOfMonth = 5;
+                    break;
+            }
+
+            cal.get(Calendar.DAY_OF_WEEK);
+
+            isWeekend = cal.get(Calendar.DAY_OF_WEEK)<6?0:1;
+
+            timeTable.add(new TimeTableRowVO(dayOfWeek,weekOfMonth,isWeekend,hour,month,catId));
         }
+
+
+        Gson gson = new Gson();
+        statTableString  = gson.toJson(timeTable);
+
+        Log.v("json",statTableString);
 
         return statTableString;
     }

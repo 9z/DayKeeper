@@ -12,6 +12,15 @@ class StatRowVO {
     String beforeAction;
     String afterAction;
     int ActionCount;
+    int catid;
+
+    public int getCatid() {
+        return catid;
+    }
+
+    public void setCatid(int catid) {
+        this.catid = catid;
+    }
 
     public StatRowVO(long startTime, long endTime) {
         this.startTime = startTime;
