@@ -218,6 +218,7 @@ public class LoginActivity extends AppCompatActivity implements
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
             findViewById(R.id.disconnect_button).setVisibility(View.VISIBLE);
+
         } else {
             //  mStatusTextView.setText(R.string.signed_out);
             login_msg.setVisibility(View.GONE);

@@ -12,16 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".HorizontalNtbActivity">
-
-        </activity>
+        <activity android:name=".HorizontalNtbActivity"></activity>
         <!-- <activity android:name=".item_analysis2" /> -->
         <!-- <activity android:name=".item_write" /> -->
         <activity android:name=".item_write_input" />
@@ -44,7 +42,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_info" />
         </receiver>
-
     </application>
 
 </manifest>

@@ -197,6 +197,7 @@ public class item_home extends Fragment {
             }
         });
 
+
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
