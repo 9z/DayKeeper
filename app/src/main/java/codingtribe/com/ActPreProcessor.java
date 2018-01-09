@@ -5,6 +5,10 @@ import android.content.Context;
 import android.drm.DrmStore;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -19,6 +23,9 @@ public class ActPreProcessor {
     ActionDB actionDB;
     StatRowVO statRowVO;
 
+    JSONObject jsonObject = new JSONObject();
+    JSONArray jsonArray = new JSONArray();
+
     ArrayList<ActionTimeInfoVO> actTimeInfoVO;
     ArrayList<StatRowVO> statTable;
 
@@ -27,8 +34,9 @@ public class ActPreProcessor {
 
     Calendar cal;
     Date date;
+    private String statTableString;
 
-    public ArrayList<StatRowVO> makeStatTable(ArrayList<ActionVO> dbArr){
+    public String  makeStatTable(ArrayList<ActionVO> dbArr) throws JSONException {
 
         actTimeInfoVO = new ArrayList<ActionTimeInfoVO>();
         statTable = new ArrayList<StatRowVO>();
@@ -189,7 +197,6 @@ public class ActPreProcessor {
                     }else{
                         cat_name = dbArr.get(dbi-1).getCat_name();
                     }
-
                     vo.setCatName(cat_name);
                     if(dbArr.get(dbi).getStart_time()>vo.getStartTime()){
                         break;
@@ -199,10 +206,14 @@ public class ActPreProcessor {
         }
 
         for(StatRowVO vo : statTable){
-            Log.v("일차확인",getDateFormat(vo.getStartTime())+" "+vo.getCatName());
+          //  Log.v("일차확인",getDateFormat(vo.getStartTime())+" "+vo.getCatName());
+            jsonObject.put("cat_name",vo.getCatName());
+            jsonObject.put("time",vo.getStartTime());
+            statTableString = jsonArray.put(jsonObject).toString();
+
         }
 
-        return statTable;
+        return statTableString;
     }
 
     private int getMinute(ActionVO vo) {
