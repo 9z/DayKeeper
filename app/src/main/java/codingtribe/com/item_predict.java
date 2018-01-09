@@ -88,18 +88,7 @@ public class item_predict extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        String array = "[{'catID':'2','carProb':'0.827586206897'},{'catID':'2','carProb':'1.0'}," +
-                "{'catID':'2','carProb':'0.965517241379'},{'catID':'2','carProb':'0.965517241379'}," +
-                "{'catID':'2','carProb':'0.965517241379'},{'catID':'2','carProb':'0.862068965517'}," +
-                "{'catID':'2','carProb':'0.689655172414'},{'catID':'0','carProb':'0.896551724138'}," +
-                "{'catID':'0','carProb':'0.931034482759'},{'catID':'9','carProb':'0.862068965517'}," +
-                "{'catID':'9','carProb':'0.965517241379'},{'catID':'9','carProb':'0.931034482759'}," +
-                "{'catID':'9','carProb':'0.896551724138'},{'catID':'9','carProb':'0.827586206897'}," +
-                "{'catID':'9','carProb':'0.896551724138'},{'catID':'9','carProb':'0.896551724138'}," +
-                "{'catID':'9','carProb':'0.931034482759'},{'catID':'9','carProb':'0.931034482759'}," +
-                "{'catID':'0','carProb':'0.551724137931'},{'catID':'0','carProb':'0.724137931034'}," +
-                "{'catID':'0','carProb':'0.724137931034'},{'catID':'0','carProb':'0.689655172414'}," +
-                "{'catID':'0','carProb':'0.689655172414'},{'catID':'0','carProb':'0.689655172414'}]";
+        String array = "[{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'3','carProb':'0.586206896552'},{'catID':'4','carProb':'0.689655172414'},{'catID':'9','carProb':'0.793103448276'},{'catID':'9','carProb':'0.827586206897'},{'catID':'9','carProb':'0.862068965517'},{'catID':'9','carProb':'0.827586206897'},{'catID':'3','carProb':'0.551724137931'},{'catID':'3','carProb':'0.758620689655'},{'catID':'3','carProb':'0.48275862069'},{'catID':'9','carProb':'0.620689655172'},{'catID':'9','carProb':'0.655172413793'},{'catID':'9','carProb':'0.689655172414'},{'catID':'4','carProb':'0.379310344828'},{'catID':'8','carProb':'0.448275862069'},{'catID':'4','carProb':'0.48275862069'},{'catID':'5','carProb':'0.448275862069'},{'catID':'2','carProb':'0.724137931034'},{'catID':'2','carProb':'0.724137931034'}]";
 
 
         lv = (ListView)findViewById(R.id.listView);
@@ -112,11 +101,7 @@ public class item_predict extends AppCompatActivity {
         arrayList = new ArrayList<PredictVO>();
 
         for(int i = 0; i<24;i++){
-            if(jsonArray.get(i).getCatID() == 0){
-                arrayList.add(new PredictVO(i+":00~",i+1+":00", CatDbHelper.getCatName(jsonArray.get(i).getCatID()+1),jsonArray.get(i).getCarProb()/0.01f));
-            }else{
                 arrayList.add(new PredictVO(i+":00~",i+1+":00", CatDbHelper.getCatName(jsonArray.get(i).getCatID()),jsonArray.get(i).getCarProb()/0.01f));
-            }
         }
 
         year = Calendar.getInstance().get(Calendar.YEAR);
