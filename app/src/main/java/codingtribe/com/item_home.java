@@ -28,6 +28,8 @@ import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 
+
+
 public class item_home extends Fragment {
 
     ArrayList<CategoryVO> catArrayList;
@@ -43,6 +45,7 @@ public class item_home extends Fragment {
     View selectedView;
 
     Thread thread = null;
+    boolean isRunningThread = false;
 
     SharedPreferences spf_catID = null;
     SharedPreferences spf_startTime = null;
@@ -118,8 +121,13 @@ public class item_home extends Fragment {
 
         btn_addCat = (Button) v.findViewById(R.id.btn_addCat);
 
-        thread = new Thread(new timeThread());
-        thread.start();
+        if(!isRunningThread){
+            thread = new Thread(new timeThread());
+            thread.start();
+            isRunningThread = true;
+        }
+
+
         //카테고리 추가 버튼을 눌렀을 때, 카테고리명을 입력받는 다이얼로그
         btn_addCat.setOnClickListener(new View.OnClickListener() {
             @Override

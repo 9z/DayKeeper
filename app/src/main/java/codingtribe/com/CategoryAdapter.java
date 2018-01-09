@@ -55,7 +55,7 @@ public class CategoryAdapter extends BaseAdapter {
 
             holder.tv_categoryName = view.findViewById(R.id.tv_category_name);
 
-            holder.tv_categoryName.setText(categoryData.get(i).getCategoryName()+" "+categoryData.get(i).getCat_id()+" "+categoryData.get(i).getCat_id());
+            holder.tv_categoryName.setText(categoryData.get(i).getCategoryName());
 
 
         } else {
