@@ -106,17 +106,10 @@ public class item_predict extends AppCompatActivity {
         btn_listChanDate = (Button)findViewById(R.id.listChanDate);
         text_listChanDate = (TextView)findViewById(R.id.listDate);
 
-        year = Calendar.getInstance().get(Calendar.YEAR);
-        month = Calendar.getInstance().get(Calendar.MONTH);
-        date = Calendar.getInstance().get(Calendar.DATE);
-
         Gson gson = new Gson();
         ArrayList<jsonVO> jsonArray = gson.fromJson(array, new TypeToken<ArrayList<jsonVO>>(){}.getType());
 
-
         arrayList = new ArrayList<PredictVO>();
-
-
 
         for(int i = 0; i<24;i++){
             if(jsonArray.get(i).getCatID() == 0){
@@ -124,8 +117,11 @@ public class item_predict extends AppCompatActivity {
             }else{
                 arrayList.add(new PredictVO(i+":00~",i+1+":00", CatDbHelper.getCatName(jsonArray.get(i).getCatID()),jsonArray.get(i).getCarProb()/0.01f));
             }
-
         }
+
+        year = Calendar.getInstance().get(Calendar.YEAR);
+        month = Calendar.getInstance().get(Calendar.MONTH);
+        date = Calendar.getInstance().get(Calendar.DATE);
 
         Intent intent = getIntent();
 
@@ -136,6 +132,7 @@ public class item_predict extends AppCompatActivity {
             month= intent.getIntExtra("month",1);
             date = intent.getIntExtra("date",1);
         }
+        dateNowArr = new int[]{year,month,date};
         text_listChanDate.setText(year + "년 " + (month + 1) + "월 " + date + "일");
 
         Calendar choiceDate = Calendar.getInstance();
@@ -162,7 +159,7 @@ public class item_predict extends AppCompatActivity {
                                         intent.putExtra("month",monthOfYear);
                                         intent.putExtra("date",dayOfMonth);
                                         Log.v("하...",intent.getIntExtra("year",0)+"");
-                                        //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                         startActivity(intent);
                                         finish();
                                     }

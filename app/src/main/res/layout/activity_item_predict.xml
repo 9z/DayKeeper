@@ -39,7 +39,7 @@
             android:background="@color/down"
             android:backgroundTint="@color/down"
             android:text="날짜변경"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@color/common_plus_signin_btn_text_light_default"
             android:textSize="18sp" />
     </RelativeLayout>
 
