@@ -132,7 +132,7 @@ public class bar_bar extends AppCompatActivity {
                                         intent.putExtra("monthWeek",monthOfYear);
                                         intent.putExtra("dateWeek",dayOfMonth);
                                         Log.v("하...",intent.getIntExtra("yearWeek",0)+"");
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                         startActivity(intent);
                                         finish();
                                     }
