@@ -231,7 +231,6 @@ public class ActPreProcessor {
         SimpleDateFormat sdf;
         Date date;
         for(StatRowVO vo : statTable){
-            Log.v("CatId----------",vo.getCatName()+" "+vo.getCatid());
             long rowTime = vo.getStartTime();
             catId = vo.getCatid();
 

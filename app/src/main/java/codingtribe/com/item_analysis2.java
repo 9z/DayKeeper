@@ -24,7 +24,7 @@ public class item_analysis2 extends Fragment {
 
     Button btn_statics, btn_predict, btn_type;
     private int mPosition;
-
+    String result1;
     static item_analysis2 newInstance(int position) {
         item_analysis2 f = new item_analysis2();    //객체 생성
         Bundle args = new Bundle();                    //해당 fragment에서 사용될 정보 담을 번들 객체
@@ -60,9 +60,6 @@ public class item_analysis2 extends Fragment {
             @Override
             public void onClick(View view) {
 
-                //예측 새창 띄우기
-                updateDetail_predict();
-
                 //찬울 테스트 이제 완성입니다. makerStatTable 메소드는 매시간별로 어떤 행동을 했는지 판단하여 기록된 모든 정보를 시간단위로 각 카테고리명을  ArrayList 형태로 반환해줍니다.
                 ActionDB actionDB = new ActionDB(getContext());
                 ArrayList<ActionVO> actionArrayList = actionDB.getAllAction(getActivity());
@@ -78,10 +75,15 @@ public class item_analysis2 extends Fragment {
                 String result = null;
                 try {
                     result = act.makeStatTable(actionArrayList);
-                    new JsonSend(sendmsg).execute(result, "vision_write").get();//보내는것
+                    JsonSend jsonSend = new JsonSend(sendmsg);
+                    result1 = jsonSend.execute(result, "vision_write").get();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                //예측 새창 띄우기
+                updateDetail_predict();
             }
         });
 
@@ -109,6 +111,8 @@ public class item_analysis2 extends Fragment {
 
     private void updateDetail_predict() {
         Intent intent = new Intent(getActivity(), item_predict.class);
+        intent.putExtra("resultString", result1);
+        Log.v("로그",result1);
         startActivity(intent);
     }
 

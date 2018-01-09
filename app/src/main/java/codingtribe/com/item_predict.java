@@ -88,8 +88,9 @@ public class item_predict extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        String array = "[{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'2','carProb':'1.0'},{'catID':'3','carProb':'0.586206896552'},{'catID':'4','carProb':'0.689655172414'},{'catID':'9','carProb':'0.793103448276'},{'catID':'9','carProb':'0.827586206897'},{'catID':'9','carProb':'0.862068965517'},{'catID':'9','carProb':'0.827586206897'},{'catID':'3','carProb':'0.551724137931'},{'catID':'3','carProb':'0.758620689655'},{'catID':'3','carProb':'0.48275862069'},{'catID':'9','carProb':'0.620689655172'},{'catID':'9','carProb':'0.655172413793'},{'catID':'9','carProb':'0.689655172414'},{'catID':'4','carProb':'0.379310344828'},{'catID':'8','carProb':'0.448275862069'},{'catID':'4','carProb':'0.48275862069'},{'catID':'5','carProb':'0.448275862069'},{'catID':'2','carProb':'0.724137931034'},{'catID':'2','carProb':'0.724137931034'}]";
-
+        String array="";
+        array = getIntent().getStringExtra("resultString");
+        Log.v("흐흐",array);
 
         lv = (ListView)findViewById(R.id.listView);
         btn_listChanDate = (Button)findViewById(R.id.listChanDate);
