@@ -17,9 +17,10 @@
             android:id="@+id/text_month"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignBaseline="@+id/btn_month"
+            android:layout_alignBottom="@+id/btn_month"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="12dp"
             android:layout_marginStart="12dp"
             android:paddingTop="25dp"
@@ -37,7 +38,7 @@
             android:layout_marginEnd="11dp"
             android:layout_marginRight="11dp"
             android:background="@color/progressbarback"
-            android:text="날짜변경"
+            android:text="항목변경"
             android:textColor="@color/progressbar"
             android:textSize="22sp" />
 
