@@ -3,7 +3,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backimage"
+    android:background="@drawable/back"
     android:orientation="vertical"
     android:weightSum="4">
 
@@ -15,7 +15,7 @@
 
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="161dp"
+        android:layout_marginBottom="108dp"
         android:visibility="visible"
         tools:visibility="visible" />
 
