@@ -3,6 +3,6 @@
     <string name="loading">로딩 중 입니다...</string>
     <string name="signed_out">당신이 하루를 어떻게 보내는지 확인해보세요!</string>
     <string name="signed_in_fmt">LoginTest</string>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">하루지기</string>
     <string name="add_widget">Add widget</string>
 </resources>
