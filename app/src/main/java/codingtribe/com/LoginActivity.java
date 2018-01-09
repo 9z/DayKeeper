@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
@@ -28,21 +29,35 @@ public class LoginActivity extends AppCompatActivity implements
     public static final String TAG = "LoginActivity";
     public static final int RC_SIGN_IN = 9001;
     public GoogleApiClient mGoogleApiClient;
-   // private TextView mStatusTextView;
+    private TextView mStatusTextView;
     public ProgressDialog mProgressDialog;
+    private TextView login_msg;
+    private Button button;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        login_msg = (TextView) findViewById(R.id.login_msg);
+
         // Views
         //mStatusTextView = (TextView) findViewById(R.id.status);
 
         // Button listeners
+        button = findViewById(R.id.move_main);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, HorizontalNtbActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-       // findViewById(R.id.sign_out_button).setOnClickListener(this);
-       // findViewById(R.id.disconnect_button).setOnClickListener(this);
+        findViewById(R.id.sign_out_button).setOnClickListener(this);
+        findViewById(R.id.disconnect_button).setOnClickListener(this);
 
         // [START configure_signin]
         // Configure sign-in to request the user's ID, email address, and basic
@@ -111,6 +126,10 @@ public class LoginActivity extends AppCompatActivity implements
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+
+            Intent intent = new Intent(LoginActivity.this, HorizontalNtbActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
     // [END onActivityResult]
@@ -121,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-          //  mStatusTextView.setText(acct.getDisplayName());
+            //  mStatusTextView.setText(acct.getDisplayName());
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -147,7 +166,9 @@ public class LoginActivity extends AppCompatActivity implements
                         updateUI(false);
                         // [END_EXCLUDE]
                     }
+
                 });
+
     }
     // [END signOut]
 
@@ -192,17 +213,18 @@ public class LoginActivity extends AppCompatActivity implements
 
     public void updateUI(boolean signedIn) {
         if (signedIn) {
-            Intent intent = new Intent(LoginActivity.this, HorizontalNtbActivity.class);
-            startActivity(intent);
-            finish();
-
+            login_msg.setVisibility(View.VISIBLE);
+            button.setVisibility(View.VISIBLE);
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-         //   findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.disconnect_button).setVisibility(View.VISIBLE);
         } else {
-          //  mStatusTextView.setText(R.string.signed_out);
-
+            //  mStatusTextView.setText(R.string.signed_out);
+            login_msg.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-         //   findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+            findViewById(R.id.sign_out_button).setVisibility(View.GONE);
+            findViewById(R.id.disconnect_button).setVisibility(View.GONE);
         }
     }
 
@@ -212,12 +234,12 @@ public class LoginActivity extends AppCompatActivity implements
             case R.id.sign_in_button:
                 signIn();
                 break;
-        //    case R.id.sign_out_button:
-        //        signOut();
-        //        break;
-     //       case R.id.disconnect_button:
-        //        revokeAccess();
-        //        break;
+            case R.id.sign_out_button:
+                signOut();
+                break;
+            case R.id.disconnect_button:
+                revokeAccess();
+                break;
         }
     }
 }
