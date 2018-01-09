@@ -157,8 +157,13 @@ public class bar_bar extends AppCompatActivity {
 
 
         float[][] test = new float[7][];
+        String[][] test_name = new String[7][];
+        //ArrayList<ArrayList<Integer>> colorBar = new ArrayList<>();
         float testDate = 1;
         String[] name = new String[7];
+
+        int[] colors = {ColorTemplate.COLORFUL_COLORS[0],ColorTemplate.COLORFUL_COLORS[1],
+                ColorTemplate.COLORFUL_COLORS[2],ColorTemplate.COLORFUL_COLORS[3],ColorTemplate.COLORFUL_COLORS[4]};
 
        for (int i = 0; i<test.length;i++) {
            long l = choiceDate.getTimeInMillis()-(1000*60*60*24*i);
@@ -167,9 +172,12 @@ public class bar_bar extends AppCompatActivity {
            name[6-i] = temp.get(Calendar.MONTH)+1+"월"+temp.get(Calendar.DATE)+"일";
            statArray = takeOneDayData(temp);
            test[i] = new float[statArray.size()];
+           test_name[i] = new String[statArray.size()];
            for (int j = 0; j <statArray.size() ; j++) {
                Log.v("하루 스탯", statArray.get(j).getCatName()+"");
                test[i][j] = statArray.get(j).getTime();
+               test_name[i][j] = statArray.get(j).getCatName();
+               //colorBar.get(i).add(colors[j]);
                testDate += statArray.get(j).getTime();
            }
            for (int k = 0; k < statArray.size(); k++) {
@@ -181,7 +189,7 @@ public class bar_bar extends AppCompatActivity {
         //barchart
 
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, test[6]));
+        entries.add(new BarEntry(0f, test[6],test_name[6]));
         entries.add(new BarEntry(1f, test[5]));
         entries.add(new BarEntry(2f, test[4]));
         entries.add(new BarEntry(3f, test[3]));
@@ -195,9 +203,6 @@ public class bar_bar extends AppCompatActivity {
         colors.add(ColorTemplate.COLORFUL_COLORS[2]);
         colors.add(ColorTemplate.COLORFUL_COLORS[3]);
         colors.add(ColorTemplate.COLORFUL_COLORS[4]);*/
-
-        int[] colors = {ColorTemplate.COLORFUL_COLORS[0],ColorTemplate.COLORFUL_COLORS[1],
-                ColorTemplate.COLORFUL_COLORS[2],ColorTemplate.COLORFUL_COLORS[3],ColorTemplate.COLORFUL_COLORS[4]};
 
         XAxis bar_xAxis = mBarChart.getXAxis();
         bar_xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
