@@ -1,100 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EFEBE9"
+    android:orientation="vertical"
     tools:context="codingtribe.com.bar_bar">
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
-
+        android:layout_height="76dp">
 
         <TextView
             android:id="@+id/text_week"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="23dp"
-            android:layout_marginRight="23dp"
-            android:layout_toLeftOf="@+id/btn_week"
-            android:layout_toStartOf="@+id/btn_week"
-            android:text="2018년 1월 8일"
-            android:textSize="24sp" />
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:paddingTop="25dp"
+            android:text="2018. 1. 8"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
 
         <Button
             android:id="@+id/btn_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/text_week"
-            android:layout_marginEnd="29dp"
-            android:layout_marginRight="29dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:background="@color/progressbarback"
             android:text="날짜변경"
-            android:textSize="18sp" />
+            android:textColor="@color/progressbar"
+            android:textSize="22sp" />
+
+
     </RelativeLayout>
 
+
     //Barchart
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:layout_margin="20dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="75dp">
+        android:layout_height="70dp">
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+
+        <Button
+            android:id="@+id/btn_pie2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/btn_style"
+            android:text="Day"
+            android:textColor="@color/progressbar"
+            android:textSize="25sp" />
+
+
+        <Button
+            android:id="@+id/btn_bar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btn_line2"
+            android:layout_alignBottom="@+id/btn_line2"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_style"
+            android:text="Week"
+            android:textColor="@color/progressbar"
+            android:textSize="25sp" />
+
+
+        <Button
+            android:id="@+id/btn_line2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/btn_style"
+            android:text="Month"
+            android:textColor="@color/progressbar"
+
+            android:textSize="25sp" />
+
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/btn_pie2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:text="하루"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/btn_bar2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_pie2"
-        android:layout_alignBottom="@+id/btn_pie2"
-        android:layout_centerHorizontal="true"
-        android:text="일주일"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/btn_line2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:text="한 달"
-        android:textSize="18sp" />
-
-
-</RelativeLayout>
+</LinearLayout>

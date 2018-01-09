@@ -111,6 +111,9 @@ public class LoginActivity extends AppCompatActivity implements
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+            Intent intent = new Intent(LoginActivity.this, HorizontalNtbActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
     // [END onActivityResult]
@@ -192,9 +195,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     public void updateUI(boolean signedIn) {
         if (signedIn) {
-            Intent intent = new Intent(LoginActivity.this, HorizontalNtbActivity.class);
-            startActivity(intent);
-            finish();
+
 
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
          //   findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
@@ -213,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements
                 signIn();
                 break;
         //    case R.id.sign_out_button:
-        //        signOut();
+              // signOut();
         //        break;
      //       case R.id.disconnect_button:
         //        revokeAccess();

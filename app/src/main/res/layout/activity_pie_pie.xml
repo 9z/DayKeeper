@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,13 +8,9 @@
     android:orientation="vertical"
     tools:context="codingtribe.com.pie_pie">
 
-    //Piechart
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="76dp">
 
         <Button
             android:id="@+id/btn_month"
@@ -23,82 +19,91 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="29dp"
-            android:layout_marginRight="29dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:background="@color/progressbarback"
             android:text="날짜변경"
-            android:textSize="18sp" />
+            android:textColor="@color/progressbar"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/text_date"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/btn_month"
-            android:layout_alignBottom="@+id/btn_month"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="53dp"
-            android:layout_marginStart="53dp"
-            android:text="2018년 1월 7일"
-            android:textSize="24sp" />
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:paddingTop="25dp"
+            android:text="2018. 1. 7"
+            android:textSize="40sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
+
+    //Piechart
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/piechart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="75dp">
+        android:layout_alignParentTop="true"
+        android:layout_weight="1">
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/piechart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+    </com.github.mikephil.charting.charts.PieChart>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <Button
+            android:id="@+id/btn_pie1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="48dp">
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/btn_style"
+            android:text="Day"
+            android:textColor="@color/progressbar"
+            android:textSize="25sp" />
 
-        </com.github.mikephil.charting.charts.PieChart>
+
+        <Button
+            android:id="@+id/btn_bar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btn_line1"
+            android:layout_alignBottom="@+id/btn_line1"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_style"
+            android:text="Week"
+            android:textColor="@color/progressbar"
+
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/btn_line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/btn_style"
+            android:text="Month"
+            android:textColor="@color/progressbar"
+
+            android:textSize="25sp" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_pie1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:text="하루"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/btn_bar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_line1"
-        android:layout_alignBottom="@+id/btn_line1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:text="일주일"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/btn_line1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:text="한 달"
-        android:textSize="18sp" />
-
-</RelativeLayout>
+</LinearLayout>
