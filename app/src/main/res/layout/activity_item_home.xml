@@ -8,6 +8,9 @@
     android:orientation="vertical"
     tools:context="codingtribe.com.item_home">
 
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -109,10 +112,12 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="10"
-            android:background="@color/progressbarback"
+            android:background="@drawable/btn_style"
             android:text="+"
-            android:textColor="@android:color/background_light"
-            android:textSize="40sp" />
+            android:textColor="@color/progressbar"
+            android:textSize="50sp"
+
+            />
 
     </RelativeLayout>
 
